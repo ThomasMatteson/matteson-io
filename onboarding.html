@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MTech Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+.stages{display:grid;grid-template-columns:minmax(220px,300px) minmax(0,1fr);gap:24px;margin-top:40px;align-items:start}
+.tabs{display:grid;border-top:1px solid var(--line)}
+.tabs button{background:none;border:0;border-bottom:1px solid var(--line);text-align:left;padding:16px 4px;display:grid;grid-template-columns:40px 1fr;gap:4px 12px;color:var(--muted)}
+.tabs button b{grid-row:span 2;font:800 26px var(--f-display);color:var(--line);font-variation-settings:"wdth" 100}
+.tabs button span{font:700 18px var(--f-display);color:var(--fg);font-variation-settings:"wdth" 100}
+.tabs button small{font:400 12.5px var(--f-mono);letter-spacing:.03em}
+.tabs button[aria-selected="true"]{background:var(--bg2);box-shadow:inset 3px 0 0 var(--accent);padding-left:14px}
+.tabs button[aria-selected="true"] b{color:var(--accent)}
+@media(max-width:900px){.stages{grid-template-columns:1fr}.tabs{grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);overflow-x:auto}.tabs button{border:1px solid var(--line);margin-right:-1px}}
+.stage{border:1px solid var(--line);background:var(--bg2);min-width:0}
+.stage .vis{border-bottom:1px solid var(--line);background:var(--bg);min-height:320px;position:relative}
+.stage .vis svg{display:block;width:100%;height:auto}
+.stage .txt{padding:20px 22px 24px;display:grid;gap:10px}
+.stage h3{font-size:clamp(26px,2.6vw,36px);font-weight:800;line-height:1.02;font-variation-settings:"wdth" 104}
+.stage p{font-weight:300;font-size:16px;max-width:62ch}
+.ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 16px;border-top:1px solid var(--line2)}
+/* stage 2: conversation */
+.conv{padding:22px;display:flex;flex-direction:column;gap:12px}
+.bub{max-width:80%;padding:12px 14px;font-size:15px;line-height:1.5;animation:in .35s ease both}
+.bub.co{align-self:flex-start;background:var(--panel);border:1px solid var(--line)}
+.bub.co b{display:block;font:500 10.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.bub.me{align-self:flex-end;background:var(--accent);color:var(--accent-ink)}
+.src{display:flex;flex-wrap:wrap;gap:6px}
+/* stage 3: autonomy dial */
+.dial{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);margin:22px 22px 0}
+.dial button{background:none;border:0;border-right:1px solid var(--line);padding:12px 8px;font:500 11.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.dial button:last-child{border-right:0}
+.dial button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.lvl{padding:18px 22px 22px;display:grid;gap:12px}
+.lvl .task{font:500 12.5px var(--f-mono);color:var(--muted);letter-spacing:.04em}
+.lvl .does{font:700 22px/1.2 var(--f-display);font-variation-settings:"wdth" 100}
+.lvl .you{font-size:15px;font-weight:300}
+.meter{display:flex;gap:4px}
+.meter i{flex:1;height:6px;background:var(--line2)}
+.meter i.on{background:var(--accent)}
+/* stage 4: coached app */
+.app{margin:22px;border:1px solid var(--line);background:var(--panel);max-width:520px;position:relative}
+.app .top{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;font:500 11.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.app ul{list-style:none;margin:0;padding:8px 14px 14px;display:grid;gap:8px}
+.app li{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:center;font-size:14.5px;padding:8px 0;border-bottom:1px solid var(--line2)}
+.app li .bx{width:16px;height:16px;border:1px solid var(--line)}
+.app li.done .bx{background:var(--accent);border-color:var(--accent)}
+.app li.done span{color:var(--muted);text-decoration:line-through}
+.app li .act{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);padding:5px 8px;background:none}
+.app li.cur .act{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%,transparent)}
+.coach{margin:0 22px 22px;max-width:520px;border-left:3px solid var(--accent);padding:10px 14px;background:var(--bg2);font-size:14.5px}
+.coach b{display:block;font:500 10.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="./"><svg class="logo" viewBox="56 56 1890 314" role="img" aria-label="MTech"><path fill="currentColor" d="M66 66H140L257 215L374 66H447V360H385V160L257 318L128 160V360H66Z"/><g fill="var(--accent)"><path d="M520 66H830V122H703V360H642V122H520Z"/><path d="M900 66H1179V122H900Z"/><path d="M900 185H1163V242H958V304H1179V360H900Z"/><path d="M1345 66H1551V122H1350A35 35 0 0 0 1315 157V269A35 35 0 0 0 1350 304H1551V360H1345A90 90 0 0 1 1255 270V156A90 90 0 0 1 1345 66Z"/><path d="M1628 66H1688V185H1876V66H1936V360H1876V242H1688V360H1628Z"/></g></svg></a>
+    <nav aria-label="Primary">
+      <a href="coworkers.html">Coworkers</a>
+      <a href="wearables.html">Field awareness</a>
+      <a href="process.html">Process control</a>
+      <a href="onboarding.html" aria-current="page">Onboarding</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="partner.html">Partner</a>
+    </nav>
+    <button id="bp" class="sw" role="switch" aria-checked="false"><span class="knob"></span><span>View as blueprint</span></button>
+  </div>
+</header>
+
+<main>
+<section class="phero">
+  <div class="wrap">
+    <div>
+      <div class="crumbs mono"><a href="./">MTech</a><span>/</span><span>Getting started</span><span>/</span><span style="color:var(--fg)">Onboarding</span></div>
+      <h1>No heavy lifting. <span>Learn it by using it.</span></h1>
+      <p class="sub">From practice in VR, to digital coworkers that learn your process, to systems that teach as you go. Getting started happens inside the work itself.</p>
+      <div class="facts"><span class="chip">VR training</span><span class="chip">Coworker training</span><span class="chip">Implementation</span><span class="chip on">Learn by using</span></div>
+    </div>
+    <div class="hvis"><span class="cap mono">FIG. O1 · Capability rises, effort stays low · illustrative</span><svg id="hero" viewBox="0 0 560 340" role="img" aria-label="Illustration: capability rises across four onboarding stages while effort stays low"></svg></div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Four stages</div><h2 class="h2">From first practice<br>to everyday work.</h2></div>
+      <p class="lede">Each stage teaches by doing, and each one is something you can try right here.</p>
+    </div>
+    <div class="stages">
+      <div class="tabs" role="tablist" id="tabs">
+        <button role="tab" aria-selected="true" data-i="0"><b>01</b><span>Practice in VR</span><small>Rehearse the real job</small></button>
+        <button role="tab" aria-selected="false" data-i="1"><b>02</b><span>Coworkers learn your way</span><small>Your process, learned</small></button>
+        <button role="tab" aria-selected="false" data-i="2"><b>03</b><span>Implement in steps</span><small>Authority you grant</small></button>
+        <button role="tab" aria-selected="false" data-i="3"><b>04</b><span>Learn by using</span><small>The system teaches as you go</small></button>
+      </div>
+      <div class="stage">
+        <!-- 1: VR -->
+        <div class="pane" data-p="0">
+          <div class="vis"><svg id="vr" viewBox="0 0 640 320" role="img" aria-label="Virtual practice of a lockout procedure"></svg></div>
+          <div class="ctl"><button class="sbtn go" id="vrNext">Complete step</button><button class="sbtn" id="vrReset">Start over</button><span class="mono" id="vrMsg"></span></div>
+          <div class="txt"><span class="mono">Stage 01 · VR training</span><h3>Rehearse the real job before the real site.</h3><p>Crews practice in a virtual site with the same in-lens guidance they’ll see through the glasses on the floor. Mistakes cost nothing, and the first real job feels familiar.</p></div>
+        </div>
+        <!-- 2: coworker learns -->
+        <div class="pane" data-p="1" hidden>
+          <div class="vis"><div class="conv" id="conv"></div></div>
+          <div class="txt"><span class="mono">Stage 02 · Coworker training</span><h3>They learn how you work, then ask when unsure.</h3><p>Digital coworkers learn from the way your team already works: your past jobs, your procedures and your corrections. When something is unclear, they ask once and remember.</p></div>
+        </div>
+        <!-- 3: autonomy -->
+        <div class="pane" data-p="2" hidden>
+          <div class="vis">
+            <div class="dial" id="dial" role="group" aria-label="Coworker autonomy">
+              <button data-l="0" aria-pressed="true">Watch</button><button data-l="1" aria-pressed="false">Assist</button><button data-l="2" aria-pressed="false">Act on a yes</button><button data-l="3" aria-pressed="false">Act within limits</button>
+            </div>
+            <div class="lvl">
+              <span class="task">Task · Reorder filter cartridges for Site 9 · $1,200</span>
+              <div class="meter" id="meter"><i></i><i></i><i></i><i></i></div>
+              <div class="does" id="does"></div>
+              <p class="you" id="you"></p>
+            </div>
+          </div>
+          <div class="txt"><span class="mono">Stage 03 · Implementation</span><h3>Start by watching. Grow by trust.</h3><p>Coworkers go live alongside your team, suggesting before they do anything. You decide when each one moves up a level, and you can move it back at any time. Rollout moves at your pace.</p></div>
+        </div>
+        <!-- 4: learn by using -->
+        <div class="pane" data-p="3" hidden>
+          <div class="vis">
+            <div class="app"><div class="top"><span>WO-4471 · Close out</span><span id="appN"></span></div><ul id="app"></ul></div>
+            <div class="coach" id="coach"></div>
+          </div>
+          <div class="txt"><span class="mono">Stage 04 · Learn by using</span><h3>The system is the training.</h3><p>Every screen shows the next step and why it matters. People learn the process by doing it, guided on every screen.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="statement">
+  <div class="wrap"><p>Our systems teach you <em>while you use them.</em> No heavy lifting required.</p></div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Who learns what</div><h2 class="h2">Everyone starts<br>where they already work.</h2></div>
+      <p class="lede">Crews, office teams and managers each get started inside the work they already do.</p>
+    </div>
+    <div class="g3">
+      <div class="feat"><span class="ic" data-icon="vr"></span><span class="k">Field crews</span><h3>Practice, then guidance in the lens</h3><p>Hazardous procedures rehearsed in VR first. On site, the same guidance appears through the glasses, step by step.</p></div>
+      <div class="feat"><span class="ic" data-icon="users"></span><span class="k">Operations team</span><h3>Coworkers that learn your way</h3><p>Digital coworkers learn from your jobs and corrections, then take routine steps off the team’s plate.</p></div>
+      <div class="feat"><span class="ic" data-icon="shield"></span><span class="k">Managers</span><h3>Authority you grant, step by step</h3><p>You choose what each coworker may do, and see every action it takes with the proof behind it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Getting started</div><h2 class="h2">Light from<br>day one.</h2></div>
+      <p class="lede">Getting started stays light for every team, from the first practice run to full rollout.</p>
+    </div>
+    <div class="g3">
+      <div class="feat"><span class="ic" data-icon="book"></span><span class="k">Training</span><h3>Learn in the flow</h3><p>People learn during real work, with guidance where they’re already looking.</p></div>
+      <div class="feat"><span class="ic" data-icon="flow"></span><span class="k">Rollout</span><h3>A step at a time</h3><p>Coworkers take on work gradually, starting by watching and suggesting.</p></div>
+      <div class="feat"><span class="ic" data-icon="spark"></span><span class="k">Change</span><h3>Keep your way of working</h3><p>The system learns your process and explains itself as you go.</p></div>
+    </div>
+    <div class="row" style="margin-top:28px"><a class="btn pri" href="partner.html">Talk about getting started</a><a class="btn" href="coworkers.html">Meet the coworkers</a></div>
+  </div>
+</section>
+
+<nav class="pager" aria-label="More from MTech">
+  <a href="process.html"><span class="mono">← Previous</span><b>Process control</b></a>
+  <a href="architecture.html"><span class="mono">Next →</span><b>Agentic architecture</b></a>
+</nav>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="plate"><span>MTECH CORPORATION · TULSA, OKLAHOMA</span></div>
+    <p>Screens and conversations on this page are samples for explanation.</p>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+<script>
+(function(){
+var $=MT.$,$$=MT.$$,S=MT.S,T=MT.T;
+
+/* hero: capability rises through four stages while effort stays flat */
+(function(){
+  var svg=$('#hero');MT.frame(svg,560,340);
+  S('line',{x1:50,y1:290,x2:530,y2:290,class:'thin'},svg);S('line',{x1:50,y1:60,x2:50,y2:290,class:'thin'},svg);
+  var cap=S('path',{d:'M60 270C150 262 190 230 240 200S330 120 380 100S470 70 520 66',class:'acc'},svg);
+  S('path',{d:'M60 252C200 250 360 252 520 250',class:'ln dash',style:'opacity:.6'},svg);
+  T('CAPABILITY',{x:526,y:58,class:'lbla',style:'text-anchor:end'},svg);T('EFFORT',{x:526,y:242,class:'lbl',style:'text-anchor:end'},svg);
+  var L=cap.getTotalLength(),names=['VR PRACTICE','COWORKERS LEARN','IMPLEMENT','LEARN BY USING'],fr=[.08,.36,.64,.93];
+  fr.forEach(function(f,i){var p=cap.getPointAtLength(L*f);S('circle',{cx:p.x,cy:p.y,r:7,class:'ln fillp'},svg);T(names[i],{x:p.x,y:p.y-16,class:'lblf',style:'text-anchor:middle;font-size:10.5px'},svg);T('0'+(i+1),{x:p.x,y:308,class:'lbl',style:'text-anchor:middle'},svg)});
+  var dot=S('circle',{r:5,class:'fillacc'},svg);
+  MT.loop(svg,function(t,still){var f=still?.64:(t*.12)%1,p=cap.getPointAtLength(L*f);dot.setAttribute('cx',p.x);dot.setAttribute('cy',p.y)});
+})();
+
+/* tabs */
+var tabs=$$('#tabs button'),panes=$$('.pane');
+tabs.forEach(function(b){b.addEventListener('click',function(){var i=+b.dataset.i;tabs.forEach(function(x,j){x.setAttribute('aria-selected',j===i?'true':'false')});panes.forEach(function(p,j){p.hidden=j!==i})})});
+
+/* stage 1: VR practice of a lockout procedure */
+(function(){
+  var svg=$('#vr');
+  for(var x=-200;x<=840;x+=64)S('line',{x1:320,y1:150,x2:x,y2:320,class:'thin',style:'opacity:.5'},svg);
+  for(var k=1;k<6;k++){var y=150+170*Math.pow(k/5,2);S('line',{x1:0,y1:y,x2:640,y2:y,class:'thin',style:'opacity:.5'},svg)}
+  S('rect',{x:220,y:40,width:200,height:200,class:'ln fillp'},svg);T('PANEL B',{x:232,y:60,class:'lbl'},svg);
+  var brk=[];for(var r=0;r<4;r++)for(var c=0;c<3;c++){brk.push(S('rect',{x:244+c*56,y:78+r*38,width:40,height:24,class:'ln'},svg))}
+  var ring=S('circle',{r:18,class:'acc'},svg),ring2=S('circle',{r:26,class:'acc',style:'opacity:.4'},svg);
+  var hud=T('',{x:24,y:30,class:'lbla'},svg),bar=S('rect',{x:24,y:290,width:0,height:4,class:'fillacc'},svg);S('rect',{x:24,y:290,width:592,height:4,class:'thin'},svg);
+  T('VIRTUAL SITE · PRACTICE MODE',{x:616,y:30,class:'lbl',style:'text-anchor:end'},svg);
+  var STEPS=[['Identify the right panel',0],['Switch off breaker B2',4],['Apply your lock to B2',4],['Tag it with your name',4],['Test that it is dead',7]],n=0;
+  function draw(){var s=STEPS[Math.min(n,4)],b=brk[s[1]],x=+b.getAttribute('x')+20,y=+b.getAttribute('y')+12;
+    ring.setAttribute('cx',x);ring.setAttribute('cy',y);ring2.setAttribute('cx',x);ring2.setAttribute('cy',y);
+    hud.textContent=n>=5?'PRACTICE COMPLETE · READY FOR THE REAL SITE':'LOCKOUT / TAGOUT · STEP '+(n+1)+' OF 5 · '+s[0].toUpperCase();
+    bar.setAttribute('width',592*Math.min(n,5)/5);brk.forEach(function(r,i){r.setAttribute('class',i===s[1]&&n>1&&n<5?'acc':'ln')});
+    ring.style.opacity=ring2.style.opacity=n>=5?'0':'1';$('#vrNext').disabled=n>=5;$('#vrMsg').textContent=n>=5?'Same guidance appears in the lens on site.':''}
+  MT.loop(svg,function(t){var k=1+.15*Math.sin(t*4);ring2.setAttribute('r',26*k)});
+  $('#vrNext').addEventListener('click',function(){n++;draw()});$('#vrReset').addEventListener('click',function(){n=0;draw()});draw();
+})();
+
+/* stage 2: a coworker learns from one correction */
+(function(){
+  var c=$('#conv');
+  function bub(cls,who,txt){var d=document.createElement('div');d.className='bub '+cls;if(who){var b=document.createElement('b');b.textContent=who;d.appendChild(b)}d.appendChild(document.createTextNode(txt));c.appendChild(d);return d}
+  function start(){c.innerHTML='';
+    bub('co','Field dispatch coworker','I noticed your team calls the customer before every dispatch. Should I do that too?');
+    var row=document.createElement('div');row.className='row';row.style.alignSelf='flex-start';
+    [['Always','Got it. I’ll call the customer before every dispatch.'],['Only for new customers','Got it. I’ll call new customers before dispatch, and send returning customers a text instead.']].forEach(function(o,i){var b=document.createElement('button');b.className='sbtn'+(i===0?' go':'');b.textContent=o[0];
+      b.addEventListener('click',function(){row.remove();bub('me','',o[0]);setTimeout(function(){bub('co','Field dispatch coworker',o[1]+' You can change this any time.');
+        var src=document.createElement('div');src.className='src';['Learned from your past jobs','Confirmed by you','Applied to all crews'].forEach(function(s){var ch=document.createElement('span');ch.className='chip on';ch.textContent=s;src.appendChild(ch)});c.appendChild(src);
+        var again=document.createElement('button');again.className='sbtn';again.textContent='Start over';again.style.alignSelf='flex-start';again.addEventListener('click',start);c.appendChild(again)},MT.reduce?0:700)});row.appendChild(b)});
+    c.appendChild(row)}
+  start();
+})();
+
+/* stage 3: autonomy dial */
+(function(){
+  var L=[
+    ['Suggests the order.','You place it yourself. The coworker watches how you do it.'],
+    ['Drafts PO-8790 for you.','You review the draft and send it.'],
+    ['Places the order after you say yes.','One tap to approve. It does the rest and shows you the result.'],
+    ['Places it on its own and tells you.','Under $5,000 from an approved vendor, it just gets done. Bigger orders still come to you.']
+  ];
+  var bs=$$('#dial button'),ms=$$('#meter i');
+  function set(l){bs.forEach(function(b,i){b.setAttribute('aria-pressed',i===l?'true':'false')});ms.forEach(function(m,i){m.className=i<=l?'on':''});$('#does').textContent=L[l][0];$('#you').textContent=L[l][1]}
+  bs.forEach(function(b){b.addEventListener('click',function(){set(+b.dataset.l)})});set(0);
+})();
+
+/* stage 4: the app coaches as you go */
+(function(){
+  var STEPS=[['Attach startup readings','Billing can’t invoice until the readings are recorded.','Add readings'],['Take two photos of the unit','Photos prove the install matches the approved quote.','Take photos'],['Get the customer’s sign-off','The sign-off closes the job and starts the invoice.','Request sign-off']];
+  var n=0,ul=$('#app');
+  function draw(){ul.innerHTML='';STEPS.forEach(function(s,i){var li=document.createElement('li');li.className=i<n?'done':i===n?'cur':'';
+      li.innerHTML='<span class="bx"></span><span></span><button class="act"></button>';li.children[1].textContent=s[0];var b=li.children[2];b.textContent=i<n?'Done':s[2];b.disabled=i!==n;
+      if(i===n)b.addEventListener('click',function(){n++;draw()});ul.appendChild(li)});
+    $('#appN').textContent=Math.min(n,3)+' of 3';
+    var co=$('#coach');co.innerHTML='<b></b>';
+    if(n<3){co.firstChild.textContent='Next: '+STEPS[n][0];co.appendChild(document.createTextNode('Why: '+STEPS[n][1]))}
+    else{co.firstChild.textContent='Job complete';co.appendChild(document.createTextNode('You just learned the close-out process by doing it. '));var r=document.createElement('button');r.className='sbtn';r.textContent='Start over';r.addEventListener('click',function(){n=0;draw()});co.appendChild(r)}}
+  draw();
+})();
+})();
+</script>
+</body>
+</html>
