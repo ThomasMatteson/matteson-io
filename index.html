@@ -148,6 +148,21 @@ section.s{padding-block:clamp(72px,9vw,128px);border-bottom:1px solid var(--line
 .chip.pend{border-style:dashed}
 .chip.solid{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 
+/* vision */
+.vis3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);margin-top:44px}
+.vis3>div{padding:24px 24px 24px 0;border-right:1px solid var(--line2);min-width:0;display:flex;flex-direction:column;gap:10px}
+.vis3>div+div{padding-left:24px}
+.vis3>div:last-child{border-right:0}
+.vis3 b{font:800 30px var(--f-display);color:var(--accent);font-variation-settings:"wdth" 100}
+.vis3 h3{font-size:26px;font-weight:800;line-height:1.05;font-variation-settings:"wdth" 104}
+.vis3 p{font-weight:300;font-size:16px}
+.vis3 a{margin-top:auto;font:500 12px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);text-decoration:none}
+.vis3 a:hover{text-decoration:underline}
+@media(max-width:860px){.vis3{grid-template-columns:1fr}.vis3>div,.vis3>div+div{padding:20px 0;border-right:0;border-bottom:1px solid var(--line2)}}
+.vband{margin-top:36px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--bg2));padding:clamp(20px,3vw,32px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 32px;align-items:center}
+.vband h3{font-size:clamp(24px,2.6vw,36px);font-weight:800;line-height:1.05;font-variation-settings:"wdth" 106}
+.vband p{font-weight:300;margin-top:8px;max-width:60ch}
+@media(max-width:760px){.vband{grid-template-columns:1fr}}
 /* model */
 .request{margin-top:44px;display:flex;flex-wrap:wrap;gap:12px 28px;align-items:baseline;border:1px solid var(--line);border-left:3px solid var(--accent);padding:20px 24px;background:var(--bg2)}
 .request q{font:700 clamp(22px,2.6vw,34px)/1.15 var(--f-display);font-variation-settings:"wdth" 100;quotes:"\201C" "\201D"}
@@ -315,6 +330,7 @@ footer p{max-width:62ch;font-size:13.5px;color:var(--muted)}
   <div class="wrap">
     <a class="mark" href="#top"><svg class="logo" viewBox="56 56 1890 314" role="img" aria-label="MTech"><path fill="currentColor" d="M66 66H140L257 215L374 66H447V360H385V160L257 318L128 160V360H66Z"/><g fill="var(--accent)"><path d="M520 66H830V122H703V360H642V122H520Z"/><path d="M900 66H1179V122H900Z"/><path d="M900 185H1163V242H958V304H1179V360H900Z"/><path d="M1345 66H1551V122H1350A35 35 0 0 0 1315 157V269A35 35 0 0 0 1350 304H1551V360H1345A90 90 0 0 1 1255 270V156A90 90 0 0 1 1345 66Z"/><path d="M1628 66H1688V185H1876V66H1936V360H1876V242H1688V360H1628Z"/></g></svg></a>
     <nav aria-label="Primary">
+      <a href="work.html">The job</a>
       <a href="coworkers.html">Coworkers</a>
       <a href="wearables.html">Field awareness</a>
       <a href="process.html">Process control</a>
@@ -341,7 +357,7 @@ footer p{max-width:62ch;font-size:13.5px;color:var(--muted)}
         <p class="sub">We build intelligence that sees the work, understands it and carries it through, from the job site to the balance sheet.</p>
         <div class="cta">
           <a class="btn pri" href="coworkers.html">Meet the digital coworkers</a>
-          <a class="btn" href="#model">Explore the model</a>
+          <a class="btn" href="work.html">Follow one job</a>
         </div>
       </div>
       <div class="cap" data-cap="1"><span class="fig">FIG. 1 · Through the lens</span><h2>They look like ordinary safety glasses. Look through them.</h2><p>The wellsite turns into a live map. Every valve, tank and pump is connected to every sensor on location: gas detectors, pressure transmitters, air quality, even the wearer’s own heart rate.</p></div>
@@ -354,10 +370,28 @@ footer p{max-width:62ch;font-size:13.5px;color:var(--muted)}
   </div>
 </section>
 
+<!-- VISION -->
+<section class="s" id="vision">
+  <div class="wrap">
+    <div class="eyebrow mono">Intelligence that participates in the work</div>
+    <h2 class="h2">Knowledge, at the moment<br>work happens.</h2>
+    <p class="lede">A company’s knowledge is scattered across manuals, software, email and experienced people’s heads. The person standing in front of the machine sees a fraction of it, and the office coordinates the job with an incomplete picture of what is actually happening. MTech connects those two worlds.</p>
+    <div class="vis3">
+      <div><b>01</b><h3>The glasses see the work</h3><p>They give the system a perspective on physical work, and bring the right history, procedures and expertise to the person doing it.</p><a href="wearables.html">Field awareness →</a></div>
+      <div><b>02</b><h3>Coworkers carry the job</h3><p>Digital coworkers use the business’s knowledge and tools to move the surrounding responsibilities forward: parts, schedules, documents, billing.</p><a href="coworkers.html">Digital coworkers →</a></div>
+      <div><b>03</b><h3>The architecture holds it together</h3><p>Work stays connected as people, agents and systems take their turns, with ownership and evidence attached at every step.</p><a href="architecture.html">The architecture →</a></div>
+    </div>
+    <div class="vband">
+      <div><span class="mono">One service visit · three perspectives</span><h3>Follow one job as the technician, the digital team and the business owner see it.</h3><p>Pause at any moment and ask what the system knows, where it came from, what it’s unsure of, and who owns the next step.</p></div>
+      <a class="btn pri" href="work.html#journey">Follow the job</a>
+    </div>
+  </div>
+</section>
+
 <!-- MODEL -->
 <section class="s" id="model">
   <div class="wrap">
-    <div class="eyebrow mono">A living model of a business</div>
+    <div class="eyebrow mono">Why it holds together · a living model</div>
     <h2 class="h2">One request.<br>Eight obligations.</h2>
     <p class="lede">Follow a single customer request as digital coworkers turn it into commitments, approvals, physical work and money. Open any action to see the controls around it, or interrupt the process and watch what holds it together.</p>
 
