@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MTech Field Awareness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+.modes{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(280px,1fr);border:1px solid var(--line);margin-top:40px;background:var(--bg)}
+.modes .lensbox{background:var(--bg2);border-right:1px solid var(--line);min-width:0;position:relative}
+.modes svg{display:block;width:100%;height:auto}
+.modes .side{display:flex;flex-direction:column;min-width:0}
+.mtabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.mtabs button{background:none;border:0;border-bottom:1px solid var(--line2);border-right:1px solid var(--line2);text-align:left;padding:14px 16px;display:grid;gap:4px;color:var(--muted);min-width:0}
+.mtabs button:nth-child(3n){border-right:0}
+.mtabs button .ic{width:28px;height:28px;color:var(--muted)}
+.mtabs button .ic svg{width:22px;height:22px}
+.mtabs button b{font:700 16px/1.15 var(--f-display);color:var(--fg);font-variation-settings:"wdth" 100}
+.mtabs button small{font:400 11.5px/1.35 var(--f-mono)}
+.mtabs button[aria-selected="true"]{background:var(--panel);box-shadow:inset 0 -3px 0 var(--accent)}
+.mtabs button[aria-selected="true"] .ic,.mtabs button[aria-selected="true"] b{color:var(--accent)}
+.mside{padding:18px;display:grid;gap:14px;align-content:start}
+.mside h3{font-size:24px;font-weight:800;font-variation-settings:"wdth" 104;line-height:1.05}
+.mside p{font-size:15px;font-weight:300}
+.mside .src{font:500 11px/1.5 var(--f-mono);color:var(--muted);border-left:2px solid var(--accent);padding-left:10px;letter-spacing:.02em}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checks li{display:grid;grid-template-columns:22px 1fr auto;gap:8px;align-items:center;font-size:14px;padding:7px 10px;border:1px solid var(--line2);background:var(--bg2)}
+.checks li .bx{width:14px;height:14px;border:1px solid var(--line)}
+.checks li.ok{border-color:var(--line)}
+.checks li.ok .bx{background:var(--accent);border-color:var(--accent)}
+.checks li.bad{border-color:var(--accent);color:var(--accent)}
+.checks li.bad .bx{background:none;border:2px solid var(--accent)}
+.checks li small{font:400 11px var(--f-mono);color:var(--muted)}
+.res{font:500 12.5px/1.5 var(--f-mono);padding:10px 12px;border:1px dashed var(--line);color:var(--muted);min-height:3.2em}
+.res.ok{border:1px solid var(--accent);color:var(--accent)}
+.res.bad{border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--fg)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+@media(max-width:960px){.modes{grid-template-columns:1fr}.modes .lensbox{border-right:0;border-bottom:1px solid var(--line)}}
+.arch3{margin-top:40px;border:1px solid var(--line);background:var(--bg);overflow-x:auto}
+.arch3 svg{display:block;width:100%;min-width:640px;height:auto}
+.ordinary{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
+.ordinary svg{display:block;width:100%;height:auto;max-width:520px}
+@media(max-width:820px){.ordinary{grid-template-columns:1fr}}
+/* scroll story */
+.aisle{position:relative;height:440vh;border-bottom:1px solid var(--line2)}
+.astage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 60%,var(--bg2) 0,var(--bg) 75%)}
+#agl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.alens{position:absolute;inset:max(72px,9vh) 3% 5%;border-radius:clamp(36px,6vw,90px);box-shadow:0 0 0 200vmax color-mix(in srgb,var(--bg) 70%,transparent);border:1px solid var(--line);pointer-events:none;z-index:1}
+.alens span{position:absolute;left:clamp(24px,4vw,56px);top:18px;color:var(--accent)}
+.trk{position:absolute;left:0;top:0;z-index:2;pointer-events:none;opacity:0;will-change:transform,width,height}
+.trk i{position:absolute;width:16px;height:16px;border:0 solid var(--accent)}
+.trk .a{left:0;top:0;border-width:2px 0 0 2px}.trk .b{right:0;top:0;border-width:2px 2px 0 0}.trk .c{left:0;bottom:0;border-width:0 0 2px 2px}.trk .d{right:0;bottom:0;border-width:0 2px 2px 0}
+.trk span{position:absolute;left:0;top:-24px;font:500 11px var(--f-mono);letter-spacing:.07em;color:var(--accent);white-space:nowrap;text-shadow:0 0 10px var(--bg)}
+.warnb{position:absolute;left:50%;top:clamp(96px,14vh,140px);transform:translateX(-50%);z-index:3;background:var(--accent);color:var(--accent-ink);font:600 12.5px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;opacity:0;transition:opacity .25s;white-space:nowrap;pointer-events:none}
+.baylab{position:absolute;left:0;top:0;z-index:2;margin:-30px 0 0 -36px;font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);opacity:0;white-space:nowrap;pointer-events:none;text-shadow:0 0 10px var(--bg)}
+.alog{position:absolute;right:max(24px,5%);top:max(110px,16vh);z-index:3;border:1px solid var(--accent);background:var(--bg);padding:12px 14px;display:grid;gap:4px;opacity:0;transition:opacity .4s}
+.alog b{font:600 12px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.alog span{font:400 12.5px var(--f-mono);color:var(--fg)}
+.acap{position:absolute;left:0;right:0;bottom:clamp(28px,7vh,72px);z-index:3;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;pointer-events:none}
+.acapin{max-width:460px;background:color-mix(in srgb,var(--bg) 84%,transparent);border-left:3px solid var(--accent);padding:16px 18px;backdrop-filter:blur(6px)}
+.acapin h2{font-size:clamp(24px,2.6vw,36px);font-weight:800;font-variation-settings:"wdth" 106;margin:6px 0 8px;line-height:1.05}
+.acapin p{font-size:15.5px;font-weight:300}
+.asteps{list-style:none;margin:0;padding:0;display:grid;gap:9px;font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.asteps li{display:flex;align-items:center;gap:10px;justify-content:flex-end}
+.asteps li::after{content:"";width:16px;height:2px;background:var(--line);transition:width .35s,background .35s}
+.asteps li.on{color:var(--fg)}.asteps li.on::after{width:36px;background:var(--accent)}.asteps li.done{color:var(--accent)}
+@media(max-width:760px){.asteps{display:none}.acapin{max-width:none}.alog{left:20px;right:auto}}
+.aisle.nogl{height:auto}.aisle.nogl .astage{position:relative;height:auto;padding-block:80px}.aisle.nogl #agl,.aisle.nogl .alens,.aisle.nogl .trk,.aisle.nogl .warnb,.aisle.nogl .baylab,.aisle.nogl .alog{display:none}.aisle.nogl .acap{position:relative}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="./"><svg class="logo" viewBox="56 56 1890 314" role="img" aria-label="MTech"><path fill="currentColor" d="M66 66H140L257 215L374 66H447V360H385V160L257 318L128 160V360H66Z"/><g fill="var(--accent)"><path d="M520 66H830V122H703V360H642V122H520Z"/><path d="M900 66H1179V122H900Z"/><path d="M900 185H1163V242H958V304H1179V360H900Z"/><path d="M1345 66H1551V122H1350A35 35 0 0 0 1315 157V269A35 35 0 0 0 1350 304H1551V360H1345A90 90 0 0 1 1255 270V156A90 90 0 0 1 1345 66Z"/><path d="M1628 66H1688V185H1876V66H1936V360H1876V242H1688V360H1628Z"/></g></svg></a>
+    <nav aria-label="Primary">
+      <a href="coworkers.html">Coworkers</a>
+      <a href="wearables.html" aria-current="page">Field awareness</a>
+      <a href="process.html">Process control</a>
+      <a href="onboarding.html">Onboarding</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="partner.html">Partner</a>
+    </nav>
+    <button id="bp" class="sw" role="switch" aria-checked="false"><span class="knob"></span><span>View as blueprint</span></button>
+  </div>
+</header>
+
+<main>
+<section class="phero">
+  <div class="wrap">
+    <div>
+      <div class="crumbs mono"><a href="./">MTech</a><span>/</span><span>Capabilities</span><span>/</span><span style="color:var(--fg)">Field awareness</span></div>
+      <h1>Safety glasses <span>that see the whole site.</span></h1>
+      <p class="sub">Ordinary-looking safety glasses connected to every sensor on location. They see what the wearer sees, feel what the sensors feel, and hold each step until it is safe and proven.</p>
+      <div class="facts"><span class="chip on">Vehicle awareness</span><span class="chip">Guided repair</span><span class="chip">Safety gate</span><span class="chip">Proof on site</span></div>
+    </div>
+    <div class="hvis" style="padding:28px 20px"><svg id="plain" viewBox="0 0 520 200" role="img" aria-label="Line drawing of ordinary-looking safety glasses with a small camera and sensor module"></svg></div>
+  </div>
+</section>
+
+<section class="aisle" id="aisle" aria-label="Scroll story: a forklift near miss in a warehouse aisle">
+  <div class="astage">
+    <canvas id="agl" aria-hidden="true"></canvas>
+    <div class="alens" aria-hidden="true"><span class="mono">Field awareness · aisle 7 · simulated</span></div>
+    <div class="trk" id="atrk" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><span id="atrkL"></span></div>
+    <div class="warnb" id="awarn" aria-hidden="true">Step aside · safety bay on your left</div>
+    <div class="baylab" id="abay" aria-hidden="true">Safety bay</div>
+    <div class="alog" id="alog" aria-hidden="true"><b>Near miss logged</b><span>Aisle 7 · Forklift 2 · 1.1 m clearance</span><span>Sent to the site lead</span></div>
+    <div class="acap wrap">
+      <div class="acapin" aria-live="polite"><span class="mono" id="aN">01 / 05</span><h2 id="aH">Walking the aisle</h2><p id="aP">The wearer heads down aisle 7 in the pedestrian lane. The glasses map the racks, the floor and the lane markings as they go.</p></div>
+      <ol class="asteps" id="aSteps"><li class="on">Walking the aisle</li><li>Vehicle detected</li><li>Path predicted</li><li>Warning in the lens</li><li>Near miss avoided</li></ol>
+    </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">The loop</div><h2 class="h2">See. Judge.<br>Then gate the work.</h2></div>
+      <p class="lede">Every step, every photo and every job advances on proof the system has checked.</p>
+    </div>
+    <div class="strip">
+      <div><h3>See</h3><p>The camera in the glasses, a phone or a tablet captures what is actually in front of the technician.</p></div>
+      <div><h3>Fuse</h3><p>Readings from gas, pressure, air-quality and equipment sensors are combined with what the camera sees.</p></div>
+      <div><h3>Judge</h3><p>AI checks the scene and the readings against the job’s requirements and the safety conditions.</p></div>
+      <div><h3>Gate</h3><p>If a check fails, the step stays locked. Work, photos and closure wait until the condition is met.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">What it does</div><h2 class="h2">Three jobs,<br>one pair of glasses.</h2></div>
+      <p class="lede">Switch modes to see what appears in the lens: guidance on the equipment, a safety gate before the work, and proof checked on the spot.</p>
+    </div>
+    <div class="modes">
+      <div class="lensbox"><svg id="lens" viewBox="0 0 640 360" role="img" aria-label="Simulated view through the glasses"></svg></div>
+      <div class="side">
+        <div class="mtabs" role="tablist" id="mtabs">
+          <button role="tab" aria-selected="true" data-m="repair"><span class="ic" data-icon="wrench"></span><b>Guided repair</b><small>Each step confirmed</small></button>
+          <button role="tab" aria-selected="false" data-m="gate"><span class="ic" data-icon="lock"></span><b>Safety gate</b><small>Lockout / tagout</small></button>
+          <button role="tab" aria-selected="false" data-m="proof"><span class="ic" data-icon="camera"></span><b>Proof on site</b><small>Photos validated</small></button>
+        </div>
+        <div class="mside" id="mside" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Closing a job</div><h2 class="h2">The system closes<br>the job.</h2></div>
+      <p class="lede">Five checks run before a work order can close, each one done by the system while the crew is still on site.</p>
+    </div>
+    <div class="strip odd">
+      <div><h3>Work confirmed</h3><p>AI confirms from the photo that the right work was done.</p></div>
+      <div><h3>Lockout confirmed</h3><p>Sensors confirm the lockout is in place and valid.</p></div>
+      <div><h3>Photos checked</h3><p>Every photo is checked the moment it is taken.</p></div>
+      <div><h3>Proof and safety pass</h3><p>Closure opens once both conditions are met.</p></div>
+      <div><h3>Fixed on site</h3><p>Anything missing is caught and corrected before the crew leaves.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">How it’s built</div><h2 class="h2">From the lens<br>to the control room.</h2></div>
+      <p class="lede">Three layers. Decisions that can’t wait happen on site; the heavy lifting happens in the cloud. Sensors across the location feed one picture of what is happening.</p>
+    </div>
+    <div class="arch3"><svg id="arch" viewBox="0 0 1000 300" role="img" aria-label="Diagram: wearer, on-site edge processing and cloud, connected to a network of sensors"></svg></div>
+    <div class="g3">
+      <div class="feat"><span class="ic" data-icon="eye"></span><span class="k">On the wearer</span><h3>Glasses, phone or tablet</h3><p>A display over the field of view, a camera and depth sensors, motion sensing, and optional biometrics for stress and fatigue.</p></div>
+      <div class="feat"><span class="ic" data-icon="chip"></span><span class="k">On site</span><h3>Edge processing</h3><p>Computer vision and the safety engine run close to the work, so a hazard warning never waits on a signal from far away.</p></div>
+      <div class="feat"><span class="ic" data-icon="cloud"></span><span class="k">In the cloud</span><h3>Control and records</h3><p>Model updates, work orders, analytics, remote supervision and a complete record of what was verified.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Where it reaches</div><h2 class="h2">Anywhere work must<br>be proven before it counts.</h2></div>
+      <p class="lede">Written for field operations, and broad enough for any work where safety and proof matter more than a signature.</p>
+    </div>
+    <div class="g4">
+      <div class="feat"><span class="ic" data-icon="gauge"></span><span class="k">Oil &amp; gas</span><h3>Wellsites and platforms</h3><p>Valve and wellhead service with guidance on the equipment and every step confirmed by camera.</p></div>
+      <div class="feat"><span class="ic" data-icon="gas"></span><span class="k">Industrial safety</span><h3>Plants and tank farms</h3><p>Invisible leaks found by fused sensor readings, with hazard zones drawn in the lens.</p></div>
+      <div class="feat"><span class="ic" data-icon="box"></span><span class="k">Construction</span><h3>Active job sites</h3><p>Pre-lift checklists, exclusion zones and a coordinated pause when a protocol is skipped.</p></div>
+      <div class="feat"><span class="ic" data-icon="wrench"></span><span class="k">Field service</span><h3>Maintenance crews</h3><p>Preventive maintenance proven with validated photos before a work order can close.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="statement">
+  <div class="wrap">
+    <p>Familiar safety glasses, with <em>intelligence in every view.</em></p>
+    <div style="margin-top:24px">
+      <div><p style="font:300 17px/1.6 var(--f-body);max-width:46ch;letter-spacing:0">The camera and sensors sit quietly in the frame. Crews get the help without extra hardware in the way, and nothing new to get used to.</p></div>
+    </div>
+  </div>
+</section>
+
+<nav class="pager" aria-label="More from MTech">
+  <a href="coworkers.html"><span class="mono">← Previous</span><b>Digital coworkers</b></a>
+  <a href="process.html"><span class="mono">Next →</span><b>Process control</b></a>
+</nav>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="plate"><span>MTECH CORPORATION · TULSA, OKLAHOMA</span></div>
+    <p>Views through the lens on this page are simulations for explanation. Readings, sites and equipment are examples.</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="site.js"></script>
+<script>
+(function(){
+var $=MT.$,$$=MT.$$,S=MT.S,T=MT.T;
+function rnd(s){var x=Math.sin(s*127.1)*43758.5453;return x-Math.floor(x)}
+
+/* one lens renderer with three scenes, used for the autoplaying hero and the interactive viewer */
+function lens(svg,id){
+  var defs=S('defs',{},svg),cp=S('clipPath',{id:id},defs);S('path',{d:MT.rr(12,12,616,336,78)},cp);
+  var v=S('g',{'clip-path':'url(#'+id+')'},svg);
+  S('rect',{x:0,y:0,width:640,height:360,class:'fillbg'},v);
+
+  /* wellsite */
+  var site=S('g',{},v);
+  S('polygon',{points:'0,150 640,150 640,360 0,360',class:'fillp'},site);
+  for(var x=-480;x<=1120;x+=80)S('line',{x1:320,y1:150,x2:x,y2:360,class:'thin'},site);
+  for(var k=1;k<=6;k++){var yy=150+210*Math.pow(k/6,2);S('line',{x1:0,y1:yy,x2:640,y2:yy,class:'thin'},site)}
+  S('rect',{x:40,y:258,width:170,height:8,class:'ln fillp'},site);S('path',{d:'M100 258L122 168L144 258',class:'ln'},site);
+  S('line',{x1:58,y1:166,x2:196,y2:160,class:'ln',style:'stroke-width:3'},site);S('path',{d:'M196 152Q214 162 206 194',class:'ln',style:'stroke-width:3'},site);S('line',{x1:206,y1:194,x2:206,y2:258,class:'ln'},site);
+  S('rect',{x:48,y:222,width:44,height:36,class:'ln fillp'},site);S('circle',{cx:70,cy:214,r:20,class:'ln'},site);S('line',{x1:62,y1:166,x2:70,y2:214,class:'ln'},site);
+  [[478,532],[540,594],[602,656]].forEach(function(t){S('rect',{x:t[0],y:118,width:t[1]-t[0],height:130,class:'ln fillp'},site);S('ellipse',{cx:(t[0]+t[1])/2,cy:118,rx:(t[1]-t[0])/2,ry:7,class:'ln fillp'},site)});
+  S('line',{x1:470,y1:112,x2:640,y2:112,class:'thin'},site);
+  S('rect',{x:330,y:282,width:60,height:10,class:'ln fillp'},site);S('rect',{x:350,y:230,width:20,height:52,class:'ln fillp'},site);
+  S('rect',{x:342,y:205,width:36,height:25,class:'ln fillp'},site);S('circle',{cx:360,cy:217,r:13,class:'ln'},site);
+  S('rect',{x:352,y:175,width:16,height:30,class:'ln fillp'},site);S('rect',{x:338,y:155,width:44,height:20,class:'ln fillp'},site);
+  S('rect',{x:300,y:158,width:38,height:14,class:'ln fillp'},site);S('rect',{x:382,y:158,width:38,height:14,class:'ln fillp'},site);
+  S('circle',{cx:319,cy:146,r:9,class:'ln'},site);S('circle',{cx:401,cy:146,r:9,class:'ln'},site);
+  S('rect',{x:352,y:135,width:16,height:20,class:'ln fillp'},site);S('circle',{cx:360,cy:128,r:6,class:'ln'},site);
+  S('path',{d:'M420 165H466V250L560 232',class:'ln'},site);
+  S('line',{x1:218,y1:150,x2:218,y2:88,class:'ln'},site);S('path',{d:'M218 88L252 92L252 100L218 98Z',class:'ln fillp'},site);
+  S('line',{x1:58,y1:340,x2:58,y2:306,class:'ln'},site);S('rect',{x:30,y:284,width:58,height:22,class:'ln fillp'},site);T('MUSTER',{x:59,y:299,class:'lbl',style:'text-anchor:middle;font-size:9px'},site);
+  var SENS=[[450,300,'GAS',1],[604,334,'PRESSURE',-1],[256,276,'VOC',1]].map(function(s){var g=S('g',{},site);S('line',{x1:s[0],y1:s[1],x2:s[0],y2:s[1]-74,class:'ln'},g);
+    S('rect',{x:s[0]-8,y:s[1]-88,width:16,height:14,class:'acc fillp'},g);S('path',{d:'M'+(s[0]-7)+' '+(s[1]-94)+'Q'+s[0]+' '+(s[1]-100)+' '+(s[0]+7)+' '+(s[1]-94),class:'acc'},g);
+    var lx=s[3]>0?s[0]+12:s[0]-142,lb=S('g',{},g);S('rect',{x:lx,y:s[1]-104,width:130,height:20,class:'fillbg',style:'opacity:.9'},lb);var tx=T('',{x:lx+6,y:s[1]-90,class:'lbla',style:'font-size:10.5px'},lb);return {tx:tx,k:s[2]}});
+  var plume=S('g',{},site),pts=[];for(var i=0;i<170;i++){var t=Math.pow(rnd(i),.8),r=4+t*40;pts.push({t:t,el:S('circle',{cx:420+t*190+(rnd(i+300)-.5)*r*1.6,cy:165-t*42+(rnd(i+600)-.5)*r,r:1.3+t*1.4,class:'fillacc'},plume)})}
+  var zone=S('ellipse',{cx:470,cy:250,rx:40,ry:12,class:'acc dash',style:'opacity:0'},site);
+  var route=S('path',{d:'M330 352C260 334 170 326 100 316',class:'acc',style:'stroke-width:3;opacity:0'},site);var rArrow=S('path',{d:'M110 308L96 316L110 324',class:'acc',style:'stroke-width:3;opacity:0'},site);
+  var leakB=S('path',{d:'M402 147v-8h8M430 147v-8h-8M402 183v8h8M430 183v8h-8',class:'acc',style:'stroke-width:2.5;opacity:0'},site),leakL=S('g',{style:'opacity:0'},site);
+  S('rect',{x:436,y:130,width:152,height:20,class:'fillbg',style:'opacity:.9'},leakL);T('LEAK SOURCE · FLANGE',{x:442,y:144,class:'lbla',style:'font-size:10.5px'},leakL);
+  var risk=S('g',{},site);T('FUSED RISK',{x:40,y:62,class:'lbl'},risk);S('rect',{x:40,y:68,width:140,height:6,class:'thin'},risk);var riskBar=S('rect',{x:40,y:68,width:0,height:6,class:'fillacc'},risk);
+  var hr=T('',{x:596,y:62,class:'lblf',style:'text-anchor:end'},site);
+
+  /* flange close-up (repair and proof) */
+  var fl=S('g',{style:'display:none'},v);
+  S('rect',{x:0,y:0,width:640,height:360,class:'fillp'},fl);
+  S('rect',{x:0,y:150,width:640,height:80,class:'ln',style:'fill:var(--bg2)'},fl);
+  S('circle',{cx:320,cy:190,r:118,class:'ln',style:'fill:var(--bg2)'},fl);S('circle',{cx:320,cy:190,r:56,class:'ln fillbg'},fl);
+  var gasket=S('circle',{cx:320,cy:190,r:72,class:'ln dash'},fl);
+  var bolts=[];for(var b=0;b<8;b++){var a=b/8*Math.PI*2-Math.PI/2,bx=320+92*Math.cos(a),by=190+92*Math.sin(a),g=S('g',{},fl);S('circle',{cx:bx,cy:by,r:10,class:'ln fillp'},g);S('path',{d:'M'+(bx-5)+' '+by+'h10M'+bx+' '+(by-5)+'v10',class:'thin'},g);bolts.push({g:g,x:bx,y:by})}
+  var hl=S('circle',{r:17,class:'acc',style:'stroke-width:2.5'},fl);
+  var stepCard=S('g',{},fl);S('rect',{x:24,y:56,width:250,height:64,class:'fillacc'},stepCard);var sc1=T('',{x:36,y:78,class:'lblk',style:'font-size:10.5px'},stepCard),sc2=T('',{x:36,y:100,class:'lblk',style:'font-size:12.5px'},stepCard);
+  var conf=S('g',{style:'opacity:0'},fl);S('rect',{x:396,y:56,width:216,height:30,class:'acc fillbg'},conf);T('✓ CONFIRMED BY CAMERA',{x:408,y:76,class:'lbla'},conf);
+  var frame=S('g',{style:'opacity:0'},fl);[[170,40,1,1],[470,40,-1,1],[170,340,1,-1],[470,340,-1,-1]].forEach(function(q){S('path',{d:'M'+q[0]+' '+(q[1]+30*q[3])+'V'+q[1]+'H'+(q[0]+30*q[2]),class:'acc',style:'stroke-width:3'},frame)});
+  var ghost=S('rect',{x:226,y:96,width:188,height:188,class:'acc dash',style:'opacity:0'},fl);var ghostL=T('',{x:320,y:316,class:'lbla',style:'text-anchor:middle;opacity:0'},fl);
+  var flash=S('rect',{x:0,y:0,width:640,height:360,style:'fill:var(--fg);opacity:0'},fl);
+
+  /* lockout / tagout gate */
+  var gt=S('g',{style:'display:none'},v);
+  S('rect',{x:0,y:0,width:640,height:360,class:'fillp'},gt);
+  S('rect',{x:0,y:200,width:640,height:44,class:'ln',style:'fill:var(--bg2)'},gt);
+  S('rect',{x:220,y:160,width:120,height:120,class:'ln',style:'fill:var(--bg2)'},gt);S('circle',{cx:280,cy:220,r:30,class:'ln'},gt);
+  S('line',{x1:280,y1:220,x2:400,y2:150,class:'ln',style:'stroke-width:8'},gt);
+  var lock=S('g',{},gt);S('path',{d:'M384 168v-16a12 12 0 0 1 24 0v16',class:'ln',style:'stroke-width:3'},lock);S('rect',{x:378,y:166,width:36,height:30,class:'ln fillp'},lock);S('circle',{cx:396,cy:180,r:4,class:'fillacc'},lock);
+  var tag=S('g',{},gt);S('line',{x1:396,y1:196,x2:396,y2:214,class:'ln'},tag);S('rect',{x:372,y:214,width:48,height:70,class:'ln fillp'},tag);T('DANGER',{x:396,y:230,class:'lbl',style:'text-anchor:middle;font-size:8.5px'},tag);
+  for(var q=0;q<4;q++)for(var w=0;w<4;w++)if((q*7+w*3)%3)S('rect',{x:380+w*8,y:240+q*8,width:7,height:7,class:'fillacc',style:'opacity:.8'},tag);
+  var gaugeT=T('',{x:280,y:306,class:'lblf',style:'text-anchor:middle'},gt);
+  var scanR=S('rect',{x:360,y:140,width:72,height:156,class:'acc dash',style:'opacity:0'},gt);
+  var gban=S('g',{style:'opacity:0'},gt);S('rect',{x:150,y:58,width:340,height:36,class:'fillacc'},gban);var gbt=T('',{x:320,y:81,class:'lblk',style:'text-anchor:middle'},gban);
+
+  /* chrome */
+  var mtag=T('',{x:46,y:40,class:'lbla',style:'font-size:11px'},v);
+  var ban=S('g',{style:'opacity:0'},v);S('rect',{x:170,y:84,width:300,height:34,class:'fillacc'},ban);T('GAS DETECTED · MOVE UPWIND TO MUSTER',{x:320,y:106,class:'lblk',style:'text-anchor:middle'},ban);
+  S('path',{d:MT.rr(12,12,616,336,78),class:'ln',fill:'none'},svg);
+
+  var st={mode:'monitor',leak:.2,rs:0,gs:0,gfail:false,pf:0};
+  var RSTEPS=[['STEP 1 OF 4','Confirm the valve is isolated'],['STEP 2 OF 4','Remove all 8 flange bolts'],['STEP 3 OF 4','Replace the gasket'],['STEP 4 OF 4','Torque bolts in a star pattern'],['COMPLETE','Ready for pressure test']];
+  function draw(){
+    var m=st.mode;site.style.display=m==='monitor'?'':'none';fl.style.display=(m==='repair'||m==='proof')?'':'none';gt.style.display=m==='gate'?'':'none';
+    mtag.textContent={monitor:'GAS & HAZARD MONITORING · WELLSITE',repair:'GUIDED REPAIR · HIGH-PRESSURE VALVE',gate:'SAFETY GATE · LOCKOUT / TAGOUT',proof:'PROOF ON SITE · WO-4471'}[m];
+    if(m==='monitor'){var L=st.leak,lk=MT.clamp((L-.15)/.45),zn=MT.clamp((L-.4)/.35),rt=MT.clamp((L-.62)/.3);
+      var vals={GAS:Math.round(2+46*lk)+' ppm',PRESSURE:(1480-Math.round(24*lk)).toLocaleString('en-US')+' psi',VOC:Math.round(12+60*lk)+' ppb'};
+      SENS.forEach(function(s){s.tx.textContent=s.k+' · '+vals[s.k];s.tx.setAttribute('class',lk>.3?'lbla':'lblf')});
+      pts.forEach(function(p){p.el.style.opacity=String(lk>p.t*.9?Math.min(.9,(lk-p.t*.9)*3)*(1-p.t*.4):0)});
+      zone.setAttribute('rx',40+150*zn);zone.setAttribute('ry',12+40*zn);zone.style.opacity=zn>0?.9:0;
+      route.style.opacity=rArrow.style.opacity=rt;ban.style.opacity=rt>.3?1:0;
+      var det=lk>.25;leakB.style.opacity=leakL.style.opacity=det?1:0;
+      riskBar.setAttribute('width',140*Math.min(1,lk*1.1));hr.textContent='WEARER · HR '+Math.round(76+20*lk)+' bpm'}
+    else ban.style.opacity=0;
+    if(m==='repair'||m==='proof'){var s=Math.min(st.rs,4);
+      stepCard.style.display=m==='repair'?'':'none';hl.style.display=m==='repair'&&s<4?'':'none';
+      sc1.textContent=RSTEPS[s][0];sc2.textContent=RSTEPS[s][1].toUpperCase();
+      var tgt=s===0?{x:320,y:190}:s===1?bolts[0]:s===2?{x:320,y:118}:bolts[4];hl.setAttribute('cx',tgt.x);hl.setAttribute('cy',tgt.y);hl.setAttribute('r',s===0||s===2?78:17);
+      bolts.forEach(function(bb){bb.g.style.opacity=m==='repair'&&s===2?.15:1});gasket.setAttribute('class',m==='repair'&&s>=3?'acc':'ln dash');
+      frame.style.opacity=m==='proof'?1:0;ghost.style.opacity=ghostL.style.opacity=m==='proof'&&st.pf===1?1:0;ghostL.textContent='MOVE LEFT · TILT DOWN · SHOW THE GASKET FACE'}
+    if(m==='gate'){var fail=st.gfail;lock.style.opacity=fail?.12:1;gaugeT.textContent='LINE PRESSURE · '+(fail?'240':'0')+' psi';
+      scanR.style.opacity=st.gs>0&&st.gs<5?1:0;gban.style.opacity=st.gs>=5?1:0;gbt.textContent=fail?'WORK BLOCKED · SUPERVISOR ALERTED':'ALL CHECKS PASSED · WORK MAY PROCEED'}
+  }
+  return {st:st,draw:draw,confirm:function(){conf.animate([{opacity:1},{opacity:1},{opacity:0}],{duration:1100})},flash:function(){flash.animate([{opacity:.5},{opacity:0}],{duration:420})}};
+}
+
+/* hero: the leak develops on a loop */
+
+/* scroll story: a forklift near miss in aisle 7, drawn as particles and linework */
+(function(){
+  var sec=$('#aisle'),cv=$('#agl'),R=null;
+  if(window.THREE){try{R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){R=null}}
+  if(!R){sec.classList.add('nogl');return}
+  var DPR=Math.min(2,window.devicePixelRatio||1);R.setPixelRatio(DPR);R.setClearColor(0x000000,0);
+  var scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(46,1,.05,100),world=new THREE.Group();scene.add(world);
+  var sd=4441;function rn(){sd=(sd*16807)%2147483647;return (sd-1)/2147483646}
+  function clamp(x){return Math.max(0,Math.min(1,x))}function seg(x,a,b){return clamp((x-a)/(b-a))}function mix(a,b,t){return a+(b-a)*t}var ease=MT.ease;
+  function boxL(cx,cy,cz,w,h,d){var x=w/2,y=h/2,z=d/2,v=[[-x,-y,-z],[x,-y,-z],[x,y,-z],[-x,y,-z],[-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z]].map(function(q){return [q[0]+cx,q[1]+cy,q[2]+cz]});
+    return [[0,1,2,3,0],[4,5,6,7,4],[0,4],[1,5],[2,6],[3,7]].map(function(ix){return ix.map(function(i){return v[i]})})}
+  function circ(cx,cy,z,r){var a=[];for(var i=0;i<=24;i++){var t=i/24*Math.PI*2;a.push([cx+r*Math.cos(t),cy+r*Math.sin(t),z])}return a}
+  function wheel(x,y,z,r){var a=[];for(var i=0;i<=24;i++){var t=i/24*Math.PI*2;a.push([x,y+r*Math.sin(t),z+r*Math.cos(t)])}return a}
+  function add(L,P){P.forEach(function(p){L.push(p)})}
+  var FY=-1,ST=[],LANE=[],FK=[],FX=.45,BAY=[-2.7,-1.9,.1,1.4];
+  /* floor, pedestrian lane, racks with pallets, a safety bay on the left, lights and a convex mirror */
+  [-1.6,-.8,0,.8,1.6].forEach(function(x){ST.push([[x,FY,2.6],[x,FY,-12.5]])});
+  for(var z=2.5;z>=-12.5;z-=1.5)ST.push([[-1.9,FY,z],[1.9,FY,z]]);
+  for(var dz=2.5;dz>-12.5;dz-=.6){LANE.push([[-1.5,FY+.003,dz],[-1.5,FY+.003,dz-.32]]);LANE.push([[-.9,FY+.003,dz],[-.9,FY+.003,dz-.32]])}
+  [-1,1].forEach(function(s){var xs=s*1.9,xb=s*2.7;
+    for(var uz=1.4;uz>=-12.1;uz-=1.5){if(s<0&&uz>BAY[2]-.05&&uz<BAY[3]+.05)continue;ST.push([[xs,FY,uz],[xs,FY+2.6,uz]]);ST.push([[xb,FY,uz],[xb,FY+2.6,uz]]);ST.push([[xs,FY+2.6,uz],[xb,FY+2.6,uz]])}
+    [-.25,.55,1.35].forEach(function(y){if(s<0){ST.push([[xs,FY+1+y,BAY[2]],[xs,FY+1+y,-12.1]]);ST.push([[xb,FY+1+y,BAY[2]],[xb,FY+1+y,-12.1]]);ST.push([[xs,FY+1+y,2.6],[xs,FY+1+y,BAY[3]]])}else{ST.push([[xs,FY+1+y,2.6],[xs,FY+1+y,-12.1]]);ST.push([[xb,FY+1+y,2.6],[xb,FY+1+y,-12.1]])}});
+    for(var p=0;p<16;p++){var pz=1.8-rn()*13.5,py=[.75,1.55][Math.floor(rn()*2)]+FY-1+1;if(s<0&&pz>BAY[2]-.4&&pz<BAY[3]+.4)continue;add(ST,boxL(s*2.3,py+.22,pz,.62,.44,.7))}});
+  for(var hz=BAY[2]+.15;hz<BAY[3];hz+=.3)ST.push([[BAY[0],FY,hz],[BAY[1],FY,hz+.25]]);ST.push([[BAY[0],FY,BAY[2]],[BAY[1],FY,BAY[2]],[BAY[1],FY,BAY[3]],[BAY[0],FY,BAY[3]],[BAY[0],FY,BAY[2]]]);
+  for(var lz=1;lz>=-12;lz-=3){add(ST,boxL(0,FY+3.4,lz,.9,.06,.18))}
+  ST.push([[0,FY+3.4,-12.4],[0,FY+2.75,-12.4]]);ST.push(circ(0,FY+2.45,-12.35,.32));
+  /* the forklift, forks toward the wearer */
+  add(FK,boxL(FX,FY+.45,0,.95,.7,1.3));add(FK,boxL(FX,FY+1.38,-.15,.9,.04,.95));
+  [[-.42,-.6],[.42,-.6],[-.42,.3],[.42,.3]].forEach(function(q){FK.push([[FX+q[0],FY+.8,q[1]],[FX+q[0],FY+1.36,q[1]]])});
+  [-.3,.3].forEach(function(x){FK.push([[FX+x,FY,.72],[FX+x,FY+2.05,.72]])});FK.push([[FX-.3,FY+2.05,.72],[FX+.3,FY+2.05,.72]]);FK.push([[FX-.3,FY+1.1,.72],[FX+.3,FY+1.1,.72]]);
+  [-.22,.22].forEach(function(x){add(FK,boxL(FX+x,FY+.06,1.2,.1,.05,.9))});
+  [-.5,.5].forEach(function(x){FK.push(wheel(FX+x,FY+.22,.42,.22));FK.push(wheel(FX+x,FY+.2,-.42,.2))});
+  FK.push(circ(FX-.05,FY+1.5,-.15,.05));add(FK,boxL(FX,FY+.95,-.1,.36,.08,.36));
+  /* even sampling into particles */
+  function sample(polys,n,w){var segs=[],tot=0;polys.forEach(function(poly){for(var i=1;i<poly.length;i++){var a=poly[i-1],b=poly[i],l=Math.hypot(b[0]-a[0],b[1]-a[1],b[2]-a[2]);if(l>0){segs.push({a:a,b:b,c0:tot,l:l});tot+=l}}});
+    var out=[],step=tot/n,si=0;for(var k=0;k<n;k++){var r=(k+.5)*step;while(si<segs.length-1&&segs[si].c0+segs[si].l<r)si++;var s=segs[si],f=Math.min(1,(r-s.c0)/s.l);out.push(s.a[0]+(s.b[0]-s.a[0])*f,s.a[1]+(s.b[1]-s.a[1])*f,s.a[2]+(s.b[2]-s.a[2])*f)}return out}
+  var sp=sample(ST,9000),lp=sample(LANE,700),fp=sample(FK,3200),n1=sp.length/3,n2=lp.length/3,n3=fp.length/3,N=n1+n2+n3;
+  var P=new Float32Array(N*3),F=new Float32Array(N),AL=new Float32Array(N);P.set(sp,0);P.set(lp,n1*3);P.set(fp,(n1+n2)*3);
+  for(var i=0;i<N;i++){F[i]=i>=n1+n2?1:i>=n1?.5:0;AL[i]=i>=n1+n2?.32:i>=n1?.22:.13}
+  var geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(P,3));geo.setAttribute('aF',new THREE.BufferAttribute(F,1));geo.setAttribute('aAl',new THREE.BufferAttribute(AL,1));
+  var U={uFz:{value:-12},uDet:{value:0},uPix:{value:900},uOp:{value:1},uFg:{value:new THREE.Color('#f1ede4')},uAcc:{value:new THREE.Color('#2dd4ff')}};
+  var mat=new THREE.ShaderMaterial({uniforms:U,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+    vertexShader:['attribute float aF;attribute float aAl;uniform float uFz;uniform float uDet;uniform float uPix;varying float vA;varying float vC;',
+      'void main(){vec3 p=position;if(aF>.75)p.z+=uFz;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;',
+      'gl_PointSize=clamp(.017*uPix/max(-mv.z,.05),1.3,7.);vC=aF>.75?uDet:(aF>.25?.6:0.);vA=aAl*(aF>.75?1.+uDet*.4:1.);}'].join('\n'),
+    fragmentShader:['uniform vec3 uFg;uniform vec3 uAcc;uniform float uOp;varying float vA;varying float vC;',
+      'void main(){vec2 c=gl_PointCoord-.5;float d2=dot(c,c);if(d2>.25)discard;gl_FragColor=vec4(mix(uFg,uAcc,vC),exp(-d2*26.)*vA*uOp);}'].join('\n')});
+  var pts=new THREE.Points(geo,mat);pts.frustumCulled=false;world.add(pts);
+  /* linework */
+  var fgC=new THREE.Color('#f1ede4'),acC=new THREE.Color('#2dd4ff');
+  function lm(c){return new THREE.LineBasicMaterial({color:c,transparent:true,opacity:.26,depthWrite:false})}
+  var stM=lm(fgC),laneM=lm(acC),fkM=lm(fgC),fkA=lm(acC),pathM=lm(acC),bayM=lm(acC);laneM.opacity=.25;
+  function line(poly,m){var g=new THREE.BufferGeometry().setFromPoints(poly.map(function(q){return new THREE.Vector3(q[0],q[1],q[2])}));var l=new THREE.Line(g,m);l.frustumCulled=false;return l}
+  ST.forEach(function(p){world.add(line(p,stM))});LANE.forEach(function(p){world.add(line(p,laneM))});
+  var fkG=new THREE.Group();FK.forEach(function(p){fkG.add(line(p,fkM));fkG.add(line(p,fkA))});world.add(fkG);
+  var path=line([[FX,FY+.01,0],[0,FY+.01,0],[-1,FY+.01,0]],pathM);world.add(path);
+  var bay=line([[BAY[0]+.05,FY+.01,BAY[2]+.05],[BAY[1]-.05,FY+.01,BAY[2]+.05],[BAY[1]-.05,FY+.01,BAY[3]-.05],[BAY[0]+.05,FY+.01,BAY[3]-.05],[BAY[0]+.05,FY+.01,BAY[2]+.05]],bayM);world.add(bay);
+  function colors(){var cs=getComputedStyle(document.documentElement),fg=cs.getPropertyValue('--fg').trim(),ac=cs.getPropertyValue('--accent').trim(),bg=cs.getPropertyValue('--bg').trim();
+    try{fgC.set(fg);acC.set(ac);U.uFg.value.set(fg);U.uAcc.value.set(ac)}catch(e){}
+    [stM,fkM].forEach(function(m){m.color.copy(fgC)});[laneM,fkA,pathM,bayM].forEach(function(m){m.color.copy(acC)});
+    var light=false;try{var c=new THREE.Color(bg);light=.2126*c.r+.7152*c.g+.0722*c.b>.5}catch(e){}
+    var bl=light?THREE.NormalBlending:THREE.AdditiveBlending;if(mat.blending!==bl){mat.blending=bl;mat.needsUpdate=true}U.uOp.value=light?2.2:1}
+  colors();new MutationObserver(function(){setTimeout(colors,30)}).observe(document.documentElement,{attributes:true,attributeFilter:['class','data-theme']});
+  /* overlays and captions */
+  var trk=$('#atrk'),trkL=$('#atrkL'),warn=$('#awarn'),bayL=$('#abay'),logC=$('#alog'),cH=$('#aH'),cP=$('#aP'),cN=$('#aN'),steps=$$('#aSteps li');
+  var CAP=[[0,'Walking the aisle','The wearer heads down aisle 7 in the pedestrian lane. The glasses map the racks, the floor and the lane markings as they go.'],
+    [.2,'Vehicle detected','A forklift turns in at the far end. It is picked out and tracked before the wearer has looked up.'],
+    [.35,'Path predicted','Its speed and heading put it in the pedestrian lane within seconds. The predicted path is drawn on the floor.'],
+    [.47,'Warning in the lens','A clear warning appears where the wearer is already looking, with the nearest safety bay marked.'],
+    [.7,'Near miss avoided','The wearer steps into the safety bay, the forklift passes, and the near miss is logged for the site lead.']];
+  var W=1,H=1,v3=new THREE.Vector3(),capI=-1;
+  function size(){W=cv.clientWidth||innerWidth;H=cv.clientHeight||innerHeight;R.setSize(W,H,false);cam.aspect=W/H;cam.updateProjectionMatrix();U.uPix.value=H*DPR/(2*Math.tan(23*Math.PI/180))}
+  size();addEventListener('resize',size);
+  function proj(x,y,z){v3.set(x,y,z).project(cam);return [(v3.x*.5+.5)*W,(-v3.y*.5+.5)*H,v3.z]}
+  var Ps=0,last=0,vis=true,raf=0;
+  function target(){var r=sec.getBoundingClientRect(),span=sec.offsetHeight-innerHeight;return span>0?clamp(-r.top/span):0}
+  function frame(now){raf=0;if(!vis)return;var dt=Math.min(.1,(now-(last||now))/1000);last=now;var Pt=target();Ps=MT.reduce?Pt:Ps+(Pt-Ps)*(1-Math.exp(-dt*6));var p=Ps;
+    var walk=ease(seg(p,0,.18)),step=ease(seg(p,.55,.68));
+    var fz=p<.62?mix(-12.5,-2.6,ease(seg(p,.12,.62))):mix(-2.6,3.6,ease(seg(p,.66,.95)));
+    var det=seg(p,.22,.3),pathOn=seg(p,.35,.42)*(1-seg(p,.66,.72)),warnOn=p>.47&&p<.7;
+    U.uFz.value=fz;U.uDet.value=det;fkG.position.z=fz;fkM.opacity=.3*(1-det);fkA.opacity=.85*det;
+    var cz=mix(2.6,1.2,walk)-.1*step,cx=mix(0,-2.25,step),bob=Math.sin(walk*18)*.012*(1-step);
+    cam.position.set(cx,FY+1.68+bob,cz);cam.lookAt(mix(.1,.9,step),FY+1.2,mix(-6,-3,step));
+    var pa=path.geometry.attributes.position;pa.setXYZ(0,FX,FY+.01,fz+1.7);pa.setXYZ(1,mix(FX,-1.2,.5),FY+.01,mix(fz+1.7,cz,.55));pa.setXYZ(2,-1.2,FY+.01,cz-.4);pa.needsUpdate=true;pathM.opacity=pathOn*.9;
+    bayM.opacity=seg(p,.47,.52)*(1-seg(p,.86,.95))*.9;
+    R.render(scene,cam);
+    var dist=Math.max(0,cz-(fz+1.7));
+    if(det>.02&&fz<cz-1){var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9,ok=true;[[FX-.55,FY,fz-.7],[FX+.55,FY,fz-.7],[FX-.55,FY+2.1,fz+1.7],[FX+.55,FY+2.1,fz+1.7],[FX-.55,FY+2.1,fz-.7],[FX+.55,FY,fz+1.7]].forEach(function(q){var s=proj(q[0],q[1],q[2]);if(s[2]>1)ok=false;x0=Math.min(x0,s[0]);y0=Math.min(y0,s[1]);x1=Math.max(x1,s[0]);y1=Math.max(y1,s[1])});
+      if(ok){trk.style.transform='translate3d('+x0.toFixed(1)+'px,'+y0.toFixed(1)+'px,0)';trk.style.width=(x1-x0).toFixed(1)+'px';trk.style.height=(y1-y0).toFixed(1)+'px';trkL.textContent='FORKLIFT · '+dist.toFixed(1)+' m · '+(pathOn>.5||warnOn?'ENTERING YOUR LANE':'TRACKING');trk.style.opacity=String(det)}else trk.style.opacity='0'}else trk.style.opacity='0';
+    warn.style.opacity=warnOn?'1':'0';
+    var b=proj((BAY[0]+BAY[1])/2,FY+.05,(BAY[2]+BAY[3])/2);bayL.style.transform='translate3d('+b[0].toFixed(1)+'px,'+b[1].toFixed(1)+'px,0)';bayL.style.opacity=b[2]<1?bayM.opacity.toFixed(2):'0';
+    logC.style.opacity=p>.86?'1':'0';
+    var k=0;CAP.forEach(function(c,i){if(p>=c[0])k=i});if(k!==capI){capI=k;cN.textContent='0'+(k+1)+' / 05';cH.textContent=CAP[k][1];cP.textContent=CAP[k][2];steps.forEach(function(li,i){li.className=i<k?'done':i===k?'on':''})}
+    raf=requestAnimationFrame(frame)}
+  new IntersectionObserver(function(es){vis=es[0].isIntersecting;if(vis&&!raf)raf=requestAnimationFrame(frame)}).observe(sec);raf=requestAnimationFrame(frame);
+})();
+
+/* interactive viewer */
+var L=lens($('#lens'),'ml'),side=$('#mside'),tabs=$$('#mtabs button');
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function head(t,p,src){side.innerHTML='';side.appendChild(el('h3','',t));side.appendChild(el('p','',p));if(src)side.appendChild(el('p','src',src))}
+var MODES={
+  monitor:function(){head('Invisible, then obvious.','Gas detectors, pressure transmitters and air-quality sensors report to the glasses. When readings move together, the system fuses them, draws the hazard zone, marks the source and routes the wearer upwind while it alerts nearby crew.','From the invention’s industrial safety scenario.');
+    var lab=el('label','mono');lab.textContent='Let the leak develop ';var r=document.createElement('input');r.type='range';r.min=0;r.max=100;r.value=20;r.setAttribute('aria-label','Leak progression');lab.appendChild(r);side.appendChild(lab);
+    var res=el('div','res');side.appendChild(res);
+    function u(){L.st.leak=r.value/100;L.draw();var lk=MT.clamp((L.st.leak-.15)/.45);res.className='res'+(L.st.leak>.62?' bad':lk>.25?' ok':'');
+      res.textContent=L.st.leak>.62?'Evacuate upwind. Crew within the zone notified. Operators sent a diagnostic report.':lk>.25?'Readings moving together: leak suspected at the wing valve flange.':'All readings normal. Monitoring.'}
+    r.addEventListener('input',u);u()},
+  repair:function(){head('Each step, confirmed.','On a high-pressure valve assembly, the next step appears on the equipment itself. The camera confirms each step, like bolt removal or gasket placement, before the next one unlocks. An engineer onshore can join the view if help is needed.','From the invention’s oil and gas scenario.');
+    var b=el('button','sbtn go','Do this step');var rs=el('button','sbtn','Start over');var row=el('div','row');row.appendChild(b);row.appendChild(rs);side.appendChild(row);var res=el('div','res');side.appendChild(res);
+    function u(){L.draw();b.disabled=L.st.rs>=4;res.className='res'+(L.st.rs>=4?' ok':'');res.textContent=L.st.rs>=4?'Repair complete. Every step verified and logged against the work order.':'Waiting for step '+(L.st.rs+1)+'. The next step stays locked until the camera confirms this one.'}
+    b.addEventListener('click',function(){L.confirm();setTimeout(function(){L.st.rs++;u()},MT.reduce?0:650)});rs.addEventListener('click',function(){L.st.rs=0;u()});L.st.rs=0;u()},
+  gate:function(){head('Lockout, verified.','Before anyone touches the valve, the system reads the tag, recognizes the lock, checks that the line is de-energized and that the permit is current. If any check fails, work is blocked and a supervisor is alerted.','From the invention’s safety enforcement system.');
+    var ul=el('ul','checks');var C=[['Tag read','QR on the tag'],['Lock recognized','Seen by the camera'],['Energy isolated','Line pressure 0 psi'],['Permit current','Within its time window']];
+    C.forEach(function(c){var li=el('li');li.innerHTML='<span class="bx"></span><span></span><small></small>';li.children[1].textContent=c[0];li.children[2].textContent=c[1];ul.appendChild(li)});side.appendChild(ul);
+    var row=el('div','row'),run=el('button','sbtn go','Run safety check'),tog=el('button','sbtn','Remove the lock');row.appendChild(run);row.appendChild(tog);side.appendChild(row);var res=el('div','res');side.appendChild(res);
+    var lis=$$('li',ul),timer=null;
+    function paint(){lis.forEach(function(li,i){var done=i<L.st.gs,bad=done&&L.st.gfail&&(i===1||i===2);li.className=done?(bad?'bad':'ok'):''});L.draw();
+      res.className='res'+(L.st.gs>=4?(L.st.gfail?' bad':' ok'):'');res.textContent=L.st.gs>=4?(L.st.gfail?'Blocked. The lock is missing and the line is still pressurized. Supervisor alerted; the event is logged.':'Allowed. Verification logged against the work order.'):L.st.gs>0?'Checking…':'Not yet checked. Work on this valve is locked.'}
+    run.addEventListener('click',function(){clearInterval(timer);L.st.gs=0;paint();timer=setInterval(function(){L.st.gs++;if(L.st.gs>=5){clearInterval(timer)}paint()},MT.reduce?10:450)});
+    tog.addEventListener('click',function(){L.st.gfail=!L.st.gfail;tog.textContent=L.st.gfail?'Put the lock back':'Remove the lock';L.st.gs=0;paint()});
+    L.st.gs=0;L.st.gfail=false;paint()},
+  proof:function(){head('Proof, checked as it’s taken.','Every photo is checked on the spot for clarity, the right component, the right angle and safety. If it fails, the reason and a guide come back immediately, while the crew is still on site.','From the invention’s work validation engine.');
+    var ul=el('ul','checks');['Image is clear','Right component in frame','Correct angle','Scene is safe'].forEach(function(c){var li=el('li');li.innerHTML='<span class="bx"></span><span></span><small></small>';li.children[1].textContent=c;ul.appendChild(li)});side.appendChild(ul);
+    var row=el('div','row'),cap=el('button','sbtn go','Take photo'),rs=el('button','sbtn','Start over');row.appendChild(cap);row.appendChild(rs);side.appendChild(row);var res=el('div','res');side.appendChild(res);var lis=$$('li',ul);
+    function paint(){var pf=L.st.pf;lis.forEach(function(li,i){li.className=pf===0?'':pf===1?(i===1||i===2?'bad':'ok'):'ok';li.children[2].textContent=pf===1&&i===1?'gasket face hidden':pf===1&&i===2?'tilt down 15°':''});
+      res.className='res'+(pf===1?' bad':pf===2?' ok':'');res.textContent=pf===0?'Line up the flange in the frame.':pf===1?'Retake needed: the gasket face isn’t in frame. Follow the guide in the lens.':'Accepted. Attached to WO-4471 as validated documentation.';cap.textContent=pf===1?'Retake photo':'Take photo';cap.disabled=pf===2;L.draw()}
+    cap.addEventListener('click',function(){L.flash();L.st.pf=Math.min(2,L.st.pf+1);setTimeout(paint,MT.reduce?0:300)});rs.addEventListener('click',function(){L.st.pf=0;paint()});L.st.pf=0;paint()}
+};
+function setMode(m){tabs.forEach(function(b){b.setAttribute('aria-selected',b.dataset.m===m?'true':'false')});L.st.mode=m;MODES[m]()}
+tabs.forEach(function(b){b.addEventListener('click',function(){setMode(b.dataset.m)})});setMode('repair');
+
+/* three-layer architecture diagram */
+(function(){var svg=$('#arch');MT.frame(svg,1000,300);
+  var cols=[[170,'ON THE WEARER',['Display over the view','Camera + depth','Motion sensing','Biometrics']],[500,'ON SITE · EDGE',['Computer vision','Safety engine','Motion analysis','Fast local decisions']],[830,'IN THE CLOUD',['AI hub + model updates','Work orders','Analytics','Remote supervision']]];
+  cols.forEach(function(c,i){var g=S('g',{},svg);S('rect',{x:c[0]-130,y:40,width:260,height:170,class:i===1?'acc fillp':'ln fillp'},g);T(c[1],{x:c[0],y:66,class:'lbla',style:'text-anchor:middle'},g);
+    c[2].forEach(function(r,j){S('rect',{x:c[0]-110,y:80+j*30,width:220,height:22,class:'thin',fill:'none'},g);T(r,{x:c[0],y:95+j*30,class:'lblf',style:'text-anchor:middle;font-size:11px'},g)})});
+  MT.arrow(svg,300,120,368,120,'acc');MT.arrow(svg,370,132,302,132,'ln');MT.arrow(svg,630,120,698,120,'acc');MT.arrow(svg,700,132,632,132,'ln');
+  S('line',{x1:60,y1:252,x2:940,y2:252,class:'ln dash'},svg);T('IOT SENSOR NETWORK · asset · gas · pressure · temperature · air quality · vibration · lockout status',{x:500,y:278,class:'lbl',style:'text-anchor:middle'},svg);
+  [170,500,830].forEach(function(x){S('line',{x1:x,y1:210,x2:x,y2:252,class:'thin'},svg);S('circle',{cx:x,cy:252,r:5,class:'fillacc'},svg)});
+  for(var i=0;i<9;i++)S('circle',{cx:90+i*102,cy:252,r:3,class:'fillacc',style:'opacity:.6'},svg);
+})();
+
+/* ordinary glasses */
+(function(){var svg=$('#plain');
+  S('path',{d:MT.rr(70,60,170,96,34),class:'ln fillp'},svg);S('path',{d:MT.rr(280,60,170,96,34),class:'ln fillp'},svg);
+  S('path',{d:'M240 90Q260 74 280 90',class:'ln',style:'stroke-width:2.4'},svg);S('path',{d:'M66 62Q260 44 454 62',class:'ln',style:'stroke-width:3'},svg);
+  S('rect',{x:24,y:72,width:48,height:12,rx:6,class:'ln fillp'},svg);S('rect',{x:448,y:72,width:48,height:12,rx:6,class:'ln fillp'},svg);
+  S('circle',{cx:260,cy:60,r:4,class:'fillacc'},svg);S('rect',{x:452,y:90,width:26,height:20,rx:4,class:'acc'},svg);
+  S('line',{x1:260,y1:56,x2:260,y2:26,class:'thin'},svg);T('CAMERA',{x:268,y:26,class:'lbl'},svg);S('line',{x1:478,y1:110,x2:490,y2:130,class:'thin'},svg);T('SENSORS',{x:470,y:146,class:'lbl'},svg);
+})();
+})();
+</script>
+</body>
+</html>

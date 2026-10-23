@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Partner with MTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+.paths3 .feat{padding:26px 24px 26px}
+.paths3 .feat h3{font-size:clamp(26px,2.4vw,34px);line-height:1}
+.paths3 ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:8px;border-top:1px solid var(--line2);padding-top:14px}
+.paths3 li{display:grid;grid-template-columns:18px 1fr;gap:8px;font-size:14.5px;line-height:1.4}
+.paths3 li::before{content:"";width:7px;height:7px;background:var(--accent);margin-top:7px}
+.paths3 .btn{margin-top:auto;align-self:flex-start}
+.paths3 .feat.sel{border-color:var(--accent);box-shadow:inset 0 3px 0 var(--accent)}
+.cgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(24px,4vw,64px);margin-top:40px;align-items:start}
+@media(max-width:900px){.cgrid{grid-template-columns:1fr}}
+.pick{display:grid;gap:8px}
+.pick button{background:var(--bg);border:1px solid var(--line);padding:14px 16px;text-align:left;display:grid;grid-template-columns:28px 1fr;gap:4px 12px;align-items:center}
+.pick button .ic{width:28px;height:28px;color:var(--muted);grid-row:span 2}
+.pick button .ic svg{width:22px;height:22px}
+.pick button b{font:700 17px var(--f-display);font-variation-settings:"wdth" 100}
+.pick button small{font:400 12px var(--f-mono);color:var(--muted)}
+.pick button[aria-pressed="true"]{border-color:var(--accent);background:var(--panel)}
+.pick button[aria-pressed="true"] .ic,.pick button[aria-pressed="true"] b{color:var(--accent)}
+form{display:grid;grid-template-columns:1fr 1fr;gap:14px;border:1px solid var(--line);background:var(--bg);padding:24px}
+form label{display:grid;gap:6px;font:500 11px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+form .full{grid-column:1/-1}
+input,select,textarea{font:400 16px var(--f-body);color:var(--fg);background:var(--bg2);border:1px solid var(--line);padding:12px;border-radius:0;width:100%;min-width:0}
+textarea{min-height:120px;resize:vertical}
+@media(max-width:600px){form{grid-template-columns:1fr}}
+#formMsg{font:400 13px var(--f-mono);color:var(--accent)}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="./"><svg class="logo" viewBox="56 56 1890 314" role="img" aria-label="MTech"><path fill="currentColor" d="M66 66H140L257 215L374 66H447V360H385V160L257 318L128 160V360H66Z"/><g fill="var(--accent)"><path d="M520 66H830V122H703V360H642V122H520Z"/><path d="M900 66H1179V122H900Z"/><path d="M900 185H1163V242H958V304H1179V360H900Z"/><path d="M1345 66H1551V122H1350A35 35 0 0 0 1315 157V269A35 35 0 0 0 1350 304H1551V360H1345A90 90 0 0 1 1255 270V156A90 90 0 0 1 1345 66Z"/><path d="M1628 66H1688V185H1876V66H1936V360H1876V242H1688V360H1628Z"/></g></svg></a>
+    <nav aria-label="Primary">
+      <a href="coworkers.html">Coworkers</a>
+      <a href="wearables.html">Field awareness</a>
+      <a href="process.html">Process control</a>
+      <a href="onboarding.html">Onboarding</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="partner.html" aria-current="page">Partner</a>
+    </nav>
+    <button id="bp" class="sw" role="switch" aria-checked="false"><span class="knob"></span><span>View as blueprint</span></button>
+  </div>
+</header>
+
+<main>
+<section class="phero">
+  <div class="wrap">
+    <div>
+      <div class="crumbs mono"><a href="./">MTech</a><span>/</span><span style="color:var(--fg)">Partner</span></div>
+      <h1>Partner <span>with MTech.</span></h1>
+      <p class="sub">Use what we’ve built, license the architecture behind it, or bring us a process and build something new together.</p>
+      <div class="facts"><span class="chip on">Use it</span><span class="chip">License it</span><span class="chip">Build it</span></div>
+    </div>
+    <div class="hvis"><svg id="hero" viewBox="0 0 560 340" role="img" aria-label="Three paths, using, licensing and building, converging on working systems"></svg></div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Three ways in</div><h2 class="h2">Pick the path<br>that fits your work.</h2></div>
+      <p class="lede">Every partnership starts with a conversation about the work you want AI to carry. Here is what each path covers.</p>
+    </div>
+    <div class="g3 paths3">
+      <div class="feat" data-p="products"><span class="ic" data-icon="users"></span><span class="k">Use it</span><h3>Explore products</h3><p>Put MTech’s products to work in your operation.</p>
+        <ul><li>Digital coworkers for ordering, scheduling, billing and collections</li><li>Field awareness on the glasses your crews wear</li><li>Process control with evidence on every step</li></ul>
+        <a class="btn pri" href="#contact" data-path="products">Ask about products</a></div>
+      <div class="feat" data-p="license"><span class="ic" data-icon="layers"></span><span class="k">Build on it</span><h3>License technology</h3><p>Bring the agentic architecture into your own platform.</p>
+        <ul><li>The mechanisms behind controlled authority and clean handoffs</li><li>Engineering support while you implement</li></ul>
+        <a class="btn pri" href="#contact" data-path="license">Discuss a license</a></div>
+      <div class="feat" data-p="build"><span class="ic" data-icon="spark"></span><span class="k">Solve something new</span><h3>Build with MTech</h3><p>Bring a business process you want AI to carry safely.</p>
+        <ul><li>A working session on your process and its risks</li><li>Controls designed for the way your team works</li><li>A prototype you can put in front of your team</li></ul>
+        <a class="btn pri" href="#contact" data-path="build">Start a project</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">How it starts</div><h2 class="h2">From a first call<br>to working systems.</h2></div>
+      <p class="lede">The same four steps, whichever path you choose.</p>
+    </div>
+    <div class="strip">
+      <div><h3>Conversation</h3><p>Tell us about the work: where it slows down, where it goes wrong, who owns it.</p></div>
+      <div><h3>Fit</h3><p>Together we decide which path fits: a product, a license or a new build.</p></div>
+      <div><h3>Plan</h3><p>A plan with owners, limits and the evidence each step will need.</p></div>
+      <div><h3>Start</h3><p>Work begins a step at a time, with your team learning as they use it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="statement">
+  <div class="wrap"><p>Original inventions, built into <em>working systems.</em></p></div>
+</section>
+
+<section class="s" id="contact">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Get in touch</div><h2 class="h2">Start the<br>conversation.</h2></div>
+      <p class="lede">Choose a path and tell us a little about the work. We’ll reply to set up a first conversation.</p>
+    </div>
+    <div class="cgrid">
+      <div class="pick" id="pick" role="group" aria-label="Choose a path">
+        <button data-v="products" aria-pressed="true"><span class="ic" data-icon="users"></span><b>Explore products</b><small>Use what MTech has built</small></button>
+        <button data-v="license" aria-pressed="false"><span class="ic" data-icon="layers"></span><b>License technology</b><small>Build on the architecture</small></button>
+        <button data-v="build" aria-pressed="false"><span class="ic" data-icon="spark"></span><b>Build with MTech</b><small>Solve something new</small></button>
+      </div>
+      <form id="form" novalidate>
+        <label>Name<input id="cName" autocomplete="name"></label>
+        <label>Email<input id="cMail" type="email" autocomplete="email"></label>
+        <label class="full">Company<input id="cCo" autocomplete="organization"></label>
+        <label class="full">I would like to<select id="cPath"><option value="products">Explore products</option><option value="license">License technology</option><option value="build">Build with MTech</option></select></label>
+        <label class="full">About the work<textarea id="cMsg"></textarea></label>
+        <div class="full row"><button class="btn pri" type="submit">Send message</button><span id="formMsg" role="status"></span></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<nav class="pager" aria-label="More from MTech">
+  <a href="architecture.html"><span class="mono">← Previous</span><b>Agentic architecture</b></a>
+  <a href="./#model"><span class="mono">Next →</span><b>The living model</b></a>
+</nav>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="plate"><span>MTECH CORPORATION · TULSA, OKLAHOMA</span></div>
+    <p>Prefer email? Write to <a href="mailto:tmatteson@matteson.io">tmatteson@matteson.io</a>.</p>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+<script>
+(function(){
+var $=MT.$,$$=MT.$$,S=MT.S,T=MT.T;
+
+/* hero: three paths converge on working systems */
+(function(){
+  var svg=$('#hero');MT.frame(svg,560,340);
+  var L=[['USE IT',80],['LICENSE IT',170],['BUILD IT',260]],paths=[];
+  L.forEach(function(l){T(l[0],{x:40,y:l[1]-12,class:'lbla'},svg);S('circle',{cx:44,cy:l[1],r:5,class:'fillacc'},svg);
+    paths.push(S('path',{d:'M50 '+l[1]+'C220 '+l[1]+' 260 170 380 170',class:'thin dash'},svg))});
+  S('rect',{x:380,y:120,width:140,height:100,class:'acc fillp'},svg);T('WORKING',{x:450,y:164,class:'lblf',style:'text-anchor:middle'},svg);T('SYSTEMS',{x:450,y:184,class:'lblf',style:'text-anchor:middle'},svg);
+  var dots=[];for(var i=0;i<9;i++)dots.push({el:S('circle',{r:3.5,class:'fillacc'},svg),k:i%3,off:i/9});
+  MT.loop(svg,function(t){dots.forEach(function(d){var p=paths[d.k],f=(t*.22+d.off)%1,pt=p.getPointAtLength(p.getTotalLength()*f);d.el.setAttribute('cx',pt.x);d.el.setAttribute('cy',pt.y);d.el.style.opacity=String(Math.sin(f*Math.PI))})});
+})();
+
+/* path selection keeps the cards, the picker and the form in sync */
+var sel=$('#cPath');
+function choose(v){sel.value=v;$$('#pick button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===v?'true':'false')});$$('.paths3 .feat').forEach(function(f){f.classList.toggle('sel',f.dataset.p===v)})}
+$$('#pick button').forEach(function(b){b.addEventListener('click',function(){choose(b.dataset.v)})});
+$$('[data-path]').forEach(function(a){a.addEventListener('click',function(){choose(a.dataset.path)})});
+sel.addEventListener('change',function(){choose(sel.value)});
+var h=(location.hash||'').slice(1);choose(['products','license','build'].indexOf(h)>=0?h:'products');
+$('#form').addEventListener('submit',function(e){e.preventDefault();
+  var name=$('#cName').value.trim(),mail=$('#cMail').value.trim(),co=$('#cCo').value.trim(),msg=$('#cMsg').value.trim(),path=sel.options[sel.selectedIndex].text;
+  if(!name||!mail||!$('#cMail').checkValidity()){$('#formMsg').textContent='Please add your name and a valid email.';return}
+  var body='I would like to: '+path+'\n'+(co?'Company: '+co+'\n':'')+'\n'+msg+'\n\n'+name+' <'+mail+'>';
+  location.href='mailto:tmatteson@matteson.io?subject='+encodeURIComponent(path+' · '+name+(co?', '+co:''))+'&body='+encodeURIComponent(body);
+  $('#formMsg').textContent='Opening your email app…'});
+})();
+</script>
+</body>
+</html>

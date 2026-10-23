@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MTech Agentic Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+.anat{margin-top:40px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);border:1px solid var(--line)}
+.anat svg{display:block;width:100%;height:auto;background:var(--bg2);border-right:1px solid var(--line)}
+.anat .txt{padding:24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.anat .stepn{font:500 12px var(--f-mono);letter-spacing:.1em;color:var(--accent);text-transform:uppercase}
+.anat h3{font-size:clamp(26px,2.6vw,36px);font-weight:800;line-height:1.02;font-variation-settings:"wdth" 104}
+.anat p{font-weight:300;font-size:16px}
+.anat .dots{display:flex;gap:6px;margin-top:auto}
+.anat .dots button{width:30px;height:4px;border:0;padding:0;background:var(--line)}
+.anat .dots button[aria-current="step"]{background:var(--accent)}
+@media(max-width:900px){.anat{grid-template-columns:1fr}.anat svg{border-right:0;border-bottom:1px solid var(--line)}}
+.mgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:40px}
+.mc{border:1px solid var(--line);background:var(--bg2);padding:20px 22px 22px;display:grid;gap:10px;align-content:start;min-width:0}
+.mc::before{content:"";height:5px;background:var(--metal);margin:-20px -22px 6px}
+.mc h3{font-size:24px;font-weight:800;line-height:1.05;font-variation-settings:"wdth" 104}
+.mc p{font-weight:300;font-size:15.5px}
+.mc .k{font:500 11.5px/1.5 var(--f-mono);color:var(--accent)}
+.mc .t{font:400 12.5px/1.5 var(--f-mono);color:var(--muted);border-top:1px solid var(--line2);padding-top:10px}
+@media(max-width:1000px){.mgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.mgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="./"><svg class="logo" viewBox="56 56 1890 314" role="img" aria-label="MTech"><path fill="currentColor" d="M66 66H140L257 215L374 66H447V360H385V160L257 318L128 160V360H66Z"/><g fill="var(--accent)"><path d="M520 66H830V122H703V360H642V122H520Z"/><path d="M900 66H1179V122H900Z"/><path d="M900 185H1163V242H958V304H1179V360H900Z"/><path d="M1345 66H1551V122H1350A35 35 0 0 0 1315 157V269A35 35 0 0 0 1350 304H1551V360H1345A90 90 0 0 1 1255 270V156A90 90 0 0 1 1345 66Z"/><path d="M1628 66H1688V185H1876V66H1936V360H1876V242H1688V360H1628Z"/></g></svg></a>
+    <nav aria-label="Primary">
+      <a href="coworkers.html">Coworkers</a>
+      <a href="wearables.html">Field awareness</a>
+      <a href="process.html">Process control</a>
+      <a href="onboarding.html">Onboarding</a>
+      <a href="architecture.html" aria-current="page">Architecture</a>
+      <a href="partner.html">Partner</a>
+    </nav>
+    <button id="bp" class="sw" role="switch" aria-checked="false"><span class="knob"></span><span>View as blueprint</span></button>
+  </div>
+</header>
+
+<main>
+<section class="phero">
+  <div class="wrap">
+    <div>
+      <div class="crumbs mono"><a href="./">MTech</a><span>/</span><span>Inventions</span><span>/</span><span style="color:var(--fg)">Agentic architecture</span></div>
+      <h1>The agentic <span>architecture.</span></h1>
+      <p class="sub">The rules and mechanisms that let AI agents carry business work from request to fulfillment to settlement, with controlled authority, continuous ownership and recorded evidence. MTech’s digital coworkers are built on them.</p>
+      <div class="facts"><span class="chip solid">Invention</span><span class="chip">Platform-neutral</span></div>
+    </div>
+    <div class="hvis"><span class="cap mono">FIG. A · Work moving between agents</span><svg id="hero" viewBox="0 0 560 380" role="img" aria-label="A unit of work passes from one agent to the next with its owner, authority, evidence and next action attached"></svg></div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">The problem</div><h2 class="h2">Agents can decide.<br>Acting is the hard part.</h2></div>
+      <p class="lede">Three questions every business has to answer before it can let AI do real work. The architecture answers each one with a rule.</p>
+    </div>
+    <div class="g3">
+      <div class="feat"><span class="ic" data-icon="key"></span><span class="k">Authority</span><h3>Who said it could?</h3><p>An agent that holds the keys can do anything its credentials allow, whether or not anyone approved that specific action.</p></div>
+      <div class="feat"><span class="ic" data-icon="owner"></span><span class="k">Ownership</span><h3>Whose step is it?</h3><p>When work passes between agents, it can be dropped, duplicated, or acted on by two agents at once.</p></div>
+      <div class="feat"><span class="ic" data-icon="sensor"></span><span class="k">Outcomes</span><h3>Did it happen?</h3><p>Suppliers, banks and other systems do not always answer. Guessing wrong means a duplicate order or a missing one.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="statement">
+  <div class="wrap"><p>Permission lives in <em>the control layer,</em> apart from the agent that asks.</p></div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Anatomy</div><h2 class="h2">One protected transition,<br>step by step.</h2></div>
+      <p class="lede">This is the moment the architecture is built around: an agent wants to act and hand the work on. Step through what the control layer checks and what it commits.</p>
+    </div>
+    <div class="anat">
+      <svg id="anat" viewBox="0 0 760 420" role="img" aria-label="Diagram of a protected transition"></svg>
+      <div class="txt" aria-live="polite">
+        <span class="stepn" id="aN"></span>
+        <h3 id="aT"></h3>
+        <p id="aP"></p>
+        <div class="row"><button class="sbtn" id="aPrev">Back</button><button class="sbtn go" id="aNext">Next step</button><button class="sbtn" id="aPlay">Play</button></div>
+        <div class="dots" id="aDots"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Mechanisms</div><h2 class="h2">Six rules that hold<br>the work together.</h2></div>
+      <p class="lede">Each rule answers one way agent-driven work goes wrong. Most can be tried in the living model on the home page.</p>
+    </div>
+    <div class="mgrid">
+      <article class="mc"><span class="mono">01 · Central</span><h3>The protected transition</h3><p>Handing over responsibility and committing the exact approved next action happen as one step. Either both happen or neither does.</p><p class="k">One owner, always</p><p class="t">Try it: “Interrupt a coworker during a handoff” in the home page model.</p></article>
+      <article class="mc"><span class="mono">02</span><h3>Authority separation</h3><p>The agent states what it intends to do. A control layer holds the credentials and acts only when current authority, a matching approval and the live record agree.</p><p class="k">Permission lives in the control layer</p><p class="t">The agent never holds supplier or bank credentials.</p></article>
+      <article class="mc"><span class="mono">03</span><h3>Approval bound to the action</h3><p>An approval covers one exact, recorded action and is used once. A changed item, amount or destination is a different action.</p><p class="k">One approval, one exact action</p><p class="t">Try it: “Change the purchase after approval”.</p></article>
+      <article class="mc"><span class="mono">04</span><h3>Ownership and version checks</h3><p>Each part of a job has one current owner and a version. Stale or competing attempts are turned away before they reach the outside world.</p><p class="k">One owner per concern</p><p class="t">Try it: “Have two coworkers attempt the same step”.</p></article>
+      <article class="mc"><span class="mono">05</span><h3>Reconcile before replay</h3><p>An unanswered request is marked unknown, and the outside record is checked before the action is sent again.</p><p class="k">Checked before resent</p><p class="t">Try it: “Lose the supplier’s response”.</p></article>
+      <article class="mc"><span class="mono">06</span><h3>Evidence before money</h3><p>Billing and payment depend on the state of the work. An invoice cannot move ahead of the completion evidence it relies on.</p><p class="k">Work state governs financial state</p><p class="t">Try it: “Receive an invoice before completion evidence”.</p></article>
+    </div>
+    <div class="row" style="margin-top:28px"><a class="btn pri" href="./#model">Open the living model</a></div>
+  </div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Where it applies</div><h2 class="h2">The whole commercial<br>lifecycle.</h2></div>
+      <p class="lede">From the first order to the last payment, every hand-off between work and money runs under the same rules.</p>
+    </div>
+    <div class="g4">
+      <div class="feat"><span class="ic" data-icon="box"></span><span class="k">Procurement</span><h3>Orders</h3><p>Placed only under a matching approval, never resent blindly.</p></div>
+      <div class="feat"><span class="ic" data-icon="layers"></span><span class="k">Inventory</span><h3>Reservations</h3><p>Owned by one step at a time, released when the job changes.</p></div>
+      <div class="feat"><span class="ic" data-icon="truck"></span><span class="k">Field execution</span><h3>Crews</h3><p>Dispatched with the approved scope and evidence needs attached.</p></div>
+      <div class="feat"><span class="ic" data-icon="check"></span><span class="k">Quality control</span><h3>Completion</h3><p>Evidence recorded before any work is called complete.</p></div>
+      <div class="feat"><span class="ic" data-icon="doc"></span><span class="k">Billing</span><h3>Invoices</h3><p>Issued only after verified completion, at the approved amount.</p></div>
+      <div class="feat"><span class="ic" data-icon="money"></span><span class="k">Payables</span><h3>Supplier bills</h3><p>Matched to what was actually received.</p></div>
+      <div class="feat"><span class="ic" data-icon="clock"></span><span class="k">Receivables</span><h3>Collections</h3><p>Owned and tracked through to the payment.</p></div>
+      <div class="feat"><span class="ic" data-icon="link"></span><span class="k">Settlement</span><h3>Closing the loop</h3><p>A complete, provable chain from request to cash.</p></div>
+    </div>
+    <div class="filing">
+      <div><span>Inventor</span><strong>Thomas W. Matteson</strong></div>
+      <div><span>Company</span><strong>MTech Corporation</strong></div>
+    </div>
+  </div>
+</section>
+
+<nav class="pager" aria-label="More from MTech">
+  <a href="onboarding.html"><span class="mono">← Previous</span><b>Onboarding</b></a>
+  <a href="partner.html"><span class="mono">Next →</span><b>Partner with MTech</b></a>
+</nav>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="plate"><span>MTECH CORPORATION · TULSA, OKLAHOMA</span></div>
+    <p>Diagrams on this page are explanatory illustrations.</p>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+<script>
+(function(){
+var $=MT.$,S=MT.S,T=MT.T;
+
+/* hero: capsule handed from agent to agent around a loop */
+(function(){
+  var svg=$('#hero');
+  var N=[{p:[110,270],n:'Purchasing',next:'Place PO'},{p:[280,110],n:'Logistics',next:'Book delivery'},{p:[450,270],n:'Field',next:'Dispatch crew'}];
+  var c=[280,220],paths=[];
+  for(var i=0;i<3;i++){var a=N[i].p,b=N[(i+1)%3].p,mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,qx=mx+(mx-c[0])*.6,qy=my+(my-c[1])*.6;
+    paths.push(S('path',{d:'M'+a[0]+' '+a[1]+' Q'+qx+' '+qy+' '+b[0]+' '+b[1],class:'thin dash'},svg))}
+  var rings=N.map(function(n){var g=S('g',{},svg);S('circle',{cx:n.p[0],cy:n.p[1],r:70,class:'thin'},g);var r=S('circle',{cx:n.p[0],cy:n.p[1],r:64,class:'ln',style:'stroke-width:1.2'},g);
+    T(n.n.toUpperCase()+' AGENT',{x:n.p[0],y:n.p[1]+(n.p[1]<200?-80:92),class:'lblf',style:'text-anchor:middle'},g);return r});
+  var flash=T('HANDOFF COMMITTED',{class:'lbla',style:'text-anchor:middle;opacity:0'},svg);
+  var cap=MT.capsule(svg,160,[['OWNER',''],['AUTHORITY','Q-2210 ≤ $14,860'],['EVIDENCE',''],['NEXT','']]);
+  var PER=3.4,MOVE=1.9;
+  MT.loop(svg,function(t,still){
+    if(still)t=MOVE+.3;
+    var k=Math.floor(t/PER),seg=k%3,loc=t-k*PER,dst=(seg+1)%3,arrived=loc>=MOVE,e=MT.ease(MT.clamp(loc/MOVE));
+    var p=paths[seg],pt=p.getPointAtLength(p.getTotalLength()*e),at=arrived?dst:seg;
+    cap.g.setAttribute('transform','translate('+pt.x+' '+pt.y+')');
+    cap.vals[0].textContent=N[at].n+' agent';cap.vals[2].textContent=(k+2+(arrived?1:0))+' signed';cap.vals[3].textContent=N[at].next;
+    rings.forEach(function(r,i){r.setAttribute('class',i===at?'acc':'ln')});
+    var d=N[dst].p;flash.setAttribute('x',d[0]);flash.setAttribute('y',d[1]+(d[1]<200?-96:-80));flash.style.opacity=arrived?String(1-MT.clamp((loc-MOVE)/(PER-MOVE))*.7):'0';
+  });
+})();
+
+/* anatomy stepper */
+(function(){
+  var svg=$('#anat');MT.frame(svg,760,420);
+  function grp(){return S('g',{},svg)}
+  var gA=grp(),gC=grp(),gK=grp(),gX=grp(),gB=grp(),gR=grp();
+  /* agent A with its proposal */
+  S('circle',{cx:80,cy:120,r:38,class:'ln fillp'},gA);T('AGENT A',{x:80,y:124,class:'lblf',style:'text-anchor:middle'},gA);T('current owner',{x:80,y:176,class:'lbl',style:'text-anchor:middle'},gA);
+  var prop=S('g',{},gA);S('rect',{x:140,y:72,width:170,height:96,class:'ln fillp'},prop);T('PROPOSED ACTION',{x:150,y:92,class:'lbl'},prop);
+  T('PO-8812 · Northline',{x:150,y:114,class:'lblf'},prop);T('1 × 7.5-ton unit',{x:150,y:132,class:'lblf'},prop);T('$9,240 · Site 14',{x:150,y:150,class:'lblf'},prop);
+  /* control layer with its checks */
+  S('rect',{x:360,y:52,width:200,height:150,class:'ln fillp'},gC);T('CONTROL LAYER',{x:372,y:72,class:'lblf'},gC);
+  S('circle',{cx:540,cy:68,r:6,class:'ln'},gC);S('path',{d:'M546 68H556M552 68V73',class:'ln'},gC);
+  var checks=['Authority is current','Approval Q-2210 matches','Agent A owns the step','Record is at version 8'].map(function(s,i){var g=S('g',{},gK);var b=S('rect',{x:374,y:88+i*26,width:14,height:14,class:'ln'},g);var m=T('✓',{x:376,y:100+i*26,class:'lbla',style:'opacity:0'},g);T(s,{x:398,y:100+i*26,class:'lblf'},g);return {b:b,m:m}});
+  /* one commit */
+  var cm=S('rect',{x:40,y:236,width:520,height:150,class:'thin dash',fill:'none'},gX);T('ONE COMMIT · ALL OR NOTHING',{x:52,y:256,class:'lbla'},gX);
+  var commits=['Order recorded as approved','Approval Q-2210 used up','Audit entry: who, what, which approval','Ownership: Agent A → Agent B','Outbox: send PO-8812 to supplier'].map(function(s,i){var x=56+(i%2)*256,y=282+Math.floor(i/2)*32;var g=S('g',{style:'opacity:.25'},gX);S('rect',{x:x,y:y-14,width:240,height:24,class:'ln fillp'},g);T(s,{x:x+10,y:y+2,class:'lblf',style:'font-size:10.5px'},g);return g});
+  /* external system and agent B */
+  S('rect',{x:600,y:72,width:130,height:70,class:'ln fillp'},gB);T('SUPPLIER',{x:665,y:102,class:'lblf',style:'text-anchor:middle'},gB);var ext=T('waiting',{x:665,y:122,class:'lbl',style:'text-anchor:middle'},gB);
+  S('circle',{cx:665,cy:300,r:38,class:'ln fillp'},gB);T('AGENT B',{x:665,y:304,class:'lblf',style:'text-anchor:middle'},gB);var bsub=T('next owner',{x:665,y:356,class:'lbl',style:'text-anchor:middle'},gB);
+  var a1=S('g',{},gR);MT.arrow(a1,312,120,356,120);
+  var a2=S('g',{},gR);MT.arrow(a2,460,204,460,232,'acc');
+  var a3=S('g',{},gR);MT.arrow(a3,562,128,598,110,'acc');
+  var a4=S('g',{},gR);MT.arrow(a4,562,330,624,310,'acc');
+  var STEPS=[
+    {t:'The agent proposes an exact action',p:'Agent A submits a precise proposal: this order, this supplier, this amount, this destination. The proposal is fixed so it cannot change after it is checked.'},
+    {t:'The control layer checks what must be true',p:'Working from its own rules, the control layer works out what has to hold: the agent’s authority is current, approval Q-2210 matches this exact order, Agent A owns this step, and the record has not moved on.'},
+    {t:'Everything commits together',p:'The order, the use of the approval, the audit entry, the transfer of ownership to Agent B and the instruction to send the order are saved in one step. If any part fails, none of it happens.'},
+    {t:'The control layer acts with its own credentials',p:'Only after the commit does the control layer send the order, using credentials the agent never held. Agent B now owns the work and can see exactly what is pending.'},
+    {t:'The result is recorded, or reconciled',p:'If the supplier confirms, the result is recorded. If no answer comes, the outcome is treated as unknown and checked against the supplier’s records before anything is sent again. Agent A can no longer act on this step.'}
+  ];
+  var cur=0,dots=$('#aDots');
+  STEPS.forEach(function(s,i){var b=document.createElement('button');b.setAttribute('aria-label','Step '+(i+1));b.addEventListener('click',function(){go(i)});dots.appendChild(b)});
+  function go(i){cur=(i+STEPS.length)%STEPS.length;var s=STEPS[cur];
+    $('#aN').textContent='Step '+(cur+1)+' of '+STEPS.length;$('#aT').textContent=s.t;$('#aP').textContent=s.p;
+    MT.$$('button',dots).forEach(function(b,j){if(j===cur)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});
+    prop.style.opacity=1;a1.style.opacity=cur>=1?1:.25;
+    checks.forEach(function(c,j){var on=cur>=1;c.m.style.opacity=on?1:0;c.b.setAttribute('class',on?'acc':'ln')});
+    gK.style.opacity=cur>=1?1:.35;
+    a2.style.opacity=cur>=2?1:.15;cm.setAttribute('class',cur>=2?'acc dash':'thin dash');
+    commits.forEach(function(g){g.style.opacity=cur>=2?1:.25});
+    a3.style.opacity=cur>=3?1:.15;a4.style.opacity=cur>=2?1:.15;
+    ext.textContent=cur<3?'waiting':cur===3?'order sent':'confirmed SO-55190';
+    bsub.textContent=cur>=2?'owner now':'next owner';
+    gA.style.opacity=cur>=4?.45:1;
+  }
+  $('#aNext').addEventListener('click',function(){stop();go(cur+1)});
+  $('#aPrev').addEventListener('click',function(){stop();go(cur-1)});
+  var timer=null;function stop(){if(timer){clearInterval(timer);timer=null;$('#aPlay').textContent='Play'}}
+  $('#aPlay').addEventListener('click',function(){if(timer){stop();return}this.textContent='Pause';go(0);timer=setInterval(function(){if(cur===STEPS.length-1){stop();return}go(cur+1)},2600)});
+  go(0);
+})();
+})();
+</script>
+</body>
+</html>
