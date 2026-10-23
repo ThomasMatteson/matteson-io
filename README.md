@@ -18,3 +18,15 @@ python3 -m http.server 8000
 | `partner.html` | Partner / contact (form not yet connected) |
 
 Shared styles and helpers live in `site.css` and `site.js`. The home page loads three.js r128 from cdnjs and falls back to a static hero without WebGL.
+
+## Hosting
+
+The site deploys to GitHub Pages at https://matteson.io from `main` via `.github/workflows/pages.yml`.
+
+One-time setup:
+
+1. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+2. At the domain registrar, point `matteson.io` at GitHub Pages:
+   - `A` records for `@`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - `CNAME` record for `www`: `thomasmatteson.github.io`
+3. Back in **Settings → Pages**, confirm the custom domain `matteson.io` and tick **Enforce HTTPS** once the certificate is issued.

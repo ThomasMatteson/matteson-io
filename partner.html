@@ -75,7 +75,7 @@ textarea{min-height:120px;resize:vertical}
         <ul><li>Digital coworkers for ordering, scheduling, billing and collections</li><li>Field awareness on the glasses your crews wear</li><li>Process control with evidence on every step</li></ul>
         <a class="btn pri" href="#contact" data-path="products">Ask about products</a></div>
       <div class="feat" data-p="license"><span class="ic" data-icon="layers"></span><span class="k">Build on it</span><h3>License technology</h3><p>Bring the agentic architecture into your own platform.</p>
-        <ul><li>The mechanisms behind controlled authority and clean handoffs</li><li>Engineering support while you implement</li><li>Filing details shared as they are verified</li></ul>
+        <ul><li>The mechanisms behind controlled authority and clean handoffs</li><li>Engineering support while you implement</li></ul>
         <a class="btn pri" href="#contact" data-path="license">Discuss a license</a></div>
       <div class="feat" data-p="build"><span class="ic" data-icon="spark"></span><span class="k">Solve something new</span><h3>Build with MTech</h3><p>Bring a business process you want AI to carry safely.</p>
         <ul><li>A working session on your process and its risks</li><li>Controls designed for the way your team works</li><li>A prototype you can put in front of your team</li></ul>
@@ -136,7 +136,7 @@ textarea{min-height:120px;resize:vertical}
 <footer>
   <div class="wrap">
     <div class="plate"><span>MTECH CORPORATION · TULSA, OKLAHOMA</span></div>
-    <p>This page is a design preview. The form is for illustration and sends nothing yet.</p>
+    <p>Prefer email? Write to <a href="mailto:tmatteson@matteson.io">tmatteson@matteson.io</a>.</p>
   </div>
 </footer>
 
@@ -163,7 +163,12 @@ $$('#pick button').forEach(function(b){b.addEventListener('click',function(){cho
 $$('[data-path]').forEach(function(a){a.addEventListener('click',function(){choose(a.dataset.path)})});
 sel.addEventListener('change',function(){choose(sel.value)});
 var h=(location.hash||'').slice(1);choose(['products','license','build'].indexOf(h)>=0?h:'products');
-$('#form').addEventListener('submit',function(e){e.preventDefault();$('#formMsg').textContent='Design preview: this form isn’t connected yet, so nothing was sent.'});
+$('#form').addEventListener('submit',function(e){e.preventDefault();
+  var name=$('#cName').value.trim(),mail=$('#cMail').value.trim(),co=$('#cCo').value.trim(),msg=$('#cMsg').value.trim(),path=sel.options[sel.selectedIndex].text;
+  if(!name||!mail||!$('#cMail').checkValidity()){$('#formMsg').textContent='Please add your name and a valid email.';return}
+  var body='I would like to: '+path+'\n'+(co?'Company: '+co+'\n':'')+'\n'+msg+'\n\n'+name+' <'+mail+'>';
+  location.href='mailto:tmatteson@matteson.io?subject='+encodeURIComponent(path+' · '+name+(co?', '+co:''))+'&body='+encodeURIComponent(body);
+  $('#formMsg').textContent='Opening your email app…'});
 })();
 </script>
 </body>
