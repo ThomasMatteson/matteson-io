@@ -25,6 +25,7 @@
 .steps li.late small b{color:var(--accent);font-weight:500}
 .clock{display:flex;gap:14px;align-items:baseline}
 .clock b{font:800 30px var(--f-display);font-variation-settings:"wdth" 104}
+@media(max-width:600px){.steps li{grid-template-columns:30px minmax(0,1fr)}.steps .ev{grid-column:2;text-align:left;max-width:none}}
 #pMsg{min-height:1.6em;font:400 13px var(--f-mono);color:var(--accent);margin-top:12px}
 </style>
 </head>

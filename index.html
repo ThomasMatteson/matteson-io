@@ -59,7 +59,7 @@ svg .numt{font:500 10.5px var(--f-mono);fill:var(--fg);text-anchor:middle}
 /* nav */
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line2)}
 .nav .wrap{display:flex;align-items:center;gap:28px;height:60px}
-.mark{font:800 22px var(--f-display);font-variation-settings:"wdth" 118;letter-spacing:.02em;text-decoration:none}
+.mark{display:inline-flex;align-items:center;min-height:44px;font:800 22px var(--f-display);font-variation-settings:"wdth" 118;letter-spacing:.02em;text-decoration:none}
 .nav nav{display:flex;gap:24px;margin-left:auto}
 .nav nav a{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;text-decoration:none;color:var(--muted)}
 .nav nav a:hover{color:var(--fg)}
@@ -125,6 +125,7 @@ svg .numt{font:500 10.5px var(--f-mono);fill:var(--fg);text-anchor:middle}
 .trk .a{left:0;top:0;border-width:2px 0 0 2px}.trk .b{right:0;top:0;border-width:2px 2px 0 0}.trk .c{left:0;bottom:0;border-width:0 0 2px 2px}.trk .d{right:0;bottom:0;border-width:0 2px 2px 0}
 .trk span{position:absolute;left:0;top:-24px;font:500 11px var(--f-mono);letter-spacing:.07em;color:var(--accent);white-space:nowrap;text-shadow:0 0 10px var(--bg)}
 .warnb{position:absolute;left:50%;top:clamp(96px,14vh,140px);transform:translateX(-50%);z-index:3;background:var(--accent);color:var(--accent-ink);font:600 12.5px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;opacity:0;transition:opacity .25s;white-space:nowrap;pointer-events:none}
+@media(max-width:700px){.lensv .bio{top:38px;left:clamp(24px,4vw,56px);right:auto}.warnb{white-space:normal;width:calc(100% - 32px);text-align:center;line-height:1.4}}
 .reel.nogl .lensv,.reel.nogl .trk,.reel.nogl .warnb{display:none}
 .reel.nogl{height:auto}
 .reel.nogl .stage{position:relative;height:auto;min-height:80vh}
@@ -982,7 +983,7 @@ function capsule(parent,w,rows){
     if(det>.02){var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9,ok=true;
       FB.forEach(function(q){v3.set(q[0],q[1],q[2]).applyMatrix4(world.matrixWorld).project(camera);if(v3.z>1)ok=false;var sx=(v3.x*.5+.5)*W,sy=(-v3.y*.5+.5)*H;x0=Math.min(x0,sx);y0=Math.min(y0,sy);x1=Math.max(x1,sx);y1=Math.max(y1,sy)});
       if(ok){trk.style.transform='translate3d('+x0.toFixed(1)+'px,'+y0.toFixed(1)+'px,0)';trk.style.width=(x1-x0).toFixed(1)+'px';trk.style.height=(y1-y0).toFixed(1)+'px';
-        trkL.textContent='LEAK SOURCE · WING VALVE FLANGE';trk.style.opacity=det.toFixed(3)}else trk.style.opacity='0'}
+        trkL.textContent='LEAK SOURCE · WING VALVE FLANGE';trkL.style.transform='translateX('+Math.min(0,innerWidth-12-x0-trkL.offsetWidth).toFixed(1)+'px)';trk.style.opacity=det.toFixed(3)}else trk.style.opacity='0'}
     else trk.style.opacity='0';
     var go=see*route>.3;warnb.style.opacity=go?'1':'0';warnb.textContent='Gas detected · move upwind to the muster point';
     place(musLab,MU[0],FY+1.8,MU[2],see*route);place(crewLab,WK[0],FY+2.05,WK[2],see*route);
