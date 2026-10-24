@@ -3,8 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MTech</title>
+<title>MTech · A superintelligence company</title>
 <meta name="description" content="MTech builds intelligence that sees the work, understands it and carries it through, from the job site to the balance sheet.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#15171a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MTech">
+<meta property="og:title" content="MTech · A superintelligence company">
+<meta property="og:description" content="MTech builds intelligence that sees the work, understands it and carries it through, from the job site to the balance sheet.">
+<meta property="og:url" content="https://matteson.io/">
+<meta property="og:image" content="https://matteson.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
@@ -353,7 +366,7 @@ footer p{max-width:62ch;font-size:13.5px;color:var(--muted)}
     <div class="ov"><div class="wrap">
       <div class="cap hero" data-cap="0">
         <div class="eye"><svg class="logo" viewBox="56 56 1890 314" role="img" aria-label="MTech"><path fill="currentColor" d="M66 66H140L257 215L374 66H447V360H385V160L257 318L128 160V360H66Z"/><g fill="var(--accent)"><path d="M520 66H830V122H703V360H642V122H520Z"/><path d="M900 66H1179V122H900Z"/><path d="M900 185H1163V242H958V304H1179V360H900Z"/><path d="M1345 66H1551V122H1350A35 35 0 0 0 1315 157V269A35 35 0 0 0 1350 304H1551V360H1345A90 90 0 0 1 1255 270V156A90 90 0 0 1 1345 66Z"/><path d="M1628 66H1688V185H1876V66H1936V360H1876V242H1688V360H1628Z"/></g></svg><span class="mono">Ideas engineered into reality</span></div>
-        <h1>MTech is a <span>superintelligence company.</span></h1>
+        <h1>A <span>superintelligence company.</span></h1>
         <p class="sub">We build intelligence that sees the work, understands it and carries it through, from the job site to the balance sheet.</p>
         <div class="cta">
           <a class="btn pri" href="coworkers.html">Meet the digital coworkers</a>
@@ -600,11 +613,16 @@ try{if(localStorage.getItem('mtech-bp')==='1'){root.classList.add('bp');bpBtn.se
 
 /* capsule: the recurring motif */
 function capsule(parent,w,rows){
-  var g=S('g',{},parent),h=22+rows.length*19;
-  S('rect',{x:-w/2,y:-h/2,width:w,height:h,class:'ln fillp'},g);
-  S('rect',{x:-w/2,y:-h/2,width:w,height:5,class:'fillacc'},g);
-  var vals=rows.map(function(r,i){var y=-h/2+24+i*19;T(r[0],{x:-w/2+10,y:y,class:'lbl',style:'font-size:9.5px'},g);return T(r[1],{x:-w/2+w*.42,y:y,class:'lblf',style:'font-size:11px'},g)});
-  return {g:g,vals:vals,h:h};
+  var g=S('g',{},parent),h=22+rows.length*19,W=w;
+  var box=S('rect',{x:-w/2,y:-h/2,width:w,height:h,class:'ln fillp'},g);
+  var bar=S('rect',{x:-w/2,y:-h/2,width:w,height:5,class:'fillacc'},g);
+  var labs=[],vals=rows.map(function(r,i){var y=-h/2+24+i*19;labs.push(T(r[0],{x:-w/2+10,y:y,class:'lbl',style:'font-size:9.5px'},g));return T(r[1],{x:-w/2+w*.42,y:y,class:'lblf',style:'font-size:11px'},g)});
+  /* the card grows to fit its longest label and value, and never shrinks back */
+  function fit(){var lw=0,vw=0;try{labs.forEach(function(l){lw=Math.max(lw,l.getComputedTextLength())});vals.forEach(function(v){vw=Math.max(vw,v.getComputedTextLength())})}catch(e){return}
+    W=Math.max(W,Math.ceil(lw+vw+34));[box,bar].forEach(function(r){r.setAttribute('x',-W/2);r.setAttribute('width',W)});
+    labs.forEach(function(l){l.setAttribute('x',-W/2+10)});var vx=Math.max(-W/2+w*.42,-W/2+lw+22);vals.forEach(function(v){v.setAttribute('x',vx)})}
+  fit();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+  return {g:g,vals:vals,h:h,fit:fit};
 }
 
 /* reel: one particle system. First the glasses, then the job site seen through them, then the network of digital coworkers */
@@ -1209,7 +1227,7 @@ resetTo(2);select(2);syncButtons();
   S('circle',{cx:70,cy:150,r:40,class:'ln fillp'},f);T('AGENT A',{x:70,y:154,class:'lblf',style:'text-anchor:middle'},f);T('former owner',{x:70,y:208,class:'lbl',style:'text-anchor:middle'},f);
   S('circle',{cx:450,cy:150,r:40,class:'acc fillp'},f);T('AGENT B',{x:450,y:154,class:'lblf',style:'text-anchor:middle'},f);T('new owner',{x:450,y:208,class:'lbl',style:'text-anchor:middle'},f);
   S('rect',{x:150,y:62,width:220,height:176,class:'acc dash',fill:'none'},f);T('ONE COMMIT · BOTH OR NEITHER',{x:260,y:54,class:'lbla',style:'text-anchor:middle'},f);
-  var c=capsule(f,190,[['OWNER','A → B'],['AUTHORITY','Q-2210 ≤ $14,860'],['EVIDENCE','5 signed entries'],['OBLIGATION','Install by Thu'],['NEXT ACTION','Dispatch crew 9 am']]);c.g.setAttribute('transform','translate(260 150)');
+  var c=capsule(f,190,[['OWNER','A → B'],['AUTHORITY','Q-2210'],['EVIDENCE','5 signed'],['OBLIGATION','Install Thu'],['NEXT','Dispatch crew']]);c.g.setAttribute('transform','translate(260 150)');
   arrow(f,110,150,163,150);arrow(f,357,150,408,150,'acc');
   T('✕ can no longer act',{x:20,y:262,class:'lbla'},f);
   var a=S('g',{class:'ann'},f);num(a,'10',40,40,58,114);num(a,'12',480,40,462,114);num(a,'14',300,272,290,210);num(a,'16',180,280,160,238);

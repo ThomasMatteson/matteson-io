@@ -4,6 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MTech Agentic Architecture</title>
+<meta name="description" content="The rules and mechanisms that let AI agents carry business work from request to settlement, with controlled authority, continuous ownership and recorded evidence.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#15171a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MTech">
+<meta property="og:title" content="MTech Agentic Architecture">
+<meta property="og:description" content="The rules and mechanisms that let AI agents carry business work from request to settlement, with controlled authority, continuous ownership and recorded evidence.">
+<meta property="og:url" content="https://matteson.io/architecture.html">
+<meta property="og:image" content="https://matteson.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
@@ -160,23 +174,23 @@ var $=MT.$,S=MT.S,T=MT.T;
 /* hero: capsule handed from agent to agent around a loop */
 (function(){
   var svg=$('#hero');
-  var N=[{p:[110,270],n:'Purchasing',next:'Place PO'},{p:[280,110],n:'Logistics',next:'Book delivery'},{p:[450,270],n:'Field',next:'Dispatch crew'}];
+  var N=[{p:[110,270],n:'Purchasing',next:'Place PO'},{p:[280,132],n:'Logistics',next:'Book delivery'},{p:[450,270],n:'Field',next:'Dispatch crew'}];
   var c=[280,220],paths=[];
   for(var i=0;i<3;i++){var a=N[i].p,b=N[(i+1)%3].p,mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,qx=mx+(mx-c[0])*.6,qy=my+(my-c[1])*.6;
     paths.push(S('path',{d:'M'+a[0]+' '+a[1]+' Q'+qx+' '+qy+' '+b[0]+' '+b[1],class:'thin dash'},svg))}
   var rings=N.map(function(n){var g=S('g',{},svg);S('circle',{cx:n.p[0],cy:n.p[1],r:70,class:'thin'},g);var r=S('circle',{cx:n.p[0],cy:n.p[1],r:64,class:'ln',style:'stroke-width:1.2'},g);
     T(n.n.toUpperCase()+' AGENT',{x:n.p[0],y:n.p[1]+(n.p[1]<200?-80:92),class:'lblf',style:'text-anchor:middle'},g);return r});
   var flash=T('HANDOFF COMMITTED',{class:'lbla',style:'text-anchor:middle;opacity:0'},svg);
-  var cap=MT.capsule(svg,160,[['OWNER',''],['AUTHORITY','Q-2210 ≤ $14,860'],['EVIDENCE',''],['NEXT','']]);
+  var cap=MT.capsule(svg,200,[['OWNER','Purchasing agent'],['AUTHORITY','Q-2210 · $14,860'],['EVIDENCE','4 signed'],['NEXT','Dispatch crew']]);
   var PER=3.4,MOVE=1.9;
   MT.loop(svg,function(t,still){
     if(still)t=MOVE+.3;
     var k=Math.floor(t/PER),seg=k%3,loc=t-k*PER,dst=(seg+1)%3,arrived=loc>=MOVE,e=MT.ease(MT.clamp(loc/MOVE));
     var p=paths[seg],pt=p.getPointAtLength(p.getTotalLength()*e),at=arrived?dst:seg;
     cap.g.setAttribute('transform','translate('+pt.x+' '+pt.y+')');
-    cap.vals[0].textContent=N[at].n+' agent';cap.vals[2].textContent=(k+2+(arrived?1:0))+' signed';cap.vals[3].textContent=N[at].next;
+    cap.vals[0].textContent=N[at].n+' agent';cap.vals[2].textContent=(k+2+(arrived?1:0))+' signed';cap.vals[3].textContent=N[at].next;cap.fit();
     rings.forEach(function(r,i){r.setAttribute('class',i===at?'acc':'ln')});
-    var d=N[dst].p;flash.setAttribute('x',d[0]);flash.setAttribute('y',d[1]+(d[1]<200?-96:-80));flash.style.opacity=arrived?String(1-MT.clamp((loc-MOVE)/(PER-MOVE))*.7):'0';
+    var d=N[dst].p;flash.setAttribute('x',d[0]);flash.setAttribute('y',d[1]+(d[1]<200?78:-66));flash.style.opacity=arrived?String(1-MT.clamp((loc-MOVE)/(PER-MOVE))*.7):'0';
   });
 })();
 
