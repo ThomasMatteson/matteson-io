@@ -69,6 +69,48 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .asteps li.on{color:var(--fg)}.asteps li.on::after{width:36px;background:var(--accent)}.asteps li.done{color:var(--accent)}
 @media(max-width:760px){.asteps{display:none}.acapin{max-width:none}.alog{left:20px;right:auto}}
 .aisle.nogl{height:auto}.aisle.nogl .astage{position:relative;height:auto;padding-block:80px}.aisle.nogl #agl,.aisle.nogl .alens,.aisle.nogl .trk,.aisle.nogl .warnb,.aisle.nogl .baylab,.aisle.nogl .alog{display:none}.aisle.nogl .acap{position:relative}
+/* vision sections: identification, evidence sources, companion, capture, learning loop */
+.demo{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);border:1px solid var(--line);margin-top:40px;background:var(--bg)}
+.demo>.l{border-right:1px solid var(--line);padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.demo>.r{padding:20px;min-width:0}
+@media(max-width:900px){.demo{grid-template-columns:1fr}.demo>.l{border-right:0;border-bottom:1px solid var(--line)}}
+.opt{background:var(--bg2);border:1px solid var(--line);padding:12px 14px;text-align:left;display:grid;gap:2px}
+.opt b{font:700 16px var(--f-display);font-variation-settings:"wdth" 100}
+.opt small{font:400 12px var(--f-mono);color:var(--muted)}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--panel)}
+.opt[aria-pressed="true"] b{color:var(--accent)}
+.opt:disabled{opacity:.45;cursor:default}
+.lensp{border:1px solid var(--line);border-radius:28px;padding:20px 22px;background:radial-gradient(ellipse at 50% 40%,var(--panel),var(--bg2) 80%);font:400 13.5px/1.6 var(--f-mono);min-height:230px;position:relative}
+.lensp::before{content:"Through the glasses";position:absolute;top:-9px;left:24px;background:var(--bg);padding:0 8px;font:500 10.5px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.lensp>*{animation:in .35s ease both}
+.lensp .a{color:var(--accent)}
+.lensp .q{color:var(--muted)}
+.lensp .ctx{display:grid;gap:10px}
+.lensp .ctx div{border-left:2px solid var(--accent);padding-left:10px}
+.lensp .ctx b{display:block;font:500 10.5px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.lensp .pick{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.callouts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.callouts div{border:1px dashed var(--accent);padding:18px 20px;background:var(--bg2)}
+.callouts h3{font-size:19px;font-weight:800;font-variation-settings:"wdth" 102;margin-bottom:6px}
+.callouts p{font-weight:300;font-size:15px}
+@media(max-width:760px){.callouts{grid-template-columns:1fr}}
+.reqs{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.reqs li{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:15px;align-items:baseline}
+.reqs li::before{content:"○";font:500 13px var(--f-mono);color:var(--muted)}
+.reqs li.ok::before{content:"✓";color:var(--accent)}
+.reqs li.need::before{content:"!";color:var(--accent)}
+.note{border:1px solid var(--line);background:var(--bg2);padding:12px 14px;margin-top:12px;display:grid;gap:6px;font-size:14.5px}
+.note b{font:500 10.5px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-right:8px}
+.wins{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);margin-top:28px}
+.wins div{padding:16px 16px 16px 0;border-right:1px solid var(--line2);min-width:0}
+.wins div+div{padding-left:16px}
+.wins div:last-child{border-right:0}
+.wins b{display:block;font:800 22px var(--f-display);font-variation-settings:"wdth" 102;margin-bottom:4px}
+.wins p{font-weight:300;font-size:15px}
+@media(max-width:760px){.wins{grid-template-columns:1fr}.wins div,.wins div+div{padding:14px 0;border-right:0;border-bottom:1px solid var(--line2)}}
+.remote{margin-top:14px;border:1px solid var(--accent);padding:12px 14px;background:color-mix(in srgb,var(--accent) 8%,var(--bg2))}
+.remote svg{display:block;width:100%;max-width:420px;height:auto;margin-top:8px}
+.aside{margin-top:20px;font-weight:300;font-size:15.5px;max-width:72ch;border-left:3px solid var(--accent);padding-left:14px}
 </style>
 </head>
 <body>
@@ -76,6 +118,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   <div class="wrap">
     <a class="mark" href="./"><svg class="logo" viewBox="56 56 1890 314" role="img" aria-label="MTech"><path fill="currentColor" d="M66 66H140L257 215L374 66H447V360H385V160L257 318L128 160V360H66Z"/><g fill="var(--accent)"><path d="M520 66H830V122H703V360H642V122H520Z"/><path d="M900 66H1179V122H900Z"/><path d="M900 185H1163V242H958V304H1179V360H900Z"/><path d="M1345 66H1551V122H1350A35 35 0 0 0 1315 157V269A35 35 0 0 0 1350 304H1551V360H1345A90 90 0 0 1 1255 270V156A90 90 0 0 1 1345 66Z"/><path d="M1628 66H1688V185H1876V66H1936V360H1876V242H1688V360H1628Z"/></g></svg></a>
     <nav aria-label="Primary">
+      <a href="work.html">The job</a>
       <a href="coworkers.html">Coworkers</a>
       <a href="wearables.html" aria-current="page">Field awareness</a>
       <a href="process.html">Process control</a>
@@ -92,9 +135,9 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   <div class="wrap">
     <div>
       <div class="crumbs mono"><a href="./">MTech</a><span>/</span><span>Capabilities</span><span>/</span><span style="color:var(--fg)">Field awareness</span></div>
-      <h1>Safety glasses <span>that see the whole site.</span></h1>
-      <p class="sub">Ordinary-looking safety glasses connected to every sensor on location. They see what the wearer sees, feel what the sensors feel, and hold each step until it is safe and proven.</p>
-      <div class="facts"><span class="chip on">Vehicle awareness</span><span class="chip">Guided repair</span><span class="chip">Safety gate</span><span class="chip">Proof on site</span></div>
+      <h1>Knowledge that meets you <span>at the machine.</span></h1>
+      <p class="sub">What if the knowledge you needed could meet you at the exact moment you needed it? Ordinary-looking safety glasses give the system a view of the work, and bring the company’s history, procedures and expertise to the person doing it.</p>
+      <div class="facts"><span class="chip on">Identification</span><span class="chip">Working companion</span><span class="chip">Remote expert</span><span class="chip">Documentation</span><span class="chip">Safety awareness</span></div>
     </div>
     <div class="hvis" style="padding:28px 20px"><svg id="plain" viewBox="0 0 520 200" role="img" aria-label="Line drawing of ordinary-looking safety glasses with a small camera and sensor module"></svg></div>
   </div>
@@ -115,10 +158,133 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   </div>
 </section>
 
+<section class="s" id="arrive">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Before the repair</div><h2 class="h2">Arrive anywhere.<br>Know what you’re looking at.</h2></div>
+      <p class="lede">You’re at a facility you have never visited. You know the customer has a problem. You may not know where the equipment is, which version it is, what happened last visit, or what is unusual about this site. The experience begins before the repair.</p>
+    </div>
+    <div class="demo">
+      <div class="l">
+        <span class="mono">How the unit is identified</span>
+        <button class="opt" data-m="tag" aria-pressed="false"><b>Read the asset tag</b><small>The camera reads the tag on the unit</small></button>
+        <button class="opt" data-m="vis" aria-pressed="false"><b>Recognize the equipment</b><small>Make, model and shape seen by the camera</small></button>
+        <button class="opt" data-m="map" aria-pressed="false"><b>Use the mapped location</b><small>Where you are standing on the site plan</small></button>
+        <button class="opt" data-m="unsure" aria-pressed="false"><b>When it isn’t sure</b><small>Two identical units, side by side</small></button>
+      </div>
+      <div class="r"><div class="lensp" id="idLens" aria-live="polite"><div class="q">Choose how the unit is identified.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">What it sees, and what it can’t</div><h2 class="h2">Three kinds of evidence,<br>brought together.</h2></div>
+      <p class="lede">The system combines what the person sees with information the person can’t directly see. Each source contributes something different, and the experience is honest about which is which.</p>
+    </div>
+    <div class="g3">
+      <div class="feat"><span class="ic" data-icon="camera"></span><span class="k">The camera</span><h3>What is visible</h3><p>The equipment, its components and labels, the condition of parts, where the technician is and what they’re working on.</p></div>
+      <div class="feat"><span class="ic" data-icon="sensor"></span><span class="k">Connected sensors</span><h3>What can’t be seen</h3><p>Temperature, pressure, vibration, gas and other conditions, measured by instruments on the equipment or on site.</p></div>
+      <div class="feat"><span class="ic" data-icon="doc"></span><span class="k">The job record</span><h3>What should be happening</h3><p>The work order, the approved scope, the procedure and the requirements this job has to meet.</p></div>
+    </div>
+    <div class="callouts">
+      <div><h3>A camera can’t detect gas.</h3><p>Understanding the scene doesn’t reveal an invisible leak. A gas sensor supplies that measurement; the glasses help locate it and guide the person away from it.</p></div>
+      <div><h3>Seeing a lock isn’t proof of isolation.</h3><p>Recognizing a lockout device shows it is there. Confirming hazardous energy is isolated takes the right readings and the procedure’s own checks.</p></div>
+    </div>
+    <div class="g3" style="margin-top:16px">
+      <div class="feat"><span class="ic" data-icon="pulse"></span><span class="k">Vibration</span><h3>Gets attention</h3><p>Reaches someone who is looking somewhere else, or working somewhere too loud to hear.</p></div>
+      <div class="feat"><span class="ic" data-icon="chat"></span><span class="k">Audio</span><h3>Explains</h3><p>Says what the issue is and what to do, without the person having to stop and read.</p></div>
+      <div class="feat"><span class="ic" data-icon="pin"></span><span class="k">Visual overlay</span><h3>Locates</h3><p>On suitable hardware, points to the component or area that matters, right where it is.</p></div>
+    </div>
+  </div>
+</section>
+
 <section class="s">
   <div class="wrap">
     <div class="sechd">
-      <div><div class="eyebrow mono">The loop</div><h2 class="h2">See. Judge.<br>Then gate the work.</h2></div>
+      <div><div class="eyebrow mono">A working companion</div><h2 class="h2">Ask it anything<br>about the job.</h2></div>
+      <p class="lede">The system answers from the identified equipment, the approved procedures, the job’s requirements and the evidence so far. When information conflicts, or the situation is outside what it reliably knows, it says so and brings in a person who does.</p>
+    </div>
+    <div class="demo">
+      <div class="l">
+        <span class="mono">The technician asks</span>
+        <button class="opt" data-q="0" aria-pressed="false"><b>“Show me the procedure for this model.”</b></button>
+        <button class="opt" data-q="1" aria-pressed="false"><b>“What was replaced last time?”</b></button>
+        <button class="opt" data-q="2" aria-pressed="false"><b>“Which measurement do I need next?”</b></button>
+        <button class="opt" data-q="3" aria-pressed="false"><b>“This part looks different from the diagram.”</b></button>
+      </div>
+      <div class="r"><div class="lensp" id="askLens" aria-live="polite"><div class="q">Choose a question.</div></div></div>
+    </div>
+    <p class="aside">The value is putting more of the organization’s experience within reach of the person doing the work, including the experience of the one colleague who has seen this exact problem before.</p>
+  </div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Documentation, done on site</div><h2 class="h2">Get it right while<br>you’re still standing there.</h2></div>
+      <p class="lede">The system knows what this job needs to be documented: which component to photograph, from which angle, and which readings to take. It checks each capture for clarity and content as it happens.</p>
+    </div>
+    <div class="demo">
+      <div class="l">
+        <span class="mono">This job needs</span>
+        <ul class="reqs" id="reqs"></ul>
+        <div class="row" style="margin-top:8px">
+          <button class="sbtn" id="cPhoto">Photograph the nameplate</button>
+          <button class="sbtn" id="cNote">Speak a note</button>
+          <button class="sbtn go" id="cClose">Close up the unit</button>
+          <button class="sbtn" id="cReset">Reset</button>
+        </div>
+      </div>
+      <div class="r"><div class="lensp" id="capLens" aria-live="polite"></div></div>
+    </div>
+    <div class="wins">
+      <div><b>Fewer return trips</b><p>Missing photos and readings are caught before the panel goes back on.</p></div>
+      <div><b>Less reconstruction</b><p>Notes and evidence are captured as the work happens, not remembered afterwards.</p></div>
+      <div><b>A better next visit</b><p>Everything is attached to the right asset, so the next person starts informed.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">One intelligence, many interfaces</div><h2 class="h2">The glasses are<br>a window into more.</h2></div>
+      <p class="lede">The glasses are an interface to a larger intelligence system. Simple hardware already gives useful awareness; more capable hardware adds spatial guidance and richer interaction. The same system reaches across devices.</p>
+    </div>
+    <div class="strip">
+      <div><h3>Camera and haptics</h3><p>Awareness without a display: the system sees the work and taps the wearer when it matters.</p></div>
+      <div><h3>Audio</h3><p>Questions and answers by voice, hands still on the job.</p></div>
+      <div><h3>Augmented display</h3><p>Spatial guidance, overlays on components, and shared views for remote experts.</p></div>
+      <div><h3>Phones and tablets</h3><p>The same guidance and capture for crews without glasses.</p></div>
+      <div><h3>Sensors and systems</h3><p>Equipment, site sensors and business systems feeding one shared picture of the job.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Learning and doing</div><h2 class="h2">From practice to the field,<br>and back again.</h2></div>
+      <p class="lede">The same procedure, terminology and evidence requirements follow a person from rehearsal into real work. And what the field learns can make its way back to everyone.</p>
+    </div>
+    <div class="strip odd">
+      <div><h3>Rehearse</h3><p>Practice the procedure in a simulated environment, with the same guidance used on site.</p></div>
+      <div><h3>Perform</h3><p>Receive guidance while performing an authorized task on real equipment.</p></div>
+      <div><h3>Reflect</h3><p>Get feedback afterwards on what went well and what was missed.</p></div>
+      <div><h3>Propose</h3><p>A useful discovery on a real job is captured as a proposed improvement.</p></div>
+      <div><h3>Review and share</h3><p>The person who owns that knowledge reviews it. Approved improvements become available to everyone.</p></div>
+    </div>
+    <p class="aside">Observed behavior doesn’t automatically become a company rule. Every lasting change to a procedure goes through a person who owns that knowledge.</p>
+    <div class="row" style="margin-top:24px"><a class="btn pri" href="work.html#journey">Follow a full service visit</a><a class="btn" href="onboarding.html">How training works</a></div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Keeping the work safe</div><h2 class="h2">See. Judge.<br>Then gate the work.</h2></div>
       <p class="lede">Every step, every photo and every job advances on proof the system has checked.</p>
     </div>
     <div class="strip">
@@ -472,6 +638,66 @@ tabs.forEach(function(b){b.addEventListener('click',function(){setMode(b.dataset
   S('circle',{cx:260,cy:60,r:4,class:'fillacc'},svg);S('rect',{x:452,y:90,width:26,height:20,rx:4,class:'acc'},svg);
   S('line',{x1:260,y1:56,x2:260,y2:26,class:'thin'},svg);T('CAMERA',{x:268,y:26,class:'lbl'},svg);S('line',{x1:478,y1:110,x2:490,y2:130,class:'thin'},svg);T('SENSORS',{x:470,y:146,class:'lbl'},svg);
 })();
+})();
+</script>
+<script>
+/* vision sections: identification, companion and on-site documentation demos */
+(function(){
+var $=MT.$,$$=MT.$$;
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function press(group,b){$$(group).forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')})}
+
+/* identification */
+var idL=$('#idLens');
+var HOW={tag:'Asset tag RTU-3 read at 1.2 m.',vis:'Recognized: 7.5-ton packaged rooftop unit, cabinet rev C.',map:'Position on the site plan: north roof, bay 3.'};
+function context(how){
+  idL.innerHTML='';idL.appendChild(el('div','a',how));idL.appendChild(el('div','',' '));
+  var c=el('div','ctx');
+  [['This is the unit you were sent to service','RTU-3 · work order WO-4471'],['This is what the customer reported','Not cooling since Tuesday; breaker tripping'],['This is what happened last time','14 Mar: capacitor replaced, fan motor noted as noisy'],['These are the conditions that matter','Roof access by north hatch · harness required · gas line runs along the curb']].forEach(function(r,i){var d=el('div');d.appendChild(el('b','',r[0]));d.appendChild(document.createTextNode(r[1]));d.style.animationDelay=(i*.12)+'s';c.appendChild(d)});
+  idL.appendChild(c);
+}
+$$('#arrive .opt').forEach(function(b){b.addEventListener('click',function(){press('#arrive .opt',b);var m=b.dataset.m;
+  if(m!=='unsure'){context(HOW[m]);return}
+  idL.innerHTML='';idL.appendChild(el('div','a','Two matching units: RTU-3 and RTU-4.'));idL.appendChild(el('div','','Their tags are out of view, and both fit the description.'));idL.appendChild(el('div','q','Which one is in front of you?'));
+  var p=el('div','pick');['RTU-3','RTU-4'].forEach(function(u){var x=el('button','sbtn',u);x.addEventListener('click',function(){if(u==='RTU-3')context('Confirmed by you: RTU-3.');else{idL.innerHTML='';idL.appendChild(el('div','a','RTU-4 isn’t on this work order.'));idL.appendChild(el('div','','The unit you were sent for is RTU-3, the next one to the east. Unit-specific guidance stays hidden until you’re in front of it.'))}});p.appendChild(x)});
+  idL.appendChild(p);
+})});
+
+/* working companion */
+var askL=$('#askLens');
+var ANS=[
+ [['a','Procedure · 7.5-ton unit, rev C · condenser fan motor replacement'],['','1 Isolate power and verify zero voltage'],['','2 Remove the fan guard and blade'],['','3 Record the old motor’s rotation and wiring'],['q','Approved procedure, current revision.']],
+ [['a','Last visit · 14 Mar · technician D. Ortiz'],['','Replaced the run capacitor. Fan motor noted as noisy, bearing wear suspected; not replaced.'],['q','From the service history for RTU-3.']],
+ [['a','Next: contactor voltage drop, line to load'],['','Expected: under 1 V across each pole.'],['','You have 3 of 5 required readings for this job.'],['q','From the job’s completion requirements.']],
+ [['a','That doesn’t match the diagram for this model.'],['','The substitute motor may use a different mount, but I can’t confirm that from the documents I have.'],['q','I won’t guess on this one.']]
+];
+function showAns(i){askL.innerHTML='';ANS[i].forEach(function(l,k){var d=el('div',l[0],l[1]);d.style.animationDelay=(k*.12)+'s';askL.appendChild(d)});
+  if(i===3){var p=el('div','pick'),b=el('button','sbtn go','Connect to an expert');p.appendChild(b);askL.appendChild(p);
+    b.addEventListener('click',function(){p.remove();var r=el('div','remote');r.appendChild(el('div','a','Ray M., senior technician, is viewing your camera'));
+      r.innerHTML+='<svg viewBox="0 0 320 132" aria-hidden="true"><rect x="10" y="6" width="300" height="96" class="thin"/><circle cx="110" cy="54" r="32" class="ln"/><rect x="172" y="34" width="76" height="40" class="ln"/><ellipse cx="210" cy="54" rx="54" ry="32" class="acc"/><text x="210" y="124" class="lbla" style="text-anchor:middle">THAT’S THE ADAPTER PLATE</text></svg>';
+      r.appendChild(el('div','',' “That plate ships with the substitute. Mount it first, then the motor.”'));askL.appendChild(r)})}}
+$$('.demo .opt[data-q]').forEach(function(b){b.addEventListener('click',function(){press('.demo .opt[data-q]',b);showAns(+b.dataset.q)})});
+
+/* on-site documentation */
+var capL=$('#capLens'),reqs=$('#reqs'),st;
+var REQ=[['photo','Readable nameplate photo'],['amps','Startup amp reading'],['note','Service note']];
+function rr(){reqs.innerHTML='';REQ.forEach(function(r){reqs.appendChild(el('li',st[r[0]]===2?'ok':st[r[0]]===1?'need':'',r[1]))})}
+function say(lines){capL.innerHTML='';lines.forEach(function(l,k){var d=el('div',l[0],l[1]);d.style.animationDelay=(k*.12)+'s';capL.appendChild(d)})}
+function reset(){st={photo:0,amps:0,note:0,tries:0};rr();say([['q','Capture the evidence, then try to close up the unit.']]);$('#cPhoto').textContent='Photograph the nameplate'}
+$('#cPhoto').addEventListener('click',function(){
+  if(st.photo===2)return;
+  if(st.tries===0){st.tries=1;st.photo=1;rr();say([['a','Photo captured · serial number unreadable'],['','Glare across the plate. Step left and retake from a lower angle.'],['q','Caught now, not in the office next week.']]);this.textContent='Retake the photo';return}
+  st.photo=2;rr();say([['a','Nameplate ✓'],['','Serial FM-825-11937 read · attached to RTU-3 and WO-4471']]);this.textContent='Photo complete'});
+$('#cNote').addEventListener('click',function(){st.note=2;rr();capL.innerHTML='';capL.appendChild(el('div','q','YOU: “Motor seized, shaft won’t turn by hand, replaced with the substitute, rotation checked.”'));
+  var n=el('div','note');[['Finding','Condenser fan motor seized'],['Action','Replaced with substitute UM-825'],['Check','Rotation verified']].forEach(function(r){var d=el('div');d.appendChild(el('b','',r[0]));d.appendChild(document.createTextNode(r[1]));n.appendChild(d)});capL.appendChild(n)});
+$('#cClose').addEventListener('click',function(){
+  var miss=REQ.filter(function(r){return st[r[0]]!==2&&r[0]!=='amps'});
+  if(st.amps!==2){st.amps=1;rr();var lines=[['a','Before you close up: the startup amp reading is still needed.']];if(miss.length)lines.push(['','Also outstanding: '+miss.map(function(r){return r[1].toLowerCase()}).join(', ')+'.']);say(lines);
+    var p=el('div','pick'),b=el('button','sbtn go','Enter reading: 2.9 A');b.addEventListener('click',function(){st.amps=2;rr();say([['a','2.9 A recorded · within spec ✓']])});p.appendChild(b);capL.appendChild(p);return}
+  if(miss.length){say([['a','Still outstanding: '+miss.map(function(r){return r[1].toLowerCase()}).join(', ')+'.']]);return}
+  say([['a','Documentation complete ✓'],['','Everything this job needs is attached to RTU-3 and WO-4471.'],['','The next person here starts with today’s record.']])});
+$('#cReset').addEventListener('click',reset);
+reset();
 })();
 </script>
 </body>

@@ -71,6 +71,66 @@
 .bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);transition:width 1.2s linear}
 .limits{font:400 12.5px/1.6 var(--f-mono);color:var(--muted);border:1px dashed var(--line);padding:10px 12px;margin-bottom:12px}
 .limits b{color:var(--fg);font-weight:500}
+/* vision sections: a job unfolding, waiting on, channels, corrections, coordination */
+.unfold{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);border:1px solid var(--line);margin-top:40px;background:var(--bg)}
+.unfold>div{min-width:0}
+.unfold>div+div{border-left:1px solid var(--line)}
+.unfold .hd{padding:14px 18px;border-bottom:1px solid var(--line);background:var(--panel);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.feed{list-style:none;margin:0;padding:16px 18px;display:grid;gap:10px;min-height:300px;align-content:start}
+.feed li{border:1px solid var(--line2);background:var(--bg2);padding:10px 12px;font-size:14.5px;line-height:1.45;animation:in .35s ease both}
+.feed li .ch{display:block;font:500 10.5px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.feed li.cw{border-left:3px solid var(--accent)}
+.feed li.cw .ch{color:var(--accent)}
+.feed li.gap{border-color:var(--accent);border-style:dashed}
+.rec{margin:0;padding:16px 18px;display:grid;gap:0}
+.rec div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid var(--line2);font-size:14.5px}
+.rec dt{font:500 10.5px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.rec dd{margin:0}
+.rec dd.new{color:var(--accent)}
+.rec dd.miss{color:var(--accent);font-family:var(--f-mono);font-size:13px}
+.uctl{padding:0 18px 18px;display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:900px){.unfold{grid-template-columns:1fr}.unfold>div+div{border-left:0;border-top:1px solid var(--line)}}
+.waits{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:16px;margin-top:40px}
+@media(max-width:900px){.waits{grid-template-columns:1fr}}
+.wpick{display:grid;gap:8px;align-content:start}
+.wpick button{background:var(--bg);border:1px solid var(--line);padding:12px 14px;text-align:left;display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:center}
+.wpick button b{font:700 16px var(--f-display);font-variation-settings:"wdth" 100}
+.wpick button[aria-pressed="true"]{border-color:var(--accent);background:var(--panel)}
+.wpick button[aria-pressed="true"] b{color:var(--accent)}
+.wreply{border:1px solid var(--line);background:var(--bg);padding:20px 22px;min-width:0}
+.wreply q{display:block;font:500 clamp(18px,1.7vw,22px)/1.4 var(--f-body);quotes:"\201C" "\201D";margin:8px 0 16px}
+.wreply dl{margin:0;display:grid;gap:0;border-top:1px solid var(--line2)}
+.wreply dl div{display:grid;grid-template-columns:130px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid var(--line2);font-size:14.5px}
+.wreply dt{font:500 10.5px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.wreply dd{margin:0}
+@media(max-width:520px){.wreply dl div,.rec div{grid-template-columns:1fr;gap:2px}}
+.wreply>*{animation:in .35s ease both}
+.kchat{border:1px solid var(--line);background:var(--bg);margin-top:40px;max-width:860px}
+.kchat .hd{padding:14px 18px;border-bottom:1px solid var(--line);background:var(--panel);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.kmsgs{list-style:none;margin:0;padding:18px;display:grid;gap:10px}
+.kmsgs li{max-width:78%;padding:10px 14px;font-size:15px;line-height:1.45;border:1px solid var(--line2);background:var(--bg2);animation:in .35s ease both}
+.kmsgs li.me{justify-self:end;border-color:var(--line)}
+.kmsgs li .ch{display:block;font:500 10.5px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.kmsgs li.cw{border-left:3px solid var(--accent)}
+.kmsgs li.cw .ch{color:var(--accent)}
+.kmsgs li.sys{max-width:none;justify-self:stretch;background:none;border-style:dashed;font:400 13px var(--f-mono);color:var(--muted)}
+@media(max-width:620px){.kmsgs li{max-width:92%}}
+.kchat .uctl{padding:0 18px 18px}
+.know{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line);margin-top:40px}
+.know div{padding:16px 16px 16px 0;border-right:1px solid var(--line2);min-width:0}
+.know div+div{padding-left:16px}
+.know div:last-child{border-right:0}
+.know b{display:block;font:500 11px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.know span{font-size:15px;font-weight:300}
+@media(max-width:1000px){.know{grid-template-columns:1fr 1fr}.know div,.know div+div{padding:14px 12px 14px 0;border-right:0;border-bottom:1px solid var(--line2)}}
+@media(max-width:560px){.know{grid-template-columns:1fr}}
+.over{border:1px solid var(--accent);background:var(--bg);margin-top:16px}
+.over .hd{padding:14px 18px;border-bottom:1px solid var(--line);background:var(--panel);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.over q{display:block;padding:18px 18px 6px;font:500 clamp(17px,1.6vw,21px)/1.45 var(--f-body);quotes:"\201C" "\201D"}
+.over ul{list-style:none;margin:0;padding:8px 18px 18px;display:grid;gap:8px}
+.over li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid var(--line2);background:var(--bg2);padding:10px 12px;font-size:14.5px}
+.over li .chip{justify-self:end}
+.over .uctl{padding:0 18px 18px}
 </style>
 </head>
 <body>
@@ -78,6 +138,7 @@
   <div class="wrap">
     <a class="mark" href="./"><svg class="logo" viewBox="56 56 1890 314" role="img" aria-label="MTech"><path fill="currentColor" d="M66 66H140L257 215L374 66H447V360H385V160L257 318L128 160V360H66Z"/><g fill="var(--accent)"><path d="M520 66H830V122H703V360H642V122H520Z"/><path d="M900 66H1179V122H900Z"/><path d="M900 185H1163V242H958V304H1179V360H900Z"/><path d="M1345 66H1551V122H1350A35 35 0 0 0 1315 157V269A35 35 0 0 0 1350 304H1551V360H1345A90 90 0 0 1 1255 270V156A90 90 0 0 1 1345 66Z"/><path d="M1628 66H1688V185H1876V66H1936V360H1876V242H1688V360H1628Z"/></g></svg></a>
     <nav aria-label="Primary">
+      <a href="work.html">The job</a>
       <a href="coworkers.html" aria-current="page">Coworkers</a>
       <a href="wearables.html">Field awareness</a>
       <a href="process.html">Process control</a>
@@ -94,8 +155,8 @@
   <div class="wrap">
     <div>
       <div class="crumbs mono"><a href="./">MTech</a><span>/</span><span>Products</span><span>/</span><span style="color:var(--fg)">Digital coworkers</span></div>
-      <h1>Digital coworkers. <span>They own the work and see it through.</span></h1>
-      <p class="sub">Each one owns real steps of your business: ordering, scheduling, invoicing, chasing. They ask before they overstep, hand work on cleanly, and show what they did.</p>
+      <h1>Give software <span>a job.</span></h1>
+      <p class="sub">A digital coworker has a defined responsibility, the knowledge and tools to carry it out, a record of unfinished work and a clear way to involve people. It works where your business already works, and the work continues after the conversation ends.</p>
       <div class="facts"><span class="chip">Product</span><span class="chip on">Built on the agentic architecture</span></div>
     </div>
     <div class="hvis" style="padding-top:34px">
@@ -103,6 +164,111 @@
       <ul class="team" id="team"></ul>
       <div class="tfoot"><span>Showing 6 of 8 coworkers</span><span>Waiting on you: <b id="waitN">1 approval</b></span></div>
     </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Giving software a job</div><h2 class="h2">What a coworker<br>needs to do real work.</h2></div>
+      <p class="lede">A digital coworker isn’t a chat window. It is given a job, the same way a new hire is: what it is responsible for, what it can use, and who to bring in.</p>
+    </div>
+    <div class="strip odd">
+      <div><h3>A defined responsibility</h3><p>A clear part of the work it owns, from start to handoff.</p></div>
+      <div><h3>Relevant knowledge</h3><p>The customers, procedures and history that bear on that work.</p></div>
+      <div><h3>Permitted tools</h3><p>The systems it may use, and what it may do in each.</p></div>
+      <div><h3>A record of unfinished work</h3><p>Everything still open, so nothing depends on memory.</p></div>
+      <div><h3>A way to involve people</h3><p>Who to ask, who decides, and how to reach them.</p></div>
+    </div>
+    <p class="lede" style="max-width:72ch;margin-top:28px">For example, a service coworker’s responsibility could include understanding incoming requests, checking the site and equipment, identifying missing information, coordinating the next authorized step, and following the job through its part of the process.</p>
+  </div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Watch the work unfold</div><h2 class="h2">The conversation ends.<br>The work doesn’t.</h2></div>
+      <p class="lede">A vague email arrives with a photo attached. Follow the service coworker as it turns that into a job, notices what’s missing, asks for it, and picks up exactly where it left off when the answer comes back days later.</p>
+    </div>
+    <div class="unfold">
+      <div><div class="hd"><span class="mono">Where it happens</span><span class="chip" id="uStep"></span></div><ul class="feed" id="uFeed" aria-live="polite"></ul>
+        <div class="uctl"><button class="sbtn go" id="uNext">Next</button><button class="sbtn" id="uReset">Start over</button></div></div>
+      <div><div class="hd"><span class="mono">The job record</span><span class="chip on" id="uState">No job yet</span></div><dl class="rec" id="uRec"></dl></div>
+    </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Ask any coworker</div><h2 class="h2">“What are you<br>waiting on?”</h2></div>
+      <p class="lede">The answer comes from actual obligations, not a status badge: what is outstanding, what depends on it, what has already been prepared, and who can see it.</p>
+    </div>
+    <div class="waits">
+      <div class="wpick" id="who"></div>
+      <div class="wreply" id="reply" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Where your business already works</div><h2 class="h2">Many channels.<br>One job.</h2></div>
+      <p class="lede">A request might begin in email, get clarified in team chat, depend on a supplier document and finish with an update in a business system. Every one of those events stays attached to the same job, and the coworker’s value shows up as resolved questions and completed actions.</p>
+    </div>
+    <div class="g3">
+      <div class="feat"><span class="ic" data-icon="doc"></span><span class="k">Email</span><h3>Requests arrive</h3><p>Read, connected to the right customer and site, and turned into a job.</p></div>
+      <div class="feat"><span class="ic" data-icon="chat"></span><span class="k">Team chat</span><h3>People and agents talk</h3><p>Clarifications, decisions and handoffs, in the place where the team already works.</p></div>
+      <div class="feat"><span class="ic" data-icon="book"></span><span class="k">Documents</span><h3>Evidence is gathered</h3><p>Supplier quotes, drawings and sign-off sheets, attached where they matter.</p></div>
+      <div class="feat"><span class="ic" data-icon="wrench"></span><span class="k">SVS</span><h3>Field work is recorded</h3><p>Work orders, assets and service history stay current as the job moves.</p></div>
+      <div class="feat"><span class="ic" data-icon="money"></span><span class="k">Accounting</span><h3>Money follows the work</h3><p>Billing and payables receive what they need when the work supports it.</p></div>
+      <div class="feat"><span class="ic" data-icon="check"></span><span class="k">Tracking</span><h3>Obligations are tracked</h3><p>Each commitment has an owner and a clear answer to “is it actually done?”</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">It learns your business</div><h2 class="h2">Specific to you,<br>corrected by you.</h2></div>
+      <p class="lede">A coworker works from what is true for your business, and when someone corrects it, the correction is applied now and routed to the person who owns that knowledge before it becomes a lasting rule.</p>
+    </div>
+    <div class="know">
+      <div><b>The customer</b><span>Their requirements, contacts and agreements.</span></div>
+      <div><b>Your procedures</b><span>The approved way your company does the work.</span></div>
+      <div><b>The job’s history</b><span>Everything that has happened on this job so far.</span></div>
+      <div><b>Permitted records</b><span>Only the records its role is allowed to see.</span></div>
+      <div><b>Its authority</b><span>The tools and limits assigned to its role.</span></div>
+    </div>
+    <div class="kchat">
+      <div class="hd"><span class="mono">Team chat · WO-4471 thread</span><span class="chip" id="kState">Correction</span></div>
+      <ul class="kmsgs" id="kMsgs" aria-live="polite"></ul>
+      <div class="uctl"><button class="sbtn go" id="kNext">Next</button><button class="sbtn" id="kReset">Start over</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="s alt">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">The team in motion</div><h2 class="h2">Each coworker adds<br>its part.</h2></div>
+      <p class="lede">The service coworker identifies a parts requirement. Materials checks availability. Project coordinates the schedule. Quality checks the completion package. Accounting receives what it needs to bill. An oversight role watches the dependencies between them.</p>
+    </div>
+    <div class="strip">
+      <div><h3>Service</h3><p>Finds that the job needs a replacement motor and says exactly which.</p></div>
+      <div><h3>Materials</h3><p>Checks stock and suppliers, and finds a substitute.</p></div>
+      <div><h3>Project</h3><p>Fits the parts timeline into the schedules that depend on it.</p></div>
+      <div><h3>Quality</h3><p>Checks the completion package against what the customer requires.</p></div>
+      <div><h3>Accounting</h3><p>Bills from a supported package, and follows the payment.</p></div>
+    </div>
+    <div class="over">
+      <div class="hd"><span class="mono">Oversight · this week’s installations</span><span class="chip" id="oState">1 decision needed</span></div>
+      <q id="oSay">Three installations are waiting on the same shipment. One proposed substitute needs approval. These two schedules can proceed; this one needs a decision.</q>
+      <ul id="oList"></ul>
+      <div class="uctl"><button class="sbtn go" id="oApprove">Approve the substitute</button><button class="sbtn" id="oReset">Reset</button></div>
+    </div>
+    <div class="row" style="margin-top:28px"><a class="btn pri" href="work.html#journey">See it in a full service visit</a><a class="btn" href="architecture.html">Why handoffs hold together</a></div>
   </div>
 </section>
 
@@ -178,7 +344,7 @@
 </section>
 
 <nav class="pager" aria-label="More from MTech">
-  <a href="./"><span class="mono">← Home</span><b>MTech</b></a>
+  <a href="work.html"><span class="mono">← Previous</span><b>The job</b></a>
   <a href="wearables.html"><span class="mono">Next →</span><b>Field awareness</b></a>
 </nav>
 </main>
@@ -279,6 +445,75 @@ function approve(i,ok){var it=ITEMS[i];
   else{st[i]={owner:'Dana · Operations',agent:false,status:'Declined · nothing changed',phase:'done'};log('Declined by Dana · nothing changed');render()}}
 $('#qReset').addEventListener('click',reset);
 reset();
+})();
+</script>
+<script>
+/* vision sections: a job unfolding, waiting on, a correction, oversight */
+(function(){
+var $=MT.$,$$=MT.$$;
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function msg(list,cls,ch,txt){var li=el('li',cls);li.appendChild(el('span','ch',ch));li.appendChild(document.createTextNode(txt));list.appendChild(li);return li}
+
+/* a vague email becomes a job that outlives the conversation */
+var U=[
+ {f:[['','Email · Mon 08:12','“Unit on the roof is making that noise again. Photo attached. Can someone come out?” · photo.jpg']],r:[],st:'No job yet'},
+ {f:[['cw','Service coworker','Sender and address match Site 14, an existing customer. Opened a job.']],r:[['Customer','Site 14 · facilities manager','new'],['Job','WO-4471 · opened Mon 08:13','new']],st:'Open'},
+ {f:[['cw','Service coworker','From the email and photo: a rooftop unit, noise complaint, not urgent. Photo attached to the job.']],r:[['Request','Noise from a rooftop unit','new'],['Evidence','photo.jpg','new']],st:'Open'},
+ {f:[['gap cw','Service coworker','Site 14 has three rooftop units. The photo doesn’t show the tag. Which one?'],['cw','Service coworker · sent','“Thanks, we’ll get this scheduled. Which unit is it? The tag is on the side panel, for example RTU-3.”']],r:[['Missing','Equipment identifier','miss']],st:'Waiting on customer'},
+ {f:[['','Reply · Wed 15:40','“Sorry for the delay. It’s RTU-3.”'],['cw','Service coworker','Continued from the existing record. Nothing re-entered. RTU-3’s history linked: a noisy fan motor was noted in March.']],r:[['Equipment','RTU-3 · fan motor noted noisy, 14 Mar','new'],['Missing','None','']],st:'Open'},
+ {f:[['cw','Project coworker','Visit proposed for Thu 09:00 with a technician who has the fan motor in stock. Customer confirmed.']],r:[['Next step','Visit Thu 09:00 · technician assigned','new']],st:'Scheduled'}
+];
+var u=0;
+function uRender(){
+  var feed=$('#uFeed'),rec=$('#uRec');feed.innerHTML='';rec.innerHTML='';var rows={},order=[];
+  for(var i=0;i<=u;i++){U[i].f.forEach(function(f){var li=msg(feed,f[0],f[1],f[2]);if(i<u)li.style.animation='none'});U[i].r.forEach(function(r){if(!(r[0] in rows))order.push(r[0]);rows[r[0]]=[r[1],i===u?r[2]:(r[2]==='miss'?'miss':'')]})}
+  order.forEach(function(k){if(k==='Missing'&&rows[k][0]==='None')return;var d=el('div');d.appendChild(el('dt','',k));d.appendChild(el('dd',rows[k][1],rows[k][0]));rec.appendChild(d)});
+  if(!order.length){var d=el('div');d.appendChild(el('dt','','Status'));d.appendChild(el('dd','','An email nobody has acted on yet.'));rec.appendChild(d)}
+  $('#uState').textContent=U[u].st;$('#uStep').textContent='Step '+(u+1)+' of '+U.length;$('#uNext').disabled=u===U.length-1;
+}
+$('#uNext').addEventListener('click',function(){if(u<U.length-1){u++;uRender()}});
+$('#uReset').addEventListener('click',function(){u=0;uRender()});
+uRender();
+
+/* what are you waiting on? */
+var W=[
+ {n:'Materials',say:'The supplier hasn’t confirmed availability. The requested installation date depends on that confirmation. I’ve prepared the follow-up, and the project owner can see the dependency.',d:[['Waiting on','Northline to confirm 2 × motor FM-825'],['Depends on it','Installation at Site 9, requested for Tue'],['Prepared','Follow-up email, sending at 14:00 if no reply'],['Visible to','Project owner · Dana, operations']]},
+ {n:'Service',say:'The customer hasn’t confirmed roof access for Thursday. The technician’s route is built around it, so I’ve held the slot and asked their facilities manager directly.',d:[['Waiting on','Site 14 to confirm roof access, Thu 09:00'],['Depends on it','Technician route for Thu'],['Prepared','A fallback slot on Fri 07:30'],['Visible to','Dispatch · the assigned technician']]},
+ {n:'Accounting',say:'A signed service sheet for WO-4462. The invoice is drafted and held until it arrives, because this customer requires it with every bill. The technician has a specific request for it.',d:[['Waiting on','Signed service sheet, WO-4462'],['Depends on it','Invoice INV-3310 · $1,880'],['Prepared','Drafted invoice, held'],['Visible to','Account lead · the technician']]},
+ {n:'Project',say:'A decision from you. Three installations need the same shipment. Two can go ahead with what’s in stock; the third needs you to approve a substitute part.',d:[['Waiting on','Your approval of substitute UM-825'],['Depends on it','Installation at Site 22, Wed'],['Prepared','Side-by-side comparison of the two motors'],['Visible to','You · the customer’s account lead']]}
+];
+var who=$('#who'),reply=$('#reply');
+W.forEach(function(w,i){var b=el('button');b.setAttribute('aria-pressed','false');var g=el('span','gly');g.appendChild(el('i'));b.appendChild(g);b.appendChild(el('b','',w.n+' coworker'));b.addEventListener('click',function(){pick(i)});who.appendChild(b)});
+function pick(i){$$('button',who).forEach(function(b,k){b.setAttribute('aria-pressed',k===i?'true':'false')});var w=W[i];reply.innerHTML='';
+  reply.appendChild(el('span','mono','You: “What are you waiting on?”'));reply.appendChild(el('q','',w.say));var dl=el('dl');
+  w.d.forEach(function(r){var d=el('div');d.appendChild(el('dt','',r[0]));d.appendChild(el('dd','',r[1]));dl.appendChild(d)});reply.appendChild(dl)}
+pick(0);
+
+/* a correction: applied now, routed for review before it becomes a rule */
+var K=[
+ ['me','Dana · operations','Heads up: Northgate needs their own completion form signed on every job, not just ours.'],
+ ['cw','Service coworker','Understood. I’ve added Northgate’s completion form to WO-4471’s requirements, and the technician will be asked for it on site.'],
+ ['cw','Service coworker','Should this apply to every Northgate job? I’ve proposed that change to Maria, who owns customer requirements. Until she approves, it applies only to this job.'],
+ ['sys','','Proposed change · Northgate completion requirements · waiting on Maria (knowledge owner)'],
+ ['me','Maria · customer requirements','Approved. Their form is required on all Northgate work from today.'],
+ ['sys','','Northgate’s requirements updated · every coworker and technician now works from the new rule']
+];
+var ks=['Correction','Applied to this job','Applied to this job','Pending review','Pending review','Approved for every job'];
+var k=0;
+function kRender(){var m=$('#kMsgs');m.innerHTML='';for(var i=0;i<=k;i++){var li=msg(m,K[i][0],K[i][1],K[i][2]);if(i<k)li.style.animation='none';if(!K[i][1])li.firstChild.remove()}
+  $('#kState').textContent=ks[k];$('#kState').className='chip'+(k===K.length-1?' on':'');$('#kNext').disabled=k===K.length-1}
+$('#kNext').addEventListener('click',function(){if(k<K.length-1){k++;kRender()}});
+$('#kReset').addEventListener('click',function(){k=0;kRender()});
+kRender();
+
+/* oversight across dependencies */
+var O0=[['Site 9 · Tue · uses stock motor','Can proceed',''],['Site 14 · Thu · uses stock motor','Can proceed',''],['Site 22 · Wed · needs substitute UM-825','Needs a decision','on']];
+function oRender(ok){var l=$('#oList');l.innerHTML='';O0.forEach(function(r,i){var li=el('li');li.appendChild(el('span','',r[0]));var done=ok&&i===2;li.appendChild(el('span','chip '+(done?'':r[2]),done?'Can proceed':r[1]));l.appendChild(li)});
+  $('#oSay').textContent=ok?'All three installations can proceed. Materials has reserved the substitute for Site 22, and the project coworker has confirmed the Wednesday slot.':'Three installations are waiting on the same shipment. One proposed substitute needs approval. These two schedules can proceed; this one needs a decision.';
+  $('#oState').textContent=ok?'Nothing needs you':'1 decision needed';$('#oState').className='chip'+(ok?'':' on');$('#oApprove').disabled=ok}
+$('#oApprove').addEventListener('click',function(){oRender(true)});
+$('#oReset').addEventListener('click',function(){oRender(false)});
+oRender(false);
 })();
 </script>
 </body>

@@ -10,6 +10,7 @@ python3 -m http.server 8000
 | Page | Purpose |
 | --- | --- |
 | `index.html` | Home: scroll reel, living model, lifecycle, invention, products, paths |
+| `work.html` | The job: one service visit from three perspectives |
 | `coworkers.html` | Digital coworkers |
 | `wearables.html` | Field awareness |
 | `process.html` | Process control |
