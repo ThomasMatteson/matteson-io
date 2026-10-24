@@ -200,3 +200,5 @@ section.s.alt>.wrap{position:relative}
 @media(max-width:760px){.vs{grid-template-columns:1fr}.vs>div+div{border-left:0;border-top:1px solid var(--line)}}
 @keyframes in{from{opacity:0;transform:translateY(4px)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.01ms!important;animation:none!important}}
+/* phones: comfortable tap targets */
+@media(max-width:640px){.sbtn{min-height:40px}.crumbs a{display:inline-block;padding:10px 0}}

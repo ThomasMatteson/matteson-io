@@ -9,6 +9,8 @@ function clamp(x){return Math.max(0,Math.min(1,x))}
 function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
 function mix(a,b,t){return a+(b-a)*t}
 var REDUCE=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* phones get a lighter scene: lower resolution, smaller shadows, 30 fps */
+var PHONE=window.matchMedia('(max-width:700px), (pointer:coarse)').matches;
 var PLAY='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2l10 6-10 6z"/></svg>',PAUSE='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h4v12H3zM9 2h4v12H9z"/></svg>',AGAIN='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2a6 6 0 1 1-5.6 3.8l1.8.8A4 4 0 1 0 8 4v2L4.5 3 8 0z"/></svg>';
 
 /* the four parts of the idea; one lights up whenever it is doing something */
@@ -119,7 +121,7 @@ window.MTRTU=function(root,opt){
   if(R)build();else{root.classList.add('nogl');var nm=el('p','mono','This simulation needs WebGL. The record and coworker feed still play.');nm.style.padding='20px';stage.insertBefore(nm,labels)}
 
   function build(){
-    var DPR=Math.min(2,window.devicePixelRatio||1);R.setPixelRatio(DPR);R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.05;R.setClearColor(0xdfe4e8);
+    var DPR=Math.min(PHONE?1.5:2,window.devicePixelRatio||1);R.setPixelRatio(DPR);R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.05;R.setClearColor(0xdfe4e8);
     scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(42,16/9,.03,260);scene.add(camera);
     var sd=7331;function rnd(){sd=(sd*16807)%2147483647;return (sd-1)/2147483646}
     function M(c,o){return new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.7,metalness:.15},o||{}))}
@@ -213,7 +215,7 @@ window.MTRTU=function(root,opt){
     var edges=new THREE.LineSegments(new THREE.EdgesGeometry(bx(2.62,1.22,1.52)),new THREE.LineBasicMaterial({color:acc,transparent:true,opacity:0,depthTest:false}));edges.position.set(0,.93,0);U.add(edges);edges.renderOrder=19;G.edges=edges;
     /* afternoon sun with soft shadows */
     scene.add(new THREE.HemisphereLight(0xe6efff,0x8a8678,.85));scene.add(new THREE.AmbientLight(0xffffff,.12));
-    var sun=new THREE.DirectionalLight(0xfff0d8,1.25);sun.position.set(-8,10,6);sun.target.position.set(0,0,0);scene.add(sun);scene.add(sun.target);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+    var sun=new THREE.DirectionalLight(0xfff0d8,1.25);sun.position.set(-8,10,6);sun.target.position.set(0,0,0);scene.add(sun);scene.add(sun.target);sun.castShadow=true;sun.shadow.mapSize.set(PHONE?1024:2048,PHONE?1024:2048);
     var sc=sun.shadow.camera;sc.left=-9;sc.right=9;sc.top=9;sc.bottom=-9;sc.near=1;sc.far=40;sun.shadow.bias=-.0004;sun.shadow.radius=3;
     scene.fog=new THREE.Fog(0xe2e4e3,30,160);
     camera.position.set(9,7,11);camera.lookAt(0,.6,0);
@@ -298,7 +300,7 @@ window.MTRTU=function(root,opt){
   var mi=0,lt=0,fired=0,playing=false,userPaused=false,ended=false;
   function clean(){st.chips={};st.hl=null}
   function fire(upTo){var M=moms[mi];while(fired<M.beats.length&&M.beats[fired].t*M.d<=upTo){M.beats[fired].fn(S);fired++}}
-  function seek(i){reset();inst=true;for(var j=0;j<i;j++){mi=j;fired=0;clean();fire(1e9)}inst=false;root.removeAttribute('data-focus');mi=i;lt=0;fired=0;ended=false;clean();fire(0);uiMoment()}
+  function seek(i){dirty=true;reset();inst=true;for(var j=0;j<i;j++){mi=j;fired=0;clean();fire(1e9)}inst=false;root.removeAttribute('data-focus');mi=i;lt=0;fired=0;ended=false;clean();fire(0);uiMoment()}
   function uiMoment(){var M=moms[mi].m;stN.textContent=(mi+1)+' of '+moms.length+' · '+M.k;stP.textContent=M.plain;stS.textContent=M.short;chB.forEach(function(b,i){b.classList.toggle('on',i===mi)});renderMore()}
   function play(user){if(user)userPaused=false;if(ended){seek(0)}playing=true;setBtn()}
   function pause(user){playing=false;if(user)userPaused=true;setBtn()}
@@ -307,8 +309,8 @@ window.MTRTU=function(root,opt){
   function step(dt){lt+=dt;fire(lt);if(lt>=moms[mi].d){if(mi<moms.length-1){mi++;lt=0;fired=0;clean();fire(0);uiMoment()}else{lt=moms[mi].d;playing=false;ended=true;setBtn()}}}
 
   /* ---------- per-frame rendering ---------- */
-  var v3=R?new THREE.Vector3():null,W=1,H=1,last=0,vis=false,raf=0;
-  function size(){W=stage.clientWidth;H=stage.clientHeight;if(R){R.setSize(W,H,false);camera.aspect=W/H;camera.fov=W/H<1?58:42;camera.updateProjectionMatrix()}}
+  var v3=R?new THREE.Vector3():null,W=1,H=1,last=0,vis=false,raf=0,lastDraw=0,dirty=true;
+  function size(){dirty=true;W=stage.clientWidth;H=stage.clientHeight;if(R){R.setSize(W,H,false);camera.aspect=W/H;camera.fov=W/H<1?58:42;camera.updateProjectionMatrix()}}
   function proj(p){v3.set(p[0],p[1],p[2]).project(camera);return [(v3.x*.5+.5)*W,(-v3.y*.5+.5)*H,v3.z]}
   function anchor(k){var P=G.pts;if(k==='plate2')return [.8,1.12,.79];if(k==='compressor')return st.comp==='installed'?[.85,.9,.62]:P.compressor;return P[k]}
   function shotBox(){var pts=st.shotTgt==='meter'?[[.58,1.06,1.26],[.67,1.2,1.2]]:[[.68,.58,.6],[.82,.68,.62]];var a1=proj(pts[0]),a2=proj(pts[1]);
@@ -330,7 +332,8 @@ window.MTRTU=function(root,opt){
     instr.textContent=st.instr;instr.className='rtu-instr'+(st.instr?' on':'')+(st.instrOk?' ok':'');
     say.classList.toggle('on',clock-st.sayT<st.sayDur);toastEl.classList.toggle('on',clock-st.toastT<3);
     lens.classList.toggle('on',!!st.lens);tagSim.classList.toggle('on',!st.lens);
-    if(R){
+    /* draw at 30 fps on phones, and only occasionally while paused */
+    var gap=playing?(PHONE?32:0):250;if(R&&(dirty||now-lastDraw>=gap)){lastDraw=now;dirty=false;
       /* camera, with a slight head sway when we are looking through the glasses */
       var c=curCam(),sw=st.lens&&!REDUCE?1:0;camera.position.set(c[0][0]+Math.sin(clock*.9)*.012*sw,c[0][1]+Math.sin(clock*1.7)*.008*sw,c[0][2]);camera.lookAt(c[1][0],c[1][1],c[1][2]);
       st.panelP+=(st.panel-st.panelP)*Math.min(1,dt*2.5);if(inst||REDUCE)st.panelP=st.panel;var pp=ease(clamp(st.panelP));G.cpanel.position.set(.8+pp*.95,.92-pp*.42,.762+pp*.55);G.cpanel.rotation.set(-pp*.18,-pp*.25,0);
