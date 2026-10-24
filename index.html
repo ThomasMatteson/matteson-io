@@ -18,6 +18,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="rtu.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
@@ -85,7 +86,7 @@ svg .numt{font:500 10.5px var(--f-mono);fill:var(--fg);text-anchor:middle}
 @media(max-width:420px){.sw{font-size:10.5px;padding-right:10px}}
 
 /* reel: one particle system, glasses to agents */
-.reel{position:relative;height:780vh;border-bottom:1px solid var(--line2)}
+.reel{position:relative;height:640vh;border-bottom:1px solid var(--line2)}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 62% 55%,var(--bg2) 0,var(--bg) 72%)}
 .stage::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(var(--line2) 1px,transparent 1px) 0 0/80px 80px,linear-gradient(90deg,var(--line2) 1px,transparent 1px) 0 0/80px 80px;-webkit-mask-image:radial-gradient(ellipse at 50% 50%,#000 0,transparent 75%);mask-image:radial-gradient(ellipse at 50% 50%,#000 0,transparent 75%);opacity:.6}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
@@ -114,11 +115,11 @@ svg .numt{font:500 10.5px var(--f-mono);fill:var(--fg);text-anchor:middle}
 .cap .btn{margin-top:22px;pointer-events:auto}
 .cap .eye{display:flex;gap:14px;align-items:center;margin-bottom:26px}
 .cap .eye b{font:800 20px var(--f-display);font-variation-settings:"wdth" 125;letter-spacing:.04em;color:var(--fg)}
-.cap.hero h1{font-weight:800;font-variation-settings:"wdth" 108;font-size:clamp(40px,6vw,92px);line-height:.96;letter-spacing:-.022em}
-.cap.hero h1 span{display:block;color:var(--accent)}
+.cap.hero h1,.cap.hero h2{font-weight:800;font-variation-settings:"wdth" 108;font-size:clamp(40px,6vw,92px);line-height:.96;letter-spacing:-.022em}
+.cap.hero h1 span,.cap.hero h2 span{display:block;color:var(--accent)}
 .cap.hero .sub{max-width:44ch;margin-top:24px;font-size:clamp(16px,1.4vw,19px);font-weight:300}
 .cap.hero .cta{pointer-events:auto}
-@media(max-width:700px){.cap.hero{top:84px;transform:none}.cap.hero h1{font-size:38px}.cap.hero .sub{display:none}}
+@media(max-width:700px){.cap.hero{top:84px;transform:none}.cap.hero h1,.cap.hero h2{font-size:34px}.cap.hero .sub{display:none}}
 .rail{position:absolute;right:max(20px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);z-index:4;display:grid;gap:14px}
 .rail button{background:none;border:0;padding:4px 0;display:flex;align-items:center;gap:10px;justify-content:flex-end;font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .rail button::after{content:"";width:16px;height:2px;background:var(--line);transition:width .35s,background .35s}
@@ -161,6 +162,25 @@ section.s{padding-block:clamp(72px,9vw,128px);border-bottom:1px solid var(--line
 .chip.pend{border-style:dashed}
 .chip.solid{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 
+/* hero: the RTU experience */
+.hero2{padding:clamp(24px,4vw,48px) 0 clamp(40px,5vw,64px);border-bottom:1px solid var(--line2)}
+.htop{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:12px clamp(24px,4vw,64px);align-items:end;margin-bottom:18px}
+.htop .eye{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.htop h1{font-weight:800;font-variation-settings:"wdth" 108;font-size:clamp(34px,4.6vw,66px);line-height:.98;letter-spacing:-.02em}
+.htop h1 span{color:var(--accent)}
+.htop p{font-weight:300;font-size:clamp(16px,1.35vw,19px);max-width:52ch}
+@media(max-width:860px){.htop{grid-template-columns:1fr}}
+.xsel{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.xsel a{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--line);text-decoration:none;font:500 12px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.xsel a[aria-current="true"]{border-color:var(--accent);color:var(--fg);box-shadow:inset 0 -2px 0 var(--accent)}
+.xsel a:hover{color:var(--fg)}
+.svsrel{margin-top:18px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 6%,var(--bg2));display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,1fr)}
+.svsrel>div{padding:16px 20px;min-width:0}
+.svsrel>div+div{border-left:1px solid var(--line)}
+.svsrel h3{font-size:22px;font-weight:800;font-variation-settings:"wdth" 104;line-height:1.1;margin:6px 0 6px}
+.svsrel b{display:block;font:500 11px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.svsrel p{font-size:15px;line-height:1.5;font-weight:300}
+@media(max-width:900px){.svsrel{grid-template-columns:1fr}.svsrel>div+div{border-left:0;border-top:1px solid var(--line)}}
 /* vision */
 .vis3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);margin-top:44px}
 .vis3>div{padding:24px 24px 24px 0;border-right:1px solid var(--line2);min-width:0;display:flex;flex-direction:column;gap:10px}
@@ -356,7 +376,24 @@ footer p{max-width:62ch;font-size:13.5px;color:var(--muted)}
 </header>
 
 <main id="top">
-<section id="reel" class="reel" aria-label="MTech">
+<section class="hero2" id="hero" aria-label="MTech on a rooftop repair">
+  <div class="wrap">
+    <div class="htop">
+      <div><div class="eye"><svg class="logo" viewBox="56 56 1890 314" role="img" aria-label="MTech"><path fill="currentColor" d="M66 66H140L257 215L374 66H447V360H385V160L257 318L128 160V360H66Z"/><g fill="var(--accent)"><path d="M520 66H830V122H703V360H642V122H520Z"/><path d="M900 66H1179V122H900Z"/><path d="M900 185H1163V242H958V304H1179V360H900Z"/><path d="M1345 66H1551V122H1350A35 35 0 0 0 1315 157V269A35 35 0 0 0 1350 304H1551V360H1345A90 90 0 0 1 1255 270V156A90 90 0 0 1 1345 66Z"/><path d="M1628 66H1688V185H1876V66H1936V360H1876V242H1688V360H1628Z"/></g></svg><span class="mono">Ideas engineered into reality</span></div>
+        <h1>A <span>superintelligence company.</span></h1></div>
+      <p>Watch one rooftop repair: connected equipment, the technician’s glasses, digital coworkers, SVS and AI QC working on the same job.</p>
+    </div>
+    <nav class="xsel" aria-label="Examples"><a href="#hero" aria-current="true">Building systems</a><a href="#reel">Oil operations</a></nav>
+    <div id="rtuHome"></div>
+    <div class="svsrel">
+      <div><span class="mono">Built with SVS</span><h3>Our integration partner</h3><p>In the repair above, SVS supplies the job and receives the record. MTech guides the work, coordinates the response and checks the evidence.</p></div>
+      <div><b>SVS contributes</b><p>The field service platform: assets and service history, visits and work orders, and the official record of every job.</p></div>
+      <div><b>MTech contributes</b><p>The intelligence working inside it: field awareness through the glasses, digital coworkers, AI QC, and the architecture that connects them.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="reel" class="reel" aria-label="Oil operations: the same intelligence on a wellsite">
   <div class="stage">
     <canvas id="gl" aria-hidden="true"></canvas>
     <div class="labels" id="labels" aria-hidden="true"></div>
@@ -365,12 +402,12 @@ footer p{max-width:62ch;font-size:13.5px;color:var(--muted)}
     <div class="warnb" id="warnb" aria-hidden="true"></div>
     <div class="ov"><div class="wrap">
       <div class="cap hero" data-cap="0">
-        <div class="eye"><svg class="logo" viewBox="56 56 1890 314" role="img" aria-label="MTech"><path fill="currentColor" d="M66 66H140L257 215L374 66H447V360H385V160L257 318L128 160V360H66Z"/><g fill="var(--accent)"><path d="M520 66H830V122H703V360H642V122H520Z"/><path d="M900 66H1179V122H900Z"/><path d="M900 185H1163V242H958V304H1179V360H900Z"/><path d="M1345 66H1551V122H1350A35 35 0 0 0 1315 157V269A35 35 0 0 0 1350 304H1551V360H1345A90 90 0 0 1 1255 270V156A90 90 0 0 1 1345 66Z"/><path d="M1628 66H1688V185H1876V66H1936V360H1876V242H1688V360H1628Z"/></g></svg><span class="mono">Ideas engineered into reality</span></div>
-        <h1>A <span>superintelligence company.</span></h1>
-        <p class="sub">We build intelligence that sees the work, understands it and carries it through, from the job site to the balance sheet.</p>
+        <div class="eye"><span class="mono" style="color:var(--accent)">Next · Oil operations</span></div>
+        <h2>The equipment changes. <span>The intelligence carries through.</span></h2>
+        <p class="sub">Same glasses, same coworkers, a different operation: a wellsite with gas detectors, pressure transmitters, harsh conditions and a crew to protect. Scroll to see it.</p>
         <div class="cta">
-          <a class="btn pri" href="coworkers.html">Meet the digital coworkers</a>
-          <a class="btn" href="work.html">Follow one job</a>
+          <a class="btn" href="#hero">Replay building systems</a>
+          <a class="btn" href="wearables.html">Field awareness</a>
         </div>
       </div>
       <div class="cap" data-cap="1"><span class="fig">FIG. 1 · Through the lens</span><h2>They look like ordinary safety glasses. Look through them.</h2><p>The wellsite turns into a live map. Every valve, tank and pump is connected to every sensor on location: gas detectors, pressure transmitters, air quality, even the wearer’s own heart rate.</p></div>
@@ -386,17 +423,17 @@ footer p{max-width:62ch;font-size:13.5px;color:var(--muted)}
 <!-- VISION -->
 <section class="s" id="vision">
   <div class="wrap">
-    <div class="eyebrow mono">Intelligence that participates in the work</div>
-    <h2 class="h2">Knowledge, at the moment<br>work happens.</h2>
-    <p class="lede">A company’s knowledge is scattered across manuals, software, email and experienced people’s heads. The person standing in front of the machine sees a fraction of it, and the office coordinates the job with an incomplete picture of what is actually happening. MTech connects those two worlds.</p>
+    <div class="eyebrow mono">Understand the connection</div>
+    <h2 class="h2">Two operations.<br>One system underneath.</h2>
+    <p class="lede">A rooftop and a wellsite look nothing alike. What makes both work is the same: field awareness sees the work, digital coworkers carry the response, and process control makes sure every step has an owner and the evidence to prove it.</p>
     <div class="vis3">
-      <div><b>01</b><h3>The glasses see the work</h3><p>They give the system a perspective on physical work, and bring the right history, procedures and expertise to the person doing it.</p><a href="wearables.html">Field awareness →</a></div>
-      <div><b>02</b><h3>Coworkers carry the job</h3><p>Digital coworkers use the business’s knowledge and tools to move the surrounding responsibilities forward: parts, schedules, documents, billing.</p><a href="coworkers.html">Digital coworkers →</a></div>
-      <div><b>03</b><h3>The architecture holds it together</h3><p>Work stays connected as people, agents and systems take their turns, with ownership and evidence attached at every step.</p><a href="architecture.html">The architecture →</a></div>
+      <div><b>01</b><h3>Field awareness</h3><p>Glasses and connected sensors give the system a view of the physical work, and bring the right history, procedures and expertise to the person doing it.</p><a href="wearables.html">The full repair →</a></div>
+      <div><b>02</b><h3>Digital coworkers</h3><p>Coworkers with defined responsibilities carry the work around the job forward: parts, approvals, schedules, documents and billing.</p><a href="coworkers.html">Digital coworkers →</a></div>
+      <div><b>03</b><h3>Process control</h3><p>Every step has one owner, a deadline and the evidence that proves it, checked by AI QC before it counts.</p><a href="process.html">Process control →</a></div>
     </div>
     <div class="vband">
-      <div><span class="mono">One service visit · three perspectives</span><h3>Follow one job as the technician, the digital team and the business owner see it.</h3><p>Pause at any moment and ask what the system knows, where it came from, what it’s unsure of, and who owns the next step.</p></div>
-      <a class="btn pri" href="work.html#journey">Follow the job</a>
+      <div><span class="mono">Why it holds together</span><h3>Ownership, authority and evidence travel with the work as people, agents and systems take their turns.</h3><p>Follow a full service visit from three perspectives, or step through the architecture behind it.</p></div>
+      <div class="row" style="gap:10px"><a class="btn pri" href="work.html#journey">Follow one job</a><a class="btn" href="architecture.html">The architecture</a></div>
     </div>
   </div>
 </section>
@@ -594,6 +631,8 @@ footer p{max-width:62ch;font-size:13.5px;color:var(--muted)}
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="rtu.js"></script>
+<script>MTRTU(document.getElementById('rtuHome'),{full:false});</script>
 <script>
 (function(){
 'use strict';

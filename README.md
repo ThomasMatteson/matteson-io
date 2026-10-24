@@ -18,7 +18,7 @@ python3 -m http.server 8000
 | `architecture.html` | Agentic architecture |
 | `partner.html` | Partner / contact (form not yet connected) |
 
-Shared styles and helpers live in `site.css` and `site.js`. The home page loads three.js r128 from cdnjs and falls back to a static hero without WebGL.
+Shared styles and helpers live in `site.css` and `site.js`. The rooftop-unit repair experience (home hero, short; Field awareness, full) lives in `rtu.js` and `rtu.css` and uses three.js. The home page loads three.js r128 from cdnjs and falls back to a static hero without WebGL.
 
 ## Hosting
 

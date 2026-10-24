@@ -22,6 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
 <link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="rtu.css">
 <style>
 .modes{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(280px,1fr);border:1px solid var(--line);margin-top:40px;background:var(--bg)}
 .modes .lensbox{background:var(--bg2);border-right:1px solid var(--line);min-width:0;position:relative}
@@ -72,56 +73,14 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .chap{color:var(--accent);margin-bottom:26px;padding-bottom:12px;border-bottom:1px solid var(--line)}
 section.s.chintro{padding-bottom:clamp(40px,5vw,64px)}
 [id^="ch"]{scroll-margin-top:60px}
-/* scroll story: one PM visit through the glasses, with SVS and the digital team alongside */
-.walk{position:relative;height:900vh;border-bottom:1px solid var(--line2)}
-.wstage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 55%,var(--bg2) 0,var(--bg) 75%)}
-.wscene{position:absolute;inset:calc(max(72px,9vh) + 40px) 25% 6%;display:flex;align-items:center;justify-content:center;z-index:1}
-.wscene svg{width:100%;height:100%;display:block}
-.wlens{position:absolute;inset:max(72px,9vh) 2% 4%;border-radius:clamp(36px,5vw,80px);box-shadow:0 0 0 200vmax color-mix(in srgb,var(--bg) 70%,transparent);border:1px solid var(--line);pointer-events:none;z-index:2}
-.wlens span{position:absolute;left:clamp(24px,4vw,56px);top:18px;color:var(--accent)}
-.wpanel{position:absolute;z-index:3;width:21%;border:1px solid var(--accent);background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(6px);transition:opacity .4s}
-.wpanel .hd{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line);font:600 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase}
-.wpanel .hd b{color:var(--accent);font-weight:600}
-.wpanel .hd i{font-style:normal;color:var(--muted);font-weight:500;text-align:right}
-.wpanel dl{margin:0;padding:6px 12px 10px}
-.wpanel dl div{display:grid;grid-template-columns:82px minmax(0,1fr);gap:8px;padding:4px 0;border-bottom:1px solid var(--line2);font:400 12px/1.4 var(--f-mono);animation:in .35s ease both}
-.wpanel dl div:last-child{border-bottom:0}
-.wpanel dt{color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:10.5px;padding-top:1px}
-.wpanel dd{margin:0;color:var(--fg)}
-.wpanel dd.n{color:var(--accent)}
-.wsvs{right:calc(2% + 24px);top:calc(max(72px,9vh) + 52px)}
-.wag{left:calc(2% + 24px);top:calc(max(72px,9vh) + 52px);opacity:0;border-style:dashed}
-.wag.on{opacity:1}
-.wag .hd b::before{content:"";display:inline-block;width:7px;height:7px;border:1.5px solid var(--accent);transform:rotate(45deg);margin-right:8px;vertical-align:1px}
-.wcap{position:absolute;left:calc(2% + 24px);bottom:calc(4% + 24px);z-index:3;width:21%;pointer-events:none}
-.wcapin{background:color-mix(in srgb,var(--bg) 86%,transparent);border-left:3px solid var(--accent);padding:14px 16px;backdrop-filter:blur(6px)}
-.wcapin h2{font-size:clamp(20px,1.8vw,28px);font-weight:800;font-variation-settings:"wdth" 104;margin:6px 0 8px;line-height:1.08}
-.wcapin p{font-size:14.5px;font-weight:300;line-height:1.5}
-.wsteps{position:absolute;right:calc(2% + 24px);bottom:calc(4% + 24px);z-index:3;list-style:none;margin:0;padding:0;display:grid;gap:8px;font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.wsteps li{display:flex;align-items:center;gap:10px;justify-content:flex-end}
-.wsteps li::after{content:"";width:16px;height:2px;background:var(--line);transition:width .35s,background .35s}
-.wsteps li.on{color:var(--fg)}.wsteps li.on::after{width:36px;background:var(--accent)}.wsteps li.done{color:var(--accent)}
-.wscene .ov{opacity:0;transition:opacity .45s}
-.wscene .ov.on{opacity:1}
-.wscene .tag{font:600 13px var(--f-mono);letter-spacing:.06em;fill:var(--accent-ink)}
-.wscene .tagbg{fill:var(--accent)}
-.wscene .big{font:500 15px var(--f-mono);letter-spacing:.05em;fill:var(--accent)}
-.wscene .wht{font:500 13px var(--f-mono);letter-spacing:.04em;fill:var(--fg)}
-@media(max-height:760px) and (min-width:1101px){.wsteps{display:none}}
-@media(max-width:1100px){
-  .wlens{inset:max(64px,8vh) 2% 3%;border-radius:32px}
-  .wscene{inset:34% 3% 30%}
-  .wcap{left:calc(2% + 14px);right:calc(2% + 14px);width:auto;bottom:auto;top:calc(max(64px,8vh) + 40px)}
-  .wcapin{padding:12px 14px}
-  .wcapin h2{font-size:21px;margin:4px 0 6px}
-  .wcapin p{font-size:13.5px}
-  .wpanel{left:calc(2% + 14px);right:calc(2% + 14px);width:auto;top:auto;bottom:calc(3% + 14px)}
-  .wpanel dl div{grid-template-columns:78px minmax(0,1fr);font-size:11.5px}
-  .wpanel dl div:nth-child(n+4){display:none}
-  .walk.agents .wsvs{opacity:0}
-  .wsteps{display:none}
-}
-@media(max-width:1100px) and (max-height:740px){.wcapin p{display:none}.wscene{inset:26% 3% 30%}}
+/* SVS relationship */
+.svsrel{margin-top:18px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 6%,var(--bg2));display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,1fr)}
+.svsrel>div{padding:16px 20px;min-width:0}
+.svsrel>div+div{border-left:1px solid var(--line)}
+.svsrel h3{font-size:22px;font-weight:800;font-variation-settings:"wdth" 104;line-height:1.1;margin:6px 0 6px}
+.svsrel b{display:block;font:500 11px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.svsrel p{font-size:15px;line-height:1.5;font-weight:300}
+@media(max-width:900px){.svsrel{grid-template-columns:1fr}.svsrel>div+div{border-left:0;border-top:1px solid var(--line)}}
 /* vision sections: identification, evidence sources, companion, capture, learning loop */
 .demo{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);border:1px solid var(--line);margin-top:40px;background:var(--bg)}
 .demo>.l{border-right:1px solid var(--line);padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
@@ -204,20 +163,15 @@ section.s.chintro{padding-bottom:clamp(40px,5vw,64px)}
   <div class="wrap">
     <div class="chap mono">Chapter 01 · The visit</div>
     <div class="sechd">
-      <div><h2 class="h2">One roof. Ten moments.<br>Scroll through the visit.</h2></div>
-      <p class="lede">A simulated preventive maintenance visit, seen through the glasses. SVS supplies the job, the digital team answers what the technician finds, and the business sees the result. Keep scrolling.</p>
+      <div><h2 class="h2">From alert to<br>verified repair.</h2></div>
+      <p class="lede">A simulated compressor failure on a rooftop unit, start to finish. Watch the technician work while SVS and the digital team respond on the same job. Open “What just happened?” at any point for the detail.</p>
     </div>
-  </div>
-</section>
-
-<section class="walk" id="walk" aria-label="Scroll story: a preventive maintenance visit seen through the glasses, with SVS and the digital team alongside">
-  <div class="wstage">
-    <div class="wscene"><svg id="wsvg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg></div>
-    <div class="wlens" aria-hidden="true"><span class="mono">Simulation · Site 14 roof</span></div>
-    <aside class="wpanel wag" id="wAgent" aria-live="polite"><div class="hd"><b>Coworkers</b><i id="waHd"></i></div><dl id="waRows"></dl></aside>
-    <aside class="wpanel wsvs" aria-live="polite"><div class="hd"><b>SVS</b><i id="wsHd"></i></div><dl id="wsRows"></dl></aside>
-    <div class="wcap"><div class="wcapin" aria-live="polite"><span class="mono" id="wN">01 / 10</span><h2 id="wH"></h2><p id="wP"></p></div></div>
-    <ol class="wsteps" id="wSteps"></ol>
+    <div id="rtuFull" style="margin-top:32px"></div>
+    <div class="svsrel">
+      <div><span class="mono">Built with SVS</span><h3>Our integration partner</h3><p>SVS supplies the job and receives the record. MTech guides the work, coordinates the response and checks the evidence.</p></div>
+      <div><b>SVS contributes</b><p>The field service platform: assets and service history, visits and work orders, and the official record of every job.</p></div>
+      <div><b>MTech contributes</b><p>The intelligence working inside it: field awareness through the glasses, digital coworkers, AI QC, and the architecture that connects them.</p></div>
+    </div>
   </div>
 </section>
 
@@ -453,7 +407,10 @@ section.s.chintro{padding-bottom:clamp(40px,5vw,64px)}
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="site.js"></script>
+<script src="rtu.js"></script>
+<script>MTRTU(document.getElementById('rtuFull'),{full:true});</script>
 <script>
 (function(){
 var $=MT.$,$$=MT.$$,S=MT.S,T=MT.T;
@@ -554,159 +511,6 @@ function lens(svg,id){
 }
 
 /* hero: the leak develops on a loop */
-
-/* scroll story: one PM visit on a rooftop unit, seen through the glasses, with SVS supplying the job and coworkers answering it */
-(function(){
-  var sec=$('#walk'),svg=$('#wsvg');if(!sec)return;
-  function clamp(x){return Math.max(0,Math.min(1,x))}function seg(x,a,b){return clamp((x-a)/(b-a))}function mix(a,b,t){return a+(b-a)*t}var ease=MT.ease;
-  function g(cls,parent){return S('g',cls?{class:cls}:{},parent||svg)}
-  /* tags size themselves to their text, again once the web fonts have loaded */
-  var tags=[];
-  function place(o){var w;try{w=o.t.getComputedTextLength()+18}catch(e){w=0}if(!w)w=o.txt.length*8.7+18;var ax=o.a==='end'?o.x-w:o.a==='middle'?o.x-w/2:o.x;
-    o.r.setAttribute('x',ax);o.r.setAttribute('width',w);o.t.setAttribute('x',ax+9);o.t.setAttribute('y',o.y)}
-  function tag(parent,x,y,txt,anchor){var t=T(txt,{x:0,y:0,class:'tag'},parent),r=S('rect',{x:0,y:y-17,width:0,height:24,class:'tagbg'},parent);parent.insertBefore(r,t);
-    var o={t:t,r:r,x:x,y:y,txt:txt,a:anchor};tags.push(o);place(o);return r}
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){tags.forEach(place)});
-  function corners(parent,x0,y0,x1,y1,k){[[x0,y0,1,1],[x1,y0,-1,1],[x0,y1,1,-1],[x1,y1,-1,-1]].forEach(function(c){S('path',{d:'M'+c[0]+' '+(c[1]+c[3]*k)+'V'+c[1]+'H'+(c[0]+c[2]*k),class:'acc',style:'stroke-width:3'},parent)})}
-  var defs=S('defs',{},svg),rg=S('radialGradient',{id:'wglare'},defs);S('stop',{offset:'0','stop-color':'#fff','stop-opacity':'.95'},rg);S('stop',{offset:'.55','stop-color':'#fff','stop-opacity':'.6'},rg);S('stop',{offset:'1','stop-color':'#fff','stop-opacity':'0'},rg);
-
-  /* the roof and the unit, drawn once; the whole scene zooms in from the hatch */
-  var scene=g();
-  var lg=S('linearGradient',{id:'wfade',x1:'0',x2:'1',y1:'0',y2:'0'},defs);[[0,0],[.18,1],[.82,1],[1,0]].forEach(function(q){S('stop',{offset:q[0],'stop-color':'#fff','stop-opacity':q[1]},lg)});
-  var mk=S('mask',{id:'wmask',maskUnits:'userSpaceOnUse',x:'-400',y:'-200',width:'1800',height:'1000'},defs);S('rect',{x:-40,y:-200,width:1080,height:1000,fill:'url(#wfade)'},mk);
-  var roof=g('',scene);roof.setAttribute('mask','url(#wmask)');
-  S('path',{d:'M-400 120H1400',class:'thin'},roof);
-  for(var i=-6;i<=6;i++)S('path',{d:'M'+(500+i*40)+' 120L'+(500+i*260)+' 760',class:'thin'},roof);
-  [180,260,380,560].forEach(function(y){S('path',{d:'M-400 '+y+'H1400',class:'thin',style:'opacity:.6'},roof)});
-  var unit=g('',scene);
-  S('rect',{x:236,y:430,width:534,height:16,class:'ln fillp'},unit);
-  S('path',{d:'M250 170L330 120H760L680 170Z',class:'ln fillp'},unit);
-  S('path',{d:'M680 170L760 120V370L680 430Z',class:'ln fillp'},unit);
-  for(var x=692;x<=748;x+=8){var t=(x-680)/80;S('path',{d:'M'+x+' '+(170-50*t+12)+'V'+(430-60*t-12),class:'thin'},unit)}
-  S('ellipse',{cx:520,cy:145,rx:76,ry:15,class:'ln'},unit);S('path',{d:'M444 145H596M520 130V160',class:'thin'},unit);
-  S('rect',{x:250,y:170,width:430,height:260,class:'ln fillp'},unit);
-  T('RTU-3',{x:262,y:188,class:'lbl'},unit);
-  /* QR sticker and data plate */
-  S('rect',{x:636,y:200,width:32,height:32,class:'ln fillbg'},unit);
-  [[640,204],[656,204],[640,220]].forEach(function(q){S('rect',{x:q[0],y:q[1],width:8,height:8,class:'fillacc'},unit)});S('rect',{x:654,y:218,width:4,height:4,class:'fillacc'},unit);S('rect',{x:660,y:224,width:4,height:4,class:'fillacc'},unit);
-  S('rect',{x:636,y:242,width:32,height:44,class:'thin'},unit);[252,260,268,276].forEach(function(y){S('path',{d:'M641 '+y+'H663',class:'thin'},unit)});
-  /* filter panel, closed and open */
-  var p1c=g('ov on',unit);S('rect',{x:268,y:198,width:170,height:212,class:'ln fillp'},p1c);S('rect',{x:420,y:286,width:8,height:36,class:'ln'},p1c);T('FILTER ACCESS',{x:282,y:222,class:'lbl'},p1c);
-  var p1o=g('ov',unit);S('rect',{x:268,y:198,width:170,height:212,class:'ln fillbg'},p1o);S('path',{d:'M268 198L196 220V388L268 410',class:'ln fillp'},p1o);
-  for(i=0;i<4;i++){var fx=276+i*40;S('rect',{x:fx,y:206,width:34,height:196,class:'ln fillp'},p1o);var z='M'+(fx+4)+' 214';for(var y=214;y<396;y+=12)z+='L'+(fx+(((y-214)/12)%2?4:30))+' '+(y+12);S('path',{d:z,class:'thin'},p1o)}
-  /* blower panel, closed and open, with the motor and (later) its replacement */
-  var p2c=g('ov on',unit);S('rect',{x:452,y:198,width:170,height:212,class:'ln fillp'},p2c);S('rect',{x:604,y:286,width:8,height:36,class:'ln'},p2c);T('BLOWER',{x:466,y:222,class:'lbl'},p2c);
-  var p2o=g('ov',unit);S('rect',{x:452,y:198,width:170,height:212,class:'ln fillbg'},p2o);S('path',{d:'M622 198L660 214V394L622 410',class:'ln fillp'},p2o);
-  S('circle',{cx:510,cy:330,r:52,class:'thin'},p2o);S('circle',{cx:510,cy:330,r:30,class:'ln'},p2o);for(i=0;i<12;i++){var a=i/12*Math.PI*2;S('path',{d:'M'+(510+18*Math.cos(a))+' '+(330+18*Math.sin(a))+'L'+(510+30*Math.cos(a))+' '+(330+30*Math.sin(a)),class:'thin'},p2o)}
-  S('circle',{cx:510,cy:250,r:26,class:'ln'},p2o);S('circle',{cx:510,cy:250,r:4,class:'fillacc'},p2o);
-  S('path',{d:'M510 224L586 281M484 252L575 296',class:'ln',style:'stroke-width:2.4'},p2o);
-  var oldM=g('ov on',p2o);S('rect',{x:566,y:300,width:40,height:56,class:'ln fillp'},oldM);S('circle',{cx:586,cy:292,r:11,class:'ln'},oldM);
-  var newM=g('ov',p2o);S('rect',{x:566,y:300,width:40,height:56,class:'acc fillp'},newM);S('circle',{cx:586,cy:292,r:11,class:'acc'},newM);S('rect',{x:556,y:358,width:60,height:10,class:'acc fillp'},newM);
-
-  /* overlays, one group per moment, in the lens's own coordinates */
-  var N=10,O=[];for(i=0;i<N;i++)O.push(g('ov'));
-  /* 0 arrive */
-  S('path',{d:'M140 560C260 470 520 440 760 336',class:'acc dash',style:'stroke-width:3'},O[0]);
-  S('circle',{cx:770,cy:330,r:7,class:'fillacc'},O[0]);
-  tag(O[0],790,312,'RTU-3 · 40 FT · NE CORNER');tag(O[0],790,344,'FIRST OF 3 UNITS');
-  T('ACCESS: NORTH HATCH · HARNESS REQUIRED',{x:500,y:540,class:'big',style:'text-anchor:middle'},O[0]);
-  /* 1 scan, history beside the unit */
-  corners(O[1],626,190,678,242,14);
-  var scanL=S('path',{d:'M630 216H674',class:'acc',style:'stroke-width:2'},O[1]);
-  tag(O[1],690,206,'QR READ · RTU-3');
-  S('path',{d:'M678 216H700',class:'acc'},O[1]);
-  var hb=g('',O[1]);S('rect',{x:700,y:228,width:290,height:132,class:'acc fillbg'},hb);
-  T('SERVICE HISTORY',{x:714,y:252,class:'lbla'},hb);
-  [['14 JUL','Filters changed'],['02 APR','Filters · belt adjusted'],['11 JAN','Motor noisy, monitor']].forEach(function(r,j){T(r[0],{x:714,y:280+j*26,class:'lbl'},hb);T(r[1],{x:780,y:280+j*26,class:j===2?'lbla':'lblf'},hb)});
-  /* 2 nameplate photo: glare */
-  var cap=function(o,ok){S('rect',{x:300,y:130,width:400,height:230,class:(ok?'acc':'ln')+' fillbg',style:'stroke-width:2'},o);T('CAPTURE · UNIT DATA PLATE',{x:316,y:156,class:'lbl'},o);
-    var lines=['MODEL  PRU-090-4','SERIAL 2419G30871','460V · 3PH · 60HZ','MFD    2019-06'];lines.forEach(function(l,j){T(l,{x:330,y:200+j*32,class:'wht',style:'font-size:17px'+(ok?'':';opacity:.35')},o)});
-    S('path',{d:'M500 360V378M500 378L500 384',class:'acc'},o);S('path',{d:'M652 270L668 252V264',class:'thin'},o)};
-  cap(O[2],false);S('ellipse',{cx:470,cy:236,rx:150,ry:70,fill:'url(#wglare)'},O[2]);
-  tag(O[2],500,410,'SERIAL UNREADABLE · GLARE · STEP LEFT AND RETAKE','middle');
-  /* 3 nameplate photo: accepted */
-  cap(O[3],true);tag(O[3],500,410,'ACCEPTED ✓ · SERIAL MATCHES RTU-3','middle');
-  /* 4 guided filter change */
-  S('rect',{x:264,y:194,width:178,height:220,class:'acc',style:'stroke-width:3'},O[4]);
-  tag(O[4],452,226,'4 × 20×25×2 · MERV 8');tag(O[4],452,258,'FROM VAN STOCK · 4 ISSUED');
-  S('path',{d:'M290 432H420M408 424L420 432L408 440',class:'acc',style:'stroke-width:2.5'},O[4]);T('AIRFLOW → BLOWER',{x:355,y:462,class:'big',style:'text-anchor:middle'},O[4]);
-  T('STEP 2 OF 5 · ARROWS FACE THE BLOWER',{x:500,y:540,class:'big',style:'text-anchor:middle'},O[4]);
-  /* 5 problem found */
-  S('rect',{x:556,y:276,width:62,height:90,class:'acc',style:'stroke-width:3'},O[5]);
-  tag(O[5],630,300,'BLOWER MOTOR SEIZED');tag(O[5],630,332,'SHAFT WON’T TURN BY HAND');tag(O[5],630,364,'MOTOR PLATE ✓ · FM-825');
-  T('YOU: “IS THIS THE SAME MOTOR FROM JANUARY?”',{x:500,y:540,class:'wht',style:'text-anchor:middle'},O[5]);
-  /* 6 coworkers respond: the lens keeps the job in view */
-  S('rect',{x:556,y:276,width:62,height:90,class:'acc dash',style:'stroke-width:2'},O[6]);
-  tag(O[6],500,96,'MATERIALS COWORKER IS ON IT','middle');
-  T('MEANWHILE: FINISH FILTERS · CHECK CONTACTOR',{x:500,y:540,class:'big',style:'text-anchor:middle'},O[6]);
-  /* 7 uncertain part, expert annotation */
-  tag(O[7],500,96,'UNSURE: BRACKET DOESN’T MATCH THE DIAGRAM','middle');
-  S('ellipse',{cx:586,cy:363,rx:58,ry:22,class:'acc',style:'stroke-width:3'},O[7]);
-  S('path',{d:'M640 372C700 400 720 430 740 450',class:'acc',style:'stroke-width:2'},O[7]);
-  var ex=g('',O[7]);S('rect',{x:700,y:452,width:290,height:72,class:'acc fillbg'},ex);T('RAY M. · SENIOR TECH · LIVE',{x:714,y:476,class:'lbla'},ex);T('“That’s the adapter plate.',{x:714,y:498,class:'lblf'},ex);T('Mount it first, then the motor.”',{x:714,y:514,class:'lblf'},ex);
-  /* 8 close up with proof */
-  corners(O[8],196,96,804,470,34);
-  tag(O[8],500,78,'AFTER PHOTO ✓  AMPS 2.9 A ✓  SIGNATURE ✓','middle');
-  /* 9 business sees the result */
-  S('circle',{cx:500,cy:283,r:58,class:'acc fillbg',style:'stroke-width:3'},O[9]);S('path',{d:'M472 284l20 20 38-40',class:'acc',style:'stroke-width:5'},O[9]);
-  tag(O[9],500,380,'VISIT COMPLETE · SYNCED TO SVS','middle');
-  S('path',{d:'M720 520H900M886 510L900 520L886 530',class:'acc',style:'stroke-width:3'},O[9]);T('NEXT: RTU-4 · 30 FT',{x:900,y:500,class:'big',style:'text-anchor:end'},O[9]);
-
-  /* SVS record, the digital team, captions and the step rail */
-  var STEPS=[
-    {s:'Arrive',h:'Arrive with the job already in view',p:'Before the technician reaches the roof, the lens shows which unit is first, where it is and how to get to it. SVS supplies the visit, the PM program and the site’s access notes.',
-     hd:'Visit V-20931',r:[['Site','Site 14 · roof'],['Program','Quarterly PM · filters and belts'],['Units','3 on this roof · RTU-3 first'],['Access','North hatch · harness required']]},
-    {s:'Scan',h:'The unit, with its history beside it',p:'A glance at the QR sticker pulls the unit’s record from SVS. Its service history appears next to the equipment, including a January note: the blower motor was noisy.',
-     hd:'Unit RTU-3',r:[['Unit','Packaged RTU · 7.5 ton'],['Serial','2419G30871'],['Installed','4 × 20×25×2 filters · motor FM-825'],['Flag','Motor noisy in Jan · monitor','n']]},
-    {s:'Data plate',h:'Glare hides the serial',p:'The work order needs a readable photo of the data plate. Glare washes out the serial, so the system asks for a retake while the technician is still standing there, not a week later.',
-     hd:'Work order requirements',r:[['Plate photo','Rejected · glare','n'],['Filters','Pending'],['After','Pending'],['Signature','Pending']]},
-    {s:'Retake',h:'Retaken, read, accepted',p:'One step to the left and the plate is clear. The serial is read and matched to RTU-3, so the photo counts toward the work order.',
-     hd:'Work order requirements',r:[['Plate photo','Accepted ✓','n'],['Filters','Pending'],['After','Pending'],['Signature','Pending']]},
-    {s:'Guided task',h:'Guided through the task',p:'With the filter panel open, the lens shows the size and quantity from the unit’s installed parts, which way the airflow arrows face and which step comes next.',
-     hd:'Guided task',r:[['Task','Replace filters · step 2 of 5'],['Parts','4 × 20×25×2 MERV 8'],['Source','Van stock · 4 issued','n'],['Check','Arrows toward the blower']]},
-    {s:'Problem',h:'The motor the history warned about',p:'Behind the blower panel, the motor is seized. The technician asks if it is the same motor from January; it is. The issue is logged with the motor’s plate photo, and the job doesn’t stop at the roof.',
-     hd:'Issue logged',r:[['Issue','Blower motor seized','n'],['Part','FM-825 · plate photo ✓'],['History','Same motor flagged in Jan'],['Next','Sent to materials coworker','n']],
-     ag:{h:'Materials coworker',r:[['Received','FM-825 for WO-4471, with the plate photo','n']]}},
-    {s:'Coworkers',h:'The digital team answers, on the same job',p:'The materials coworker checks the van, the branch and the supplier, and surfaces an option. The project coworker routes it to the customer’s approver because it is above the visit’s not-to-exceed. The technician keeps working.',
-     hd:'Same job · WO-4471',r:[['Status','Waiting on part'],['Option','Substitute UM-825 · branch','n'],['Approval','Facilities manager ✓ 10:41','n'],['Delivery','Runner · ETA 35 min']],
-     ag:{h:'Digital team',r:[['Materials','Van: none · OEM: 3-day lead'],['Materials','Approved substitute UM-825 at the branch, 12 mi','n'],['Project','Above NTE · sent to the facilities manager'],['Project','Approved 10:41 · runner dispatched','n']]}},
-    {s:'Expert',h:'Unsure, so it brings in a person',p:'The substitute mounts differently and the bracket doesn’t match the diagram. Rather than guess, the system says so and connects a senior technician, who sees the same view and marks the answer on it.',
-     hd:'Same job · WO-4471',r:[['Part','UM-825 delivered ✓'],['Question','Bracket vs. diagram','n'],['Expert','Ray M. · 4 min'],['Note','Adapter plate ships with UM-825']],
-     ag:{h:'Materials coworker',r:[['Issued','UM-825 to WO-4471','n'],['Knowledge','Proposed: add adapter note to UM-825 · for review']]}},
-    {s:'Close up',h:'Close it up, with proof',p:'After photo, a startup amp reading and the customer’s signature. Every requirement on the work order is met before the technician leaves the unit.',
-     hd:'Work order requirements',r:[['Plate photo','Accepted ✓'],['Filters','4 of 4 ✓'],['After','Photo ✓ · 2.9 A','n'],['Signature','Facilities manager ✓','n']],
-     ag:{h:'Quality coworker',r:[['Checked','Completion package against the customer’s rules ✓','n']]}},
-    {s:'Result',h:'What the business sees',p:'One visit instead of two. The unit’s history, the van’s stock, the next PM date and billing are all updated in SVS, and the owner sees a finished job, not a callback.',
-     hd:'Visit complete',r:[['Status','Complete · synced','n'],['History','Motor UM-825 installed today'],['Inventory','Van restock queued'],['Next PM','January'],['Billing','Ready, backed by photos']],
-     ag:{h:'Business view',r:[['Trips','1 instead of 2','n'],['Downtime','Same day'],['Needs you','Nothing']]}}
-  ];
-  var rail=$('#wSteps');STEPS.forEach(function(st){var li=document.createElement('li');li.textContent=st.s;rail.appendChild(li)});
-  var agent=$('#wAgent');
-  function rows(dl,list){dl.innerHTML='';list.forEach(function(r,i){var d=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=r[0];dd.textContent=r[1];if(r[2])dd.className=r[2];d.appendChild(dt);d.appendChild(dd);d.style.animationDelay=(i*.12)+'s';dl.appendChild(d)})}
-  var cur=-1;
-  function show(k){
-    if(k===cur)return;cur=k;var st=STEPS[k];
-    $('#wN').textContent=(k<9?'0':'')+(k+1)+' / '+STEPS.length;$('#wH').textContent=st.h;$('#wP').textContent=st.p;
-    $('#wsHd').textContent=st.hd;rows($('#wsRows'),st.r);
-    if(st.ag){$('#waHd').textContent=st.ag.h;rows($('#waRows'),st.ag.r);agent.classList.add('on');sec.classList.add('agents')}else{agent.classList.remove('on');sec.classList.remove('agents')}
-    MT.$$('li',rail).forEach(function(li,i){li.className=i<k?'done':i===k?'on':''});
-    O.forEach(function(o,i){o.setAttribute('class','ov'+(i===k?' on':''))});
-    var f=k===4,b=k>=5&&k<=7;
-    p1c.setAttribute('class','ov'+(f?'':' on'));p1o.setAttribute('class','ov'+(f?' on':''));
-    p2c.setAttribute('class','ov'+(b?'':' on'));p2o.setAttribute('class','ov'+(b?' on':''));
-    oldM.setAttribute('class','ov'+(k<7?' on':''));newM.setAttribute('class','ov'+(k>=7?' on':''));
-  }
-  var Ps=0,last=0,vis=true,raf=0;
-  function target(){var r=sec.getBoundingClientRect(),span=sec.offsetHeight-innerHeight;return span>0?clamp(-r.top/span):0}
-  function frame(now){raf=0;if(!vis)return;var dt=Math.min(.1,(now-(last||now))/1000);last=now;var Pt=target();Ps=MT.reduce?Pt:Ps+(Pt-Ps)*(1-Math.exp(-dt*6));var p=Ps;
-    /* zoom from the hatch to the unit across the first moment */
-    var z=ease(seg(p,.04,.1));scene.setAttribute('transform','translate('+mix(580,0,z)+' '+mix(170,0,z)+') scale('+mix(.4,1,z)+')');
-    show(Math.min(STEPS.length-1,Math.floor(p*STEPS.length*1.03)));
-    if(cur===1){var sy=216+Math.sin(now/260)*20;scanL.setAttribute('d','M630 '+sy+'H674')}
-    raf=requestAnimationFrame(frame)}
-  new IntersectionObserver(function(es){vis=es[0].isIntersecting;if(vis&&!raf)raf=requestAnimationFrame(frame)}).observe(sec);
-  show(0);raf=requestAnimationFrame(frame);
-})();
 
 /* interactive viewer */
 var L=lens($('#lens'),'ml'),side=$('#mside'),tabs=$$('#mtabs button');
