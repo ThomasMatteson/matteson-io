@@ -128,7 +128,8 @@
   .rtu-side{grid-template-columns:1fr}
   .rtu-iot{width:auto;left:12px;right:12px;top:auto;bottom:12px;padding:7px 9px}
   .rtu-iot svg{height:26px}
-  .rtu-instr{top:46px;font-size:12px}
+  .rtu-instr{top:72px;font-size:12px}
+  .rtu-lens span{font-size:10px;letter-spacing:.06em;right:14px;line-height:1.4}
   .rtu-say{bottom:16px;font-size:14.5px}
   .rtu-qc{left:50%;top:auto;bottom:12px;transform:translate(-50%,6px);width:min(250px,86%)}
   .rtu-qc.on{transform:translate(-50%,0)}
@@ -137,5 +138,7 @@
   .rtu-chip>div{font-size:12px;padding:5px 8px;white-space:normal;width:max-content;max-width:200px}
   .rtu-chip.l>div,.rtu-chip.r>div{transform:translate(-50%,-100%);margin:-10px 0 0}
   .rtu-chs{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:8px;flex:1 1 0}
+  .rtu-chs button{min-height:40px;padding-bottom:10px}
+  .rtu-full,.rtu-why{min-height:40px}
   .rtu-why{flex:1 1 100%}
 }
