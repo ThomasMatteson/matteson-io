@@ -597,7 +597,7 @@ var X=[
   know:['The purchase order and the agreed pricing','What was actually received, from the packing slip','Match tolerances set by finance','This supplier’s billing history'],
   tools:['Invoice matching','Read access to payables','Drafting notes to suppliers'],
   judge:['Holds payment when the difference is outside tolerance','Separates what is owed from what isn’t','A dispute goes out only after the payables lead approves'],
-  steps:[['','Three-way match fails: $272 over, 9.3% against a 2% tolerance.'],['','Line by line: $180 of freight not on the purchase order.'],['','Two filter lines billed at next month’s price: $92 over.'],['','Receiving confirms every item arrived.'],['flag','Agreement covers freight on orders over $2,500. The $180 is owed; the $92 is not.']],
+  steps:[['','Three-way match fails: $272 over, 9.3% against a 2% tolerance.'],['','Line by line: $180 of freight not on the purchase order.'],['','Two filter lines billed at next month’s price: $92 over.'],['','Receiving confirms every item arrived.'],['flag','The agreement says we pay freight on orders over $2,500. This order is $2,940, so the $180 freight is owed; the $92 price difference is not.']],
   out:{h:'Finding · payables lead',r:[['Pay now','$3,120'],['Disputed','$92 · price increase not yet in effect'],['Evidence','Purchase order, packing slip, price agreement'],['Drafted','Short note to the supplier, ready for your approval']]}}
 ];
 var tabs=$('#xtabs'),cur=0;
