@@ -4,6 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MTech Field Awareness</title>
+<meta name="description" content="Ordinary-looking safety glasses that bring a company’s history, procedures and expertise to the person doing the work, at the moment they need it.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#15171a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MTech">
+<meta property="og:title" content="MTech Field Awareness">
+<meta property="og:description" content="Ordinary-looking safety glasses that bring a company’s history, procedures and expertise to the person doing the work, at the moment they need it.">
+<meta property="og:url" content="https://matteson.io/wearables.html">
+<meta property="og:image" content="https://matteson.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
@@ -44,31 +58,70 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .ordinary{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
 .ordinary svg{display:block;width:100%;height:auto;max-width:520px}
 @media(max-width:820px){.ordinary{grid-template-columns:1fr}}
-/* scroll story */
-.aisle{position:relative;height:440vh;border-bottom:1px solid var(--line2)}
-.astage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 60%,var(--bg2) 0,var(--bg) 75%)}
-#agl{position:absolute;inset:0;width:100%;height:100%;display:block}
-.alens{position:absolute;inset:max(72px,9vh) 3% 5%;border-radius:clamp(36px,6vw,90px);box-shadow:0 0 0 200vmax color-mix(in srgb,var(--bg) 70%,transparent);border:1px solid var(--line);pointer-events:none;z-index:1}
-.alens span{position:absolute;left:clamp(24px,4vw,56px);top:18px;color:var(--accent)}
-.trk{position:absolute;left:0;top:0;z-index:2;pointer-events:none;opacity:0;will-change:transform,width,height}
-.trk i{position:absolute;width:16px;height:16px;border:0 solid var(--accent)}
-.trk .a{left:0;top:0;border-width:2px 0 0 2px}.trk .b{right:0;top:0;border-width:2px 2px 0 0}.trk .c{left:0;bottom:0;border-width:0 0 2px 2px}.trk .d{right:0;bottom:0;border-width:0 2px 2px 0}
-.trk span{position:absolute;left:0;top:-24px;font:500 11px var(--f-mono);letter-spacing:.07em;color:var(--accent);white-space:nowrap;text-shadow:0 0 10px var(--bg)}
-.warnb{position:absolute;left:50%;top:clamp(96px,14vh,140px);transform:translateX(-50%);z-index:3;background:var(--accent);color:var(--accent-ink);font:600 12.5px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;opacity:0;transition:opacity .25s;white-space:nowrap;pointer-events:none}
-.baylab{position:absolute;left:0;top:0;z-index:2;margin:-30px 0 0 -36px;font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);opacity:0;white-space:nowrap;pointer-events:none;text-shadow:0 0 10px var(--bg)}
-.alog{position:absolute;right:max(24px,5%);top:max(110px,16vh);z-index:3;border:1px solid var(--accent);background:var(--bg);padding:12px 14px;display:grid;gap:4px;opacity:0;transition:opacity .4s}
-.alog b{font:600 12px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
-.alog span{font:400 12.5px var(--f-mono);color:var(--fg)}
-.acap{position:absolute;left:0;right:0;bottom:clamp(28px,7vh,72px);z-index:3;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;pointer-events:none}
-.acapin{max-width:460px;background:color-mix(in srgb,var(--bg) 84%,transparent);border-left:3px solid var(--accent);padding:16px 18px;backdrop-filter:blur(6px)}
-.acapin h2{font-size:clamp(24px,2.6vw,36px);font-weight:800;font-variation-settings:"wdth" 106;margin:6px 0 8px;line-height:1.05}
-.acapin p{font-size:15.5px;font-weight:300}
-.asteps{list-style:none;margin:0;padding:0;display:grid;gap:9px;font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.asteps li{display:flex;align-items:center;gap:10px;justify-content:flex-end}
-.asteps li::after{content:"";width:16px;height:2px;background:var(--line);transition:width .35s,background .35s}
-.asteps li.on{color:var(--fg)}.asteps li.on::after{width:36px;background:var(--accent)}.asteps li.done{color:var(--accent)}
-@media(max-width:760px){.asteps{display:none}.acapin{max-width:none}.alog{left:20px;right:auto}}
-.aisle.nogl{height:auto}.aisle.nogl .astage{position:relative;height:auto;padding-block:80px}.aisle.nogl #agl,.aisle.nogl .alens,.aisle.nogl .trk,.aisle.nogl .warnb,.aisle.nogl .baylab,.aisle.nogl .alog{display:none}.aisle.nogl .acap{position:relative}
+/* chapters */
+.chapters{border-bottom:1px solid var(--line2);background:var(--bg2)}
+.chapters ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.chapters li+li{border-left:1px solid var(--line2)}
+.chapters a{display:grid;gap:4px;padding:18px 14px 18px 0;text-decoration:none;min-width:0}
+.chapters li+li a{padding-left:14px}
+.chapters span{font:500 11px var(--f-mono);letter-spacing:.09em;color:var(--accent)}
+.chapters b{font:700 16px/1.2 var(--f-display);font-variation-settings:"wdth" 100}
+.chapters a:hover b{color:var(--accent)}
+@media(max-width:900px){.chapters ol{grid-template-columns:repeat(3,minmax(0,1fr))}.chapters li:nth-child(4){border-left:0}.chapters li:nth-child(4) a{padding-left:0}.chapters li:nth-child(n+4){border-top:1px solid var(--line2)}}
+@media(max-width:520px){.chapters ol{grid-template-columns:repeat(2,minmax(0,1fr))}.chapters li:nth-child(odd){border-left:0}.chapters li:nth-child(odd) a{padding-left:0}.chapters li:nth-child(even) a{padding-left:14px}.chapters li:nth-child(4){border-left:1px solid var(--line2)}.chapters li:nth-child(4) a{padding-left:14px}.chapters li:nth-child(n+3){border-top:1px solid var(--line2)}}
+.chap{color:var(--accent);margin-bottom:26px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+section.s.chintro{padding-bottom:clamp(40px,5vw,64px)}
+[id^="ch"]{scroll-margin-top:60px}
+/* scroll story: one PM visit through the glasses, with SVS and the digital team alongside */
+.walk{position:relative;height:900vh;border-bottom:1px solid var(--line2)}
+.wstage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 55%,var(--bg2) 0,var(--bg) 75%)}
+.wscene{position:absolute;inset:calc(max(72px,9vh) + 40px) 25% 6%;display:flex;align-items:center;justify-content:center;z-index:1}
+.wscene svg{width:100%;height:100%;display:block}
+.wlens{position:absolute;inset:max(72px,9vh) 2% 4%;border-radius:clamp(36px,5vw,80px);box-shadow:0 0 0 200vmax color-mix(in srgb,var(--bg) 70%,transparent);border:1px solid var(--line);pointer-events:none;z-index:2}
+.wlens span{position:absolute;left:clamp(24px,4vw,56px);top:18px;color:var(--accent)}
+.wpanel{position:absolute;z-index:3;width:21%;border:1px solid var(--accent);background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(6px);transition:opacity .4s}
+.wpanel .hd{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line);font:600 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase}
+.wpanel .hd b{color:var(--accent);font-weight:600}
+.wpanel .hd i{font-style:normal;color:var(--muted);font-weight:500;text-align:right}
+.wpanel dl{margin:0;padding:6px 12px 10px}
+.wpanel dl div{display:grid;grid-template-columns:82px minmax(0,1fr);gap:8px;padding:4px 0;border-bottom:1px solid var(--line2);font:400 12px/1.4 var(--f-mono);animation:in .35s ease both}
+.wpanel dl div:last-child{border-bottom:0}
+.wpanel dt{color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:10.5px;padding-top:1px}
+.wpanel dd{margin:0;color:var(--fg)}
+.wpanel dd.n{color:var(--accent)}
+.wsvs{right:calc(2% + 24px);top:calc(max(72px,9vh) + 52px)}
+.wag{left:calc(2% + 24px);top:calc(max(72px,9vh) + 52px);opacity:0;border-style:dashed}
+.wag.on{opacity:1}
+.wag .hd b::before{content:"";display:inline-block;width:7px;height:7px;border:1.5px solid var(--accent);transform:rotate(45deg);margin-right:8px;vertical-align:1px}
+.wcap{position:absolute;left:calc(2% + 24px);bottom:calc(4% + 24px);z-index:3;width:21%;pointer-events:none}
+.wcapin{background:color-mix(in srgb,var(--bg) 86%,transparent);border-left:3px solid var(--accent);padding:14px 16px;backdrop-filter:blur(6px)}
+.wcapin h2{font-size:clamp(20px,1.8vw,28px);font-weight:800;font-variation-settings:"wdth" 104;margin:6px 0 8px;line-height:1.08}
+.wcapin p{font-size:14.5px;font-weight:300;line-height:1.5}
+.wsteps{position:absolute;right:calc(2% + 24px);bottom:calc(4% + 24px);z-index:3;list-style:none;margin:0;padding:0;display:grid;gap:8px;font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.wsteps li{display:flex;align-items:center;gap:10px;justify-content:flex-end}
+.wsteps li::after{content:"";width:16px;height:2px;background:var(--line);transition:width .35s,background .35s}
+.wsteps li.on{color:var(--fg)}.wsteps li.on::after{width:36px;background:var(--accent)}.wsteps li.done{color:var(--accent)}
+.wscene .ov{opacity:0;transition:opacity .45s}
+.wscene .ov.on{opacity:1}
+.wscene .tag{font:600 13px var(--f-mono);letter-spacing:.06em;fill:var(--accent-ink)}
+.wscene .tagbg{fill:var(--accent)}
+.wscene .big{font:500 15px var(--f-mono);letter-spacing:.05em;fill:var(--accent)}
+.wscene .wht{font:500 13px var(--f-mono);letter-spacing:.04em;fill:var(--fg)}
+@media(max-height:760px) and (min-width:1101px){.wsteps{display:none}}
+@media(max-width:1100px){
+  .wlens{inset:max(64px,8vh) 2% 3%;border-radius:32px}
+  .wscene{inset:34% 3% 30%}
+  .wcap{left:calc(2% + 14px);right:calc(2% + 14px);width:auto;bottom:auto;top:calc(max(64px,8vh) + 40px)}
+  .wcapin{padding:12px 14px}
+  .wcapin h2{font-size:21px;margin:4px 0 6px}
+  .wcapin p{font-size:13.5px}
+  .wpanel{left:calc(2% + 14px);right:calc(2% + 14px);width:auto;top:auto;bottom:calc(3% + 14px)}
+  .wpanel dl div{grid-template-columns:78px minmax(0,1fr);font-size:11.5px}
+  .wpanel dl div:nth-child(n+4){display:none}
+  .walk.agents .wsvs{opacity:0}
+  .wsteps{display:none}
+}
+@media(max-width:1100px) and (max-height:740px){.wcapin p{display:none}.wscene{inset:26% 3% 30%}}
 /* vision sections: identification, evidence sources, companion, capture, learning loop */
 .demo{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);border:1px solid var(--line);margin-top:40px;background:var(--bg)}
 .demo>.l{border-right:1px solid var(--line);padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
@@ -143,23 +196,34 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   </div>
 </section>
 
-<section class="aisle" id="aisle" aria-label="Scroll story: a forklift near miss in a warehouse aisle">
-  <div class="astage">
-    <canvas id="agl" aria-hidden="true"></canvas>
-    <div class="alens" aria-hidden="true"><span class="mono">Field awareness · aisle 7 · simulated</span></div>
-    <div class="trk" id="atrk" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><span id="atrkL"></span></div>
-    <div class="warnb" id="awarn" aria-hidden="true">Step aside · safety bay on your left</div>
-    <div class="baylab" id="abay" aria-hidden="true">Safety bay</div>
-    <div class="alog" id="alog" aria-hidden="true"><b>Near miss logged</b><span>Aisle 7 · Forklift 2 · 1.1 m clearance</span><span>Sent to the site lead</span></div>
-    <div class="acap wrap">
-      <div class="acapin" aria-live="polite"><span class="mono" id="aN">01 / 05</span><h2 id="aH">Walking the aisle</h2><p id="aP">The wearer heads down aisle 7 in the pedestrian lane. The glasses map the racks, the floor and the lane markings as they go.</p></div>
-      <ol class="asteps" id="aSteps"><li class="on">Walking the aisle</li><li>Vehicle detected</li><li>Path predicted</li><li>Warning in the lens</li><li>Near miss avoided</li></ol>
+<section class="chapters" aria-label="Chapters">
+  <div class="wrap"><ol><li><a href="#ch1"><span>01</span><b>The visit</b></a></li><li><a href="#ch2"><span>02</span><b>Understanding the work</b></a></li><li><a href="#ch3"><span>03</span><b>Proof as you go</b></a></li><li><a href="#ch4"><span>04</span><b>Keeping people safe</b></a></li><li><a href="#ch5"><span>05</span><b>How it’s built</b></a></li><li><a href="#ch6"><span>06</span><b>Learning and reach</b></a></li></ol></div>
+</section>
+
+<section class="s chintro" id="ch1">
+  <div class="wrap">
+    <div class="chap mono">Chapter 01 · The visit</div>
+    <div class="sechd">
+      <div><h2 class="h2">One roof. Ten moments.<br>Scroll through the visit.</h2></div>
+      <p class="lede">A simulated preventive maintenance visit, seen through the glasses. SVS supplies the job, the digital team answers what the technician finds, and the business sees the result. Keep scrolling.</p>
     </div>
   </div>
 </section>
 
-<section class="s" id="arrive">
+<section class="walk" id="walk" aria-label="Scroll story: a preventive maintenance visit seen through the glasses, with SVS and the digital team alongside">
+  <div class="wstage">
+    <div class="wscene"><svg id="wsvg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg></div>
+    <div class="wlens" aria-hidden="true"><span class="mono">Simulation · Site 14 roof</span></div>
+    <aside class="wpanel wag" id="wAgent" aria-live="polite"><div class="hd"><b>Coworkers</b><i id="waHd"></i></div><dl id="waRows"></dl></aside>
+    <aside class="wpanel wsvs" aria-live="polite"><div class="hd"><b>SVS</b><i id="wsHd"></i></div><dl id="wsRows"></dl></aside>
+    <div class="wcap"><div class="wcapin" aria-live="polite"><span class="mono" id="wN">01 / 10</span><h2 id="wH"></h2><p id="wP"></p></div></div>
+    <ol class="wsteps" id="wSteps"></ol>
+  </div>
+</section>
+
+<section class="s" id="ch2">
   <div class="wrap">
+    <div class="chap mono">Chapter 02 · Understanding the work</div>
     <div class="sechd">
       <div><div class="eyebrow mono">Before the repair</div><h2 class="h2">Arrive anywhere.<br>Know what you’re looking at.</h2></div>
       <p class="lede">You’re at a facility you have never visited. You know the customer has a problem. You may not know where the equipment is, which version it is, what happened last visit, or what is unusual about this site. The experience begins before the repair.</p>
@@ -220,8 +284,9 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   </div>
 </section>
 
-<section class="s alt">
+<section class="s alt" id="ch3">
   <div class="wrap">
+    <div class="chap mono">Chapter 03 · Proof as you go</div>
     <div class="sechd">
       <div><div class="eyebrow mono">Documentation, done on site</div><h2 class="h2">Get it right while<br>you’re still standing there.</h2></div>
       <p class="lede">The system knows what this job needs to be documented: which component to photograph, from which angle, and which readings to take. It checks each capture for clarity and content as it happens.</p>
@@ -250,39 +315,22 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 <section class="s">
   <div class="wrap">
     <div class="sechd">
-      <div><div class="eyebrow mono">One intelligence, many interfaces</div><h2 class="h2">The glasses are<br>a window into more.</h2></div>
-      <p class="lede">The glasses are an interface to a larger intelligence system. Simple hardware already gives useful awareness; more capable hardware adds spatial guidance and richer interaction. The same system reaches across devices.</p>
-    </div>
-    <div class="strip">
-      <div><h3>Camera and haptics</h3><p>Awareness without a display: the system sees the work and taps the wearer when it matters.</p></div>
-      <div><h3>Audio</h3><p>Questions and answers by voice, hands still on the job.</p></div>
-      <div><h3>Augmented display</h3><p>Spatial guidance, overlays on components, and shared views for remote experts.</p></div>
-      <div><h3>Phones and tablets</h3><p>The same guidance and capture for crews without glasses.</p></div>
-      <div><h3>Sensors and systems</h3><p>Equipment, site sensors and business systems feeding one shared picture of the job.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="s alt">
-  <div class="wrap">
-    <div class="sechd">
-      <div><div class="eyebrow mono">Learning and doing</div><h2 class="h2">From practice to the field,<br>and back again.</h2></div>
-      <p class="lede">The same procedure, terminology and evidence requirements follow a person from rehearsal into real work. And what the field learns can make its way back to everyone.</p>
+      <div><div class="eyebrow mono">Closing a job</div><h2 class="h2">The system closes<br>the job.</h2></div>
+      <p class="lede">Five checks run before a work order can close, each one done by the system while the crew is still on site.</p>
     </div>
     <div class="strip odd">
-      <div><h3>Rehearse</h3><p>Practice the procedure in a simulated environment, with the same guidance used on site.</p></div>
-      <div><h3>Perform</h3><p>Receive guidance while performing an authorized task on real equipment.</p></div>
-      <div><h3>Reflect</h3><p>Get feedback afterwards on what went well and what was missed.</p></div>
-      <div><h3>Propose</h3><p>A useful discovery on a real job is captured as a proposed improvement.</p></div>
-      <div><h3>Review and share</h3><p>The person who owns that knowledge reviews it. Approved improvements become available to everyone.</p></div>
+      <div><h3>Work confirmed</h3><p>AI confirms from the photo that the right work was done.</p></div>
+      <div><h3>Lockout confirmed</h3><p>Sensors confirm the lockout is in place and valid.</p></div>
+      <div><h3>Photos checked</h3><p>Every photo is checked the moment it is taken.</p></div>
+      <div><h3>Proof and safety pass</h3><p>Closure opens once both conditions are met.</p></div>
+      <div><h3>Fixed on site</h3><p>Anything missing is caught and corrected before the crew leaves.</p></div>
     </div>
-    <p class="aside">Observed behavior doesn’t automatically become a company rule. Every lasting change to a procedure goes through a person who owns that knowledge.</p>
-    <div class="row" style="margin-top:24px"><a class="btn pri" href="work.html#journey">Follow a full service visit</a><a class="btn" href="onboarding.html">How training works</a></div>
   </div>
 </section>
 
-<section class="s">
+<section class="s alt" id="ch4">
   <div class="wrap">
+    <div class="chap mono">Chapter 04 · Keeping people safe</div>
     <div class="sechd">
       <div><div class="eyebrow mono">Keeping the work safe</div><h2 class="h2">See. Judge.<br>Then gate the work.</h2></div>
       <p class="lede">Every step, every photo and every job advances on proof the system has checked.</p>
@@ -296,10 +344,10 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   </div>
 </section>
 
-<section class="s alt">
+<section class="s">
   <div class="wrap">
     <div class="sechd">
-      <div><div class="eyebrow mono">What it does</div><h2 class="h2">Three jobs,<br>one pair of glasses.</h2></div>
+      <div><div class="eyebrow mono">Three situations</div><h2 class="h2">Three jobs,<br>one pair of glasses.</h2></div>
       <p class="lede">Switch modes to see what appears in the lens: guidance on the equipment, a safety gate before the work, and proof checked on the spot.</p>
     </div>
     <div class="modes">
@@ -316,23 +364,24 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   </div>
 </section>
 
-<section class="s">
+<section class="s alt" id="ch5">
   <div class="wrap">
+    <div class="chap mono">Chapter 05 · How it’s built</div>
     <div class="sechd">
-      <div><div class="eyebrow mono">Closing a job</div><h2 class="h2">The system closes<br>the job.</h2></div>
-      <p class="lede">Five checks run before a work order can close, each one done by the system while the crew is still on site.</p>
+      <div><div class="eyebrow mono">One intelligence, many interfaces</div><h2 class="h2">The glasses are<br>a window into more.</h2></div>
+      <p class="lede">The glasses are an interface to a larger intelligence system. Simple hardware already gives useful awareness; more capable hardware adds spatial guidance and richer interaction. The same system reaches across devices.</p>
     </div>
-    <div class="strip odd">
-      <div><h3>Work confirmed</h3><p>AI confirms from the photo that the right work was done.</p></div>
-      <div><h3>Lockout confirmed</h3><p>Sensors confirm the lockout is in place and valid.</p></div>
-      <div><h3>Photos checked</h3><p>Every photo is checked the moment it is taken.</p></div>
-      <div><h3>Proof and safety pass</h3><p>Closure opens once both conditions are met.</p></div>
-      <div><h3>Fixed on site</h3><p>Anything missing is caught and corrected before the crew leaves.</p></div>
+    <div class="strip">
+      <div><h3>Camera and haptics</h3><p>Awareness without a display: the system sees the work and taps the wearer when it matters.</p></div>
+      <div><h3>Audio</h3><p>Questions and answers by voice, hands still on the job.</p></div>
+      <div><h3>Augmented display</h3><p>Spatial guidance, overlays on components, and shared views for remote experts.</p></div>
+      <div><h3>Phones and tablets</h3><p>The same guidance and capture for crews without glasses.</p></div>
+      <div><h3>Sensors and systems</h3><p>Equipment, site sensors and business systems feeding one shared picture of the job.</p></div>
     </div>
   </div>
 </section>
 
-<section class="s alt">
+<section class="s">
   <div class="wrap">
     <div class="sechd">
       <div><div class="eyebrow mono">How it’s built</div><h2 class="h2">From the lens<br>to the control room.</h2></div>
@@ -344,6 +393,25 @@ input[type=range]{width:100%;accent-color:var(--accent)}
       <div class="feat"><span class="ic" data-icon="chip"></span><span class="k">On site</span><h3>Edge processing</h3><p>Computer vision and the safety engine run close to the work, so a hazard warning never waits on a signal from far away.</p></div>
       <div class="feat"><span class="ic" data-icon="cloud"></span><span class="k">In the cloud</span><h3>Control and records</h3><p>Model updates, work orders, analytics, remote supervision and a complete record of what was verified.</p></div>
     </div>
+  </div>
+</section>
+
+<section class="s alt" id="ch6">
+  <div class="wrap">
+    <div class="chap mono">Chapter 06 · Learning and reach</div>
+    <div class="sechd">
+      <div><div class="eyebrow mono">Learning and doing</div><h2 class="h2">From practice to the field,<br>and back again.</h2></div>
+      <p class="lede">The same procedure, terminology and evidence requirements follow a person from rehearsal into real work. And what the field learns can make its way back to everyone.</p>
+    </div>
+    <div class="strip odd">
+      <div><h3>Rehearse</h3><p>Practice the procedure in a simulated environment, with the same guidance used on site.</p></div>
+      <div><h3>Perform</h3><p>Receive guidance while performing an authorized task on real equipment.</p></div>
+      <div><h3>Reflect</h3><p>Get feedback afterwards on what went well and what was missed.</p></div>
+      <div><h3>Propose</h3><p>A useful discovery on a real job is captured as a proposed improvement.</p></div>
+      <div><h3>Review and share</h3><p>The person who owns that knowledge reviews it. Approved improvements become available to everyone.</p></div>
+    </div>
+    <p class="aside">Observed behavior doesn’t automatically become a company rule. Every lasting change to a procedure goes through a person who owns that knowledge.</p>
+    <div class="row" style="margin-top:24px"><a class="btn pri" href="work.html#journey">Follow a full service visit</a><a class="btn" href="onboarding.html">How training works</a></div>
   </div>
 </section>
 
@@ -375,6 +443,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   <a href="coworkers.html"><span class="mono">← Previous</span><b>Digital coworkers</b></a>
   <a href="process.html"><span class="mono">Next →</span><b>Process control</b></a>
 </nav>
+
 </main>
 
 <footer>
@@ -384,7 +453,6 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="site.js"></script>
 <script>
 (function(){
@@ -487,101 +555,157 @@ function lens(svg,id){
 
 /* hero: the leak develops on a loop */
 
-/* scroll story: a forklift near miss in aisle 7, drawn as particles and linework */
+/* scroll story: one PM visit on a rooftop unit, seen through the glasses, with SVS supplying the job and coworkers answering it */
 (function(){
-  var sec=$('#aisle'),cv=$('#agl'),R=null;
-  if(window.THREE){try{R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){R=null}}
-  if(!R){sec.classList.add('nogl');return}
-  var DPR=Math.min(2,window.devicePixelRatio||1);R.setPixelRatio(DPR);R.setClearColor(0x000000,0);
-  var scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(46,1,.05,100),world=new THREE.Group();scene.add(world);
-  var sd=4441;function rn(){sd=(sd*16807)%2147483647;return (sd-1)/2147483646}
+  var sec=$('#walk'),svg=$('#wsvg');if(!sec)return;
   function clamp(x){return Math.max(0,Math.min(1,x))}function seg(x,a,b){return clamp((x-a)/(b-a))}function mix(a,b,t){return a+(b-a)*t}var ease=MT.ease;
-  function boxL(cx,cy,cz,w,h,d){var x=w/2,y=h/2,z=d/2,v=[[-x,-y,-z],[x,-y,-z],[x,y,-z],[-x,y,-z],[-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z]].map(function(q){return [q[0]+cx,q[1]+cy,q[2]+cz]});
-    return [[0,1,2,3,0],[4,5,6,7,4],[0,4],[1,5],[2,6],[3,7]].map(function(ix){return ix.map(function(i){return v[i]})})}
-  function circ(cx,cy,z,r){var a=[];for(var i=0;i<=24;i++){var t=i/24*Math.PI*2;a.push([cx+r*Math.cos(t),cy+r*Math.sin(t),z])}return a}
-  function wheel(x,y,z,r){var a=[];for(var i=0;i<=24;i++){var t=i/24*Math.PI*2;a.push([x,y+r*Math.sin(t),z+r*Math.cos(t)])}return a}
-  function add(L,P){P.forEach(function(p){L.push(p)})}
-  var FY=-1,ST=[],LANE=[],FK=[],FX=.45,BAY=[-2.7,-1.9,.1,1.4];
-  /* floor, pedestrian lane, racks with pallets, a safety bay on the left, lights and a convex mirror */
-  [-1.6,-.8,0,.8,1.6].forEach(function(x){ST.push([[x,FY,2.6],[x,FY,-12.5]])});
-  for(var z=2.5;z>=-12.5;z-=1.5)ST.push([[-1.9,FY,z],[1.9,FY,z]]);
-  for(var dz=2.5;dz>-12.5;dz-=.6){LANE.push([[-1.5,FY+.003,dz],[-1.5,FY+.003,dz-.32]]);LANE.push([[-.9,FY+.003,dz],[-.9,FY+.003,dz-.32]])}
-  [-1,1].forEach(function(s){var xs=s*1.9,xb=s*2.7;
-    for(var uz=1.4;uz>=-12.1;uz-=1.5){if(s<0&&uz>BAY[2]-.05&&uz<BAY[3]+.05)continue;ST.push([[xs,FY,uz],[xs,FY+2.6,uz]]);ST.push([[xb,FY,uz],[xb,FY+2.6,uz]]);ST.push([[xs,FY+2.6,uz],[xb,FY+2.6,uz]])}
-    [-.25,.55,1.35].forEach(function(y){if(s<0){ST.push([[xs,FY+1+y,BAY[2]],[xs,FY+1+y,-12.1]]);ST.push([[xb,FY+1+y,BAY[2]],[xb,FY+1+y,-12.1]]);ST.push([[xs,FY+1+y,2.6],[xs,FY+1+y,BAY[3]]])}else{ST.push([[xs,FY+1+y,2.6],[xs,FY+1+y,-12.1]]);ST.push([[xb,FY+1+y,2.6],[xb,FY+1+y,-12.1]])}});
-    for(var p=0;p<16;p++){var pz=1.8-rn()*13.5,py=[.75,1.55][Math.floor(rn()*2)]+FY-1+1;if(s<0&&pz>BAY[2]-.4&&pz<BAY[3]+.4)continue;add(ST,boxL(s*2.3,py+.22,pz,.62,.44,.7))}});
-  for(var hz=BAY[2]+.15;hz<BAY[3];hz+=.3)ST.push([[BAY[0],FY,hz],[BAY[1],FY,hz+.25]]);ST.push([[BAY[0],FY,BAY[2]],[BAY[1],FY,BAY[2]],[BAY[1],FY,BAY[3]],[BAY[0],FY,BAY[3]],[BAY[0],FY,BAY[2]]]);
-  for(var lz=1;lz>=-12;lz-=3){add(ST,boxL(0,FY+3.4,lz,.9,.06,.18))}
-  ST.push([[0,FY+3.4,-12.4],[0,FY+2.75,-12.4]]);ST.push(circ(0,FY+2.45,-12.35,.32));
-  /* the forklift, forks toward the wearer */
-  add(FK,boxL(FX,FY+.45,0,.95,.7,1.3));add(FK,boxL(FX,FY+1.38,-.15,.9,.04,.95));
-  [[-.42,-.6],[.42,-.6],[-.42,.3],[.42,.3]].forEach(function(q){FK.push([[FX+q[0],FY+.8,q[1]],[FX+q[0],FY+1.36,q[1]]])});
-  [-.3,.3].forEach(function(x){FK.push([[FX+x,FY,.72],[FX+x,FY+2.05,.72]])});FK.push([[FX-.3,FY+2.05,.72],[FX+.3,FY+2.05,.72]]);FK.push([[FX-.3,FY+1.1,.72],[FX+.3,FY+1.1,.72]]);
-  [-.22,.22].forEach(function(x){add(FK,boxL(FX+x,FY+.06,1.2,.1,.05,.9))});
-  [-.5,.5].forEach(function(x){FK.push(wheel(FX+x,FY+.22,.42,.22));FK.push(wheel(FX+x,FY+.2,-.42,.2))});
-  FK.push(circ(FX-.05,FY+1.5,-.15,.05));add(FK,boxL(FX,FY+.95,-.1,.36,.08,.36));
-  /* even sampling into particles */
-  function sample(polys,n,w){var segs=[],tot=0;polys.forEach(function(poly){for(var i=1;i<poly.length;i++){var a=poly[i-1],b=poly[i],l=Math.hypot(b[0]-a[0],b[1]-a[1],b[2]-a[2]);if(l>0){segs.push({a:a,b:b,c0:tot,l:l});tot+=l}}});
-    var out=[],step=tot/n,si=0;for(var k=0;k<n;k++){var r=(k+.5)*step;while(si<segs.length-1&&segs[si].c0+segs[si].l<r)si++;var s=segs[si],f=Math.min(1,(r-s.c0)/s.l);out.push(s.a[0]+(s.b[0]-s.a[0])*f,s.a[1]+(s.b[1]-s.a[1])*f,s.a[2]+(s.b[2]-s.a[2])*f)}return out}
-  var sp=sample(ST,9000),lp=sample(LANE,700),fp=sample(FK,3200),n1=sp.length/3,n2=lp.length/3,n3=fp.length/3,N=n1+n2+n3;
-  var P=new Float32Array(N*3),F=new Float32Array(N),AL=new Float32Array(N);P.set(sp,0);P.set(lp,n1*3);P.set(fp,(n1+n2)*3);
-  for(var i=0;i<N;i++){F[i]=i>=n1+n2?1:i>=n1?.5:0;AL[i]=i>=n1+n2?.32:i>=n1?.22:.13}
-  var geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(P,3));geo.setAttribute('aF',new THREE.BufferAttribute(F,1));geo.setAttribute('aAl',new THREE.BufferAttribute(AL,1));
-  var U={uFz:{value:-12},uDet:{value:0},uPix:{value:900},uOp:{value:1},uFg:{value:new THREE.Color('#f1ede4')},uAcc:{value:new THREE.Color('#2dd4ff')}};
-  var mat=new THREE.ShaderMaterial({uniforms:U,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
-    vertexShader:['attribute float aF;attribute float aAl;uniform float uFz;uniform float uDet;uniform float uPix;varying float vA;varying float vC;',
-      'void main(){vec3 p=position;if(aF>.75)p.z+=uFz;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;',
-      'gl_PointSize=clamp(.017*uPix/max(-mv.z,.05),1.3,7.);vC=aF>.75?uDet:(aF>.25?.6:0.);vA=aAl*(aF>.75?1.+uDet*.4:1.);}'].join('\n'),
-    fragmentShader:['uniform vec3 uFg;uniform vec3 uAcc;uniform float uOp;varying float vA;varying float vC;',
-      'void main(){vec2 c=gl_PointCoord-.5;float d2=dot(c,c);if(d2>.25)discard;gl_FragColor=vec4(mix(uFg,uAcc,vC),exp(-d2*26.)*vA*uOp);}'].join('\n')});
-  var pts=new THREE.Points(geo,mat);pts.frustumCulled=false;world.add(pts);
-  /* linework */
-  var fgC=new THREE.Color('#f1ede4'),acC=new THREE.Color('#2dd4ff');
-  function lm(c){return new THREE.LineBasicMaterial({color:c,transparent:true,opacity:.26,depthWrite:false})}
-  var stM=lm(fgC),laneM=lm(acC),fkM=lm(fgC),fkA=lm(acC),pathM=lm(acC),bayM=lm(acC);laneM.opacity=.25;
-  function line(poly,m){var g=new THREE.BufferGeometry().setFromPoints(poly.map(function(q){return new THREE.Vector3(q[0],q[1],q[2])}));var l=new THREE.Line(g,m);l.frustumCulled=false;return l}
-  ST.forEach(function(p){world.add(line(p,stM))});LANE.forEach(function(p){world.add(line(p,laneM))});
-  var fkG=new THREE.Group();FK.forEach(function(p){fkG.add(line(p,fkM));fkG.add(line(p,fkA))});world.add(fkG);
-  var path=line([[FX,FY+.01,0],[0,FY+.01,0],[-1,FY+.01,0]],pathM);world.add(path);
-  var bay=line([[BAY[0]+.05,FY+.01,BAY[2]+.05],[BAY[1]-.05,FY+.01,BAY[2]+.05],[BAY[1]-.05,FY+.01,BAY[3]-.05],[BAY[0]+.05,FY+.01,BAY[3]-.05],[BAY[0]+.05,FY+.01,BAY[2]+.05]],bayM);world.add(bay);
-  function colors(){var cs=getComputedStyle(document.documentElement),fg=cs.getPropertyValue('--fg').trim(),ac=cs.getPropertyValue('--accent').trim(),bg=cs.getPropertyValue('--bg').trim();
-    try{fgC.set(fg);acC.set(ac);U.uFg.value.set(fg);U.uAcc.value.set(ac)}catch(e){}
-    [stM,fkM].forEach(function(m){m.color.copy(fgC)});[laneM,fkA,pathM,bayM].forEach(function(m){m.color.copy(acC)});
-    var light=false;try{var c=new THREE.Color(bg);light=.2126*c.r+.7152*c.g+.0722*c.b>.5}catch(e){}
-    var bl=light?THREE.NormalBlending:THREE.AdditiveBlending;if(mat.blending!==bl){mat.blending=bl;mat.needsUpdate=true}U.uOp.value=light?2.2:1}
-  colors();new MutationObserver(function(){setTimeout(colors,30)}).observe(document.documentElement,{attributes:true,attributeFilter:['class','data-theme']});
-  /* overlays and captions */
-  var trk=$('#atrk'),trkL=$('#atrkL'),warn=$('#awarn'),bayL=$('#abay'),logC=$('#alog'),cH=$('#aH'),cP=$('#aP'),cN=$('#aN'),steps=$$('#aSteps li');
-  var CAP=[[0,'Walking the aisle','The wearer heads down aisle 7 in the pedestrian lane. The glasses map the racks, the floor and the lane markings as they go.'],
-    [.2,'Vehicle detected','A forklift turns in at the far end. It is picked out and tracked before the wearer has looked up.'],
-    [.35,'Path predicted','Its speed and heading put it in the pedestrian lane within seconds. The predicted path is drawn on the floor.'],
-    [.47,'Warning in the lens','A clear warning appears where the wearer is already looking, with the nearest safety bay marked.'],
-    [.7,'Near miss avoided','The wearer steps into the safety bay, the forklift passes, and the near miss is logged for the site lead.']];
-  var W=1,H=1,v3=new THREE.Vector3(),capI=-1;
-  function size(){W=cv.clientWidth||innerWidth;H=cv.clientHeight||innerHeight;R.setSize(W,H,false);cam.aspect=W/H;cam.updateProjectionMatrix();U.uPix.value=H*DPR/(2*Math.tan(23*Math.PI/180))}
-  size();addEventListener('resize',size);
-  function proj(x,y,z){v3.set(x,y,z).project(cam);return [(v3.x*.5+.5)*W,(-v3.y*.5+.5)*H,v3.z]}
+  function g(cls,parent){return S('g',cls?{class:cls}:{},parent||svg)}
+  /* tags size themselves to their text, again once the web fonts have loaded */
+  var tags=[];
+  function place(o){var w;try{w=o.t.getComputedTextLength()+18}catch(e){w=0}if(!w)w=o.txt.length*8.7+18;var ax=o.a==='end'?o.x-w:o.a==='middle'?o.x-w/2:o.x;
+    o.r.setAttribute('x',ax);o.r.setAttribute('width',w);o.t.setAttribute('x',ax+9);o.t.setAttribute('y',o.y)}
+  function tag(parent,x,y,txt,anchor){var t=T(txt,{x:0,y:0,class:'tag'},parent),r=S('rect',{x:0,y:y-17,width:0,height:24,class:'tagbg'},parent);parent.insertBefore(r,t);
+    var o={t:t,r:r,x:x,y:y,txt:txt,a:anchor};tags.push(o);place(o);return r}
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){tags.forEach(place)});
+  function corners(parent,x0,y0,x1,y1,k){[[x0,y0,1,1],[x1,y0,-1,1],[x0,y1,1,-1],[x1,y1,-1,-1]].forEach(function(c){S('path',{d:'M'+c[0]+' '+(c[1]+c[3]*k)+'V'+c[1]+'H'+(c[0]+c[2]*k),class:'acc',style:'stroke-width:3'},parent)})}
+  var defs=S('defs',{},svg),rg=S('radialGradient',{id:'wglare'},defs);S('stop',{offset:'0','stop-color':'#fff','stop-opacity':'.95'},rg);S('stop',{offset:'.55','stop-color':'#fff','stop-opacity':'.6'},rg);S('stop',{offset:'1','stop-color':'#fff','stop-opacity':'0'},rg);
+
+  /* the roof and the unit, drawn once; the whole scene zooms in from the hatch */
+  var scene=g();
+  var lg=S('linearGradient',{id:'wfade',x1:'0',x2:'1',y1:'0',y2:'0'},defs);[[0,0],[.18,1],[.82,1],[1,0]].forEach(function(q){S('stop',{offset:q[0],'stop-color':'#fff','stop-opacity':q[1]},lg)});
+  var mk=S('mask',{id:'wmask',maskUnits:'userSpaceOnUse',x:'-400',y:'-200',width:'1800',height:'1000'},defs);S('rect',{x:-40,y:-200,width:1080,height:1000,fill:'url(#wfade)'},mk);
+  var roof=g('',scene);roof.setAttribute('mask','url(#wmask)');
+  S('path',{d:'M-400 120H1400',class:'thin'},roof);
+  for(var i=-6;i<=6;i++)S('path',{d:'M'+(500+i*40)+' 120L'+(500+i*260)+' 760',class:'thin'},roof);
+  [180,260,380,560].forEach(function(y){S('path',{d:'M-400 '+y+'H1400',class:'thin',style:'opacity:.6'},roof)});
+  var unit=g('',scene);
+  S('rect',{x:236,y:430,width:534,height:16,class:'ln fillp'},unit);
+  S('path',{d:'M250 170L330 120H760L680 170Z',class:'ln fillp'},unit);
+  S('path',{d:'M680 170L760 120V370L680 430Z',class:'ln fillp'},unit);
+  for(var x=692;x<=748;x+=8){var t=(x-680)/80;S('path',{d:'M'+x+' '+(170-50*t+12)+'V'+(430-60*t-12),class:'thin'},unit)}
+  S('ellipse',{cx:520,cy:145,rx:76,ry:15,class:'ln'},unit);S('path',{d:'M444 145H596M520 130V160',class:'thin'},unit);
+  S('rect',{x:250,y:170,width:430,height:260,class:'ln fillp'},unit);
+  T('RTU-3',{x:262,y:188,class:'lbl'},unit);
+  /* QR sticker and data plate */
+  S('rect',{x:636,y:200,width:32,height:32,class:'ln fillbg'},unit);
+  [[640,204],[656,204],[640,220]].forEach(function(q){S('rect',{x:q[0],y:q[1],width:8,height:8,class:'fillacc'},unit)});S('rect',{x:654,y:218,width:4,height:4,class:'fillacc'},unit);S('rect',{x:660,y:224,width:4,height:4,class:'fillacc'},unit);
+  S('rect',{x:636,y:242,width:32,height:44,class:'thin'},unit);[252,260,268,276].forEach(function(y){S('path',{d:'M641 '+y+'H663',class:'thin'},unit)});
+  /* filter panel, closed and open */
+  var p1c=g('ov on',unit);S('rect',{x:268,y:198,width:170,height:212,class:'ln fillp'},p1c);S('rect',{x:420,y:286,width:8,height:36,class:'ln'},p1c);T('FILTER ACCESS',{x:282,y:222,class:'lbl'},p1c);
+  var p1o=g('ov',unit);S('rect',{x:268,y:198,width:170,height:212,class:'ln fillbg'},p1o);S('path',{d:'M268 198L196 220V388L268 410',class:'ln fillp'},p1o);
+  for(i=0;i<4;i++){var fx=276+i*40;S('rect',{x:fx,y:206,width:34,height:196,class:'ln fillp'},p1o);var z='M'+(fx+4)+' 214';for(var y=214;y<396;y+=12)z+='L'+(fx+(((y-214)/12)%2?4:30))+' '+(y+12);S('path',{d:z,class:'thin'},p1o)}
+  /* blower panel, closed and open, with the motor and (later) its replacement */
+  var p2c=g('ov on',unit);S('rect',{x:452,y:198,width:170,height:212,class:'ln fillp'},p2c);S('rect',{x:604,y:286,width:8,height:36,class:'ln'},p2c);T('BLOWER',{x:466,y:222,class:'lbl'},p2c);
+  var p2o=g('ov',unit);S('rect',{x:452,y:198,width:170,height:212,class:'ln fillbg'},p2o);S('path',{d:'M622 198L660 214V394L622 410',class:'ln fillp'},p2o);
+  S('circle',{cx:510,cy:330,r:52,class:'thin'},p2o);S('circle',{cx:510,cy:330,r:30,class:'ln'},p2o);for(i=0;i<12;i++){var a=i/12*Math.PI*2;S('path',{d:'M'+(510+18*Math.cos(a))+' '+(330+18*Math.sin(a))+'L'+(510+30*Math.cos(a))+' '+(330+30*Math.sin(a)),class:'thin'},p2o)}
+  S('circle',{cx:510,cy:250,r:26,class:'ln'},p2o);S('circle',{cx:510,cy:250,r:4,class:'fillacc'},p2o);
+  S('path',{d:'M510 224L586 281M484 252L575 296',class:'ln',style:'stroke-width:2.4'},p2o);
+  var oldM=g('ov on',p2o);S('rect',{x:566,y:300,width:40,height:56,class:'ln fillp'},oldM);S('circle',{cx:586,cy:292,r:11,class:'ln'},oldM);
+  var newM=g('ov',p2o);S('rect',{x:566,y:300,width:40,height:56,class:'acc fillp'},newM);S('circle',{cx:586,cy:292,r:11,class:'acc'},newM);S('rect',{x:556,y:358,width:60,height:10,class:'acc fillp'},newM);
+
+  /* overlays, one group per moment, in the lens's own coordinates */
+  var N=10,O=[];for(i=0;i<N;i++)O.push(g('ov'));
+  /* 0 arrive */
+  S('path',{d:'M140 560C260 470 520 440 760 336',class:'acc dash',style:'stroke-width:3'},O[0]);
+  S('circle',{cx:770,cy:330,r:7,class:'fillacc'},O[0]);
+  tag(O[0],790,312,'RTU-3 · 40 FT · NE CORNER');tag(O[0],790,344,'FIRST OF 3 UNITS');
+  T('ACCESS: NORTH HATCH · HARNESS REQUIRED',{x:500,y:540,class:'big',style:'text-anchor:middle'},O[0]);
+  /* 1 scan, history beside the unit */
+  corners(O[1],626,190,678,242,14);
+  var scanL=S('path',{d:'M630 216H674',class:'acc',style:'stroke-width:2'},O[1]);
+  tag(O[1],690,206,'QR READ · RTU-3');
+  S('path',{d:'M678 216H700',class:'acc'},O[1]);
+  var hb=g('',O[1]);S('rect',{x:700,y:228,width:290,height:132,class:'acc fillbg'},hb);
+  T('SERVICE HISTORY',{x:714,y:252,class:'lbla'},hb);
+  [['14 JUL','Filters changed'],['02 APR','Filters · belt adjusted'],['11 JAN','Motor noisy, monitor']].forEach(function(r,j){T(r[0],{x:714,y:280+j*26,class:'lbl'},hb);T(r[1],{x:780,y:280+j*26,class:j===2?'lbla':'lblf'},hb)});
+  /* 2 nameplate photo: glare */
+  var cap=function(o,ok){S('rect',{x:300,y:130,width:400,height:230,class:(ok?'acc':'ln')+' fillbg',style:'stroke-width:2'},o);T('CAPTURE · UNIT DATA PLATE',{x:316,y:156,class:'lbl'},o);
+    var lines=['MODEL  PRU-090-4','SERIAL 2419G30871','460V · 3PH · 60HZ','MFD    2019-06'];lines.forEach(function(l,j){T(l,{x:330,y:200+j*32,class:'wht',style:'font-size:17px'+(ok?'':';opacity:.35')},o)});
+    S('path',{d:'M500 360V378M500 378L500 384',class:'acc'},o);S('path',{d:'M652 270L668 252V264',class:'thin'},o)};
+  cap(O[2],false);S('ellipse',{cx:470,cy:236,rx:150,ry:70,fill:'url(#wglare)'},O[2]);
+  tag(O[2],500,410,'SERIAL UNREADABLE · GLARE · STEP LEFT AND RETAKE','middle');
+  /* 3 nameplate photo: accepted */
+  cap(O[3],true);tag(O[3],500,410,'ACCEPTED ✓ · SERIAL MATCHES RTU-3','middle');
+  /* 4 guided filter change */
+  S('rect',{x:264,y:194,width:178,height:220,class:'acc',style:'stroke-width:3'},O[4]);
+  tag(O[4],452,226,'4 × 20×25×2 · MERV 8');tag(O[4],452,258,'FROM VAN STOCK · 4 ISSUED');
+  S('path',{d:'M290 432H420M408 424L420 432L408 440',class:'acc',style:'stroke-width:2.5'},O[4]);T('AIRFLOW → BLOWER',{x:355,y:462,class:'big',style:'text-anchor:middle'},O[4]);
+  T('STEP 2 OF 5 · ARROWS FACE THE BLOWER',{x:500,y:540,class:'big',style:'text-anchor:middle'},O[4]);
+  /* 5 problem found */
+  S('rect',{x:556,y:276,width:62,height:90,class:'acc',style:'stroke-width:3'},O[5]);
+  tag(O[5],630,300,'BLOWER MOTOR SEIZED');tag(O[5],630,332,'SHAFT WON’T TURN BY HAND');tag(O[5],630,364,'MOTOR PLATE ✓ · FM-825');
+  T('YOU: “IS THIS THE SAME MOTOR FROM JANUARY?”',{x:500,y:540,class:'wht',style:'text-anchor:middle'},O[5]);
+  /* 6 coworkers respond: the lens keeps the job in view */
+  S('rect',{x:556,y:276,width:62,height:90,class:'acc dash',style:'stroke-width:2'},O[6]);
+  tag(O[6],500,96,'MATERIALS COWORKER IS ON IT','middle');
+  T('MEANWHILE: FINISH FILTERS · CHECK CONTACTOR',{x:500,y:540,class:'big',style:'text-anchor:middle'},O[6]);
+  /* 7 uncertain part, expert annotation */
+  tag(O[7],500,96,'UNSURE: BRACKET DOESN’T MATCH THE DIAGRAM','middle');
+  S('ellipse',{cx:586,cy:363,rx:58,ry:22,class:'acc',style:'stroke-width:3'},O[7]);
+  S('path',{d:'M640 372C700 400 720 430 740 450',class:'acc',style:'stroke-width:2'},O[7]);
+  var ex=g('',O[7]);S('rect',{x:700,y:452,width:290,height:72,class:'acc fillbg'},ex);T('RAY M. · SENIOR TECH · LIVE',{x:714,y:476,class:'lbla'},ex);T('“That’s the adapter plate.',{x:714,y:498,class:'lblf'},ex);T('Mount it first, then the motor.”',{x:714,y:514,class:'lblf'},ex);
+  /* 8 close up with proof */
+  corners(O[8],196,96,804,470,34);
+  tag(O[8],500,78,'AFTER PHOTO ✓  AMPS 2.9 A ✓  SIGNATURE ✓','middle');
+  /* 9 business sees the result */
+  S('circle',{cx:500,cy:283,r:58,class:'acc fillbg',style:'stroke-width:3'},O[9]);S('path',{d:'M472 284l20 20 38-40',class:'acc',style:'stroke-width:5'},O[9]);
+  tag(O[9],500,380,'VISIT COMPLETE · SYNCED TO SVS','middle');
+  S('path',{d:'M720 520H900M886 510L900 520L886 530',class:'acc',style:'stroke-width:3'},O[9]);T('NEXT: RTU-4 · 30 FT',{x:900,y:500,class:'big',style:'text-anchor:end'},O[9]);
+
+  /* SVS record, the digital team, captions and the step rail */
+  var STEPS=[
+    {s:'Arrive',h:'Arrive with the job already in view',p:'Before the technician reaches the roof, the lens shows which unit is first, where it is and how to get to it. SVS supplies the visit, the PM program and the site’s access notes.',
+     hd:'Visit V-20931',r:[['Site','Site 14 · roof'],['Program','Quarterly PM · filters and belts'],['Units','3 on this roof · RTU-3 first'],['Access','North hatch · harness required']]},
+    {s:'Scan',h:'The unit, with its history beside it',p:'A glance at the QR sticker pulls the unit’s record from SVS. Its service history appears next to the equipment, including a January note: the blower motor was noisy.',
+     hd:'Unit RTU-3',r:[['Unit','Packaged RTU · 7.5 ton'],['Serial','2419G30871'],['Installed','4 × 20×25×2 filters · motor FM-825'],['Flag','Motor noisy in Jan · monitor','n']]},
+    {s:'Data plate',h:'Glare hides the serial',p:'The work order needs a readable photo of the data plate. Glare washes out the serial, so the system asks for a retake while the technician is still standing there, not a week later.',
+     hd:'Work order requirements',r:[['Plate photo','Rejected · glare','n'],['Filters','Pending'],['After','Pending'],['Signature','Pending']]},
+    {s:'Retake',h:'Retaken, read, accepted',p:'One step to the left and the plate is clear. The serial is read and matched to RTU-3, so the photo counts toward the work order.',
+     hd:'Work order requirements',r:[['Plate photo','Accepted ✓','n'],['Filters','Pending'],['After','Pending'],['Signature','Pending']]},
+    {s:'Guided task',h:'Guided through the task',p:'With the filter panel open, the lens shows the size and quantity from the unit’s installed parts, which way the airflow arrows face and which step comes next.',
+     hd:'Guided task',r:[['Task','Replace filters · step 2 of 5'],['Parts','4 × 20×25×2 MERV 8'],['Source','Van stock · 4 issued','n'],['Check','Arrows toward the blower']]},
+    {s:'Problem',h:'The motor the history warned about',p:'Behind the blower panel, the motor is seized. The technician asks if it is the same motor from January; it is. The issue is logged with the motor’s plate photo, and the job doesn’t stop at the roof.',
+     hd:'Issue logged',r:[['Issue','Blower motor seized','n'],['Part','FM-825 · plate photo ✓'],['History','Same motor flagged in Jan'],['Next','Sent to materials coworker','n']],
+     ag:{h:'Materials coworker',r:[['Received','FM-825 for WO-4471, with the plate photo','n']]}},
+    {s:'Coworkers',h:'The digital team answers, on the same job',p:'The materials coworker checks the van, the branch and the supplier, and surfaces an option. The project coworker routes it to the customer’s approver because it is above the visit’s not-to-exceed. The technician keeps working.',
+     hd:'Same job · WO-4471',r:[['Status','Waiting on part'],['Option','Substitute UM-825 · branch','n'],['Approval','Facilities manager ✓ 10:41','n'],['Delivery','Runner · ETA 35 min']],
+     ag:{h:'Digital team',r:[['Materials','Van: none · OEM: 3-day lead'],['Materials','Approved substitute UM-825 at the branch, 12 mi','n'],['Project','Above NTE · sent to the facilities manager'],['Project','Approved 10:41 · runner dispatched','n']]}},
+    {s:'Expert',h:'Unsure, so it brings in a person',p:'The substitute mounts differently and the bracket doesn’t match the diagram. Rather than guess, the system says so and connects a senior technician, who sees the same view and marks the answer on it.',
+     hd:'Same job · WO-4471',r:[['Part','UM-825 delivered ✓'],['Question','Bracket vs. diagram','n'],['Expert','Ray M. · 4 min'],['Note','Adapter plate ships with UM-825']],
+     ag:{h:'Materials coworker',r:[['Issued','UM-825 to WO-4471','n'],['Knowledge','Proposed: add adapter note to UM-825 · for review']]}},
+    {s:'Close up',h:'Close it up, with proof',p:'After photo, a startup amp reading and the customer’s signature. Every requirement on the work order is met before the technician leaves the unit.',
+     hd:'Work order requirements',r:[['Plate photo','Accepted ✓'],['Filters','4 of 4 ✓'],['After','Photo ✓ · 2.9 A','n'],['Signature','Facilities manager ✓','n']],
+     ag:{h:'Quality coworker',r:[['Checked','Completion package against the customer’s rules ✓','n']]}},
+    {s:'Result',h:'What the business sees',p:'One visit instead of two. The unit’s history, the van’s stock, the next PM date and billing are all updated in SVS, and the owner sees a finished job, not a callback.',
+     hd:'Visit complete',r:[['Status','Complete · synced','n'],['History','Motor UM-825 installed today'],['Inventory','Van restock queued'],['Next PM','January'],['Billing','Ready, backed by photos']],
+     ag:{h:'Business view',r:[['Trips','1 instead of 2','n'],['Downtime','Same day'],['Needs you','Nothing']]}}
+  ];
+  var rail=$('#wSteps');STEPS.forEach(function(st){var li=document.createElement('li');li.textContent=st.s;rail.appendChild(li)});
+  var agent=$('#wAgent');
+  function rows(dl,list){dl.innerHTML='';list.forEach(function(r,i){var d=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=r[0];dd.textContent=r[1];if(r[2])dd.className=r[2];d.appendChild(dt);d.appendChild(dd);d.style.animationDelay=(i*.12)+'s';dl.appendChild(d)})}
+  var cur=-1;
+  function show(k){
+    if(k===cur)return;cur=k;var st=STEPS[k];
+    $('#wN').textContent=(k<9?'0':'')+(k+1)+' / '+STEPS.length;$('#wH').textContent=st.h;$('#wP').textContent=st.p;
+    $('#wsHd').textContent=st.hd;rows($('#wsRows'),st.r);
+    if(st.ag){$('#waHd').textContent=st.ag.h;rows($('#waRows'),st.ag.r);agent.classList.add('on');sec.classList.add('agents')}else{agent.classList.remove('on');sec.classList.remove('agents')}
+    MT.$$('li',rail).forEach(function(li,i){li.className=i<k?'done':i===k?'on':''});
+    O.forEach(function(o,i){o.setAttribute('class','ov'+(i===k?' on':''))});
+    var f=k===4,b=k>=5&&k<=7;
+    p1c.setAttribute('class','ov'+(f?'':' on'));p1o.setAttribute('class','ov'+(f?' on':''));
+    p2c.setAttribute('class','ov'+(b?'':' on'));p2o.setAttribute('class','ov'+(b?' on':''));
+    oldM.setAttribute('class','ov'+(k<7?' on':''));newM.setAttribute('class','ov'+(k>=7?' on':''));
+  }
   var Ps=0,last=0,vis=true,raf=0;
   function target(){var r=sec.getBoundingClientRect(),span=sec.offsetHeight-innerHeight;return span>0?clamp(-r.top/span):0}
   function frame(now){raf=0;if(!vis)return;var dt=Math.min(.1,(now-(last||now))/1000);last=now;var Pt=target();Ps=MT.reduce?Pt:Ps+(Pt-Ps)*(1-Math.exp(-dt*6));var p=Ps;
-    var walk=ease(seg(p,0,.18)),step=ease(seg(p,.55,.68));
-    var fz=p<.62?mix(-12.5,-2.6,ease(seg(p,.12,.62))):mix(-2.6,3.6,ease(seg(p,.66,.95)));
-    var det=seg(p,.22,.3),pathOn=seg(p,.35,.42)*(1-seg(p,.66,.72)),warnOn=p>.47&&p<.7;
-    U.uFz.value=fz;U.uDet.value=det;fkG.position.z=fz;fkM.opacity=.3*(1-det);fkA.opacity=.85*det;
-    var cz=mix(2.6,1.2,walk)-.1*step,cx=mix(0,-2.25,step),bob=Math.sin(walk*18)*.012*(1-step);
-    cam.position.set(cx,FY+1.68+bob,cz);cam.lookAt(mix(.1,.9,step),FY+1.2,mix(-6,-3,step));
-    var pa=path.geometry.attributes.position;pa.setXYZ(0,FX,FY+.01,fz+1.7);pa.setXYZ(1,mix(FX,-1.2,.5),FY+.01,mix(fz+1.7,cz,.55));pa.setXYZ(2,-1.2,FY+.01,cz-.4);pa.needsUpdate=true;pathM.opacity=pathOn*.9;
-    bayM.opacity=seg(p,.47,.52)*(1-seg(p,.86,.95))*.9;
-    R.render(scene,cam);
-    var dist=Math.max(0,cz-(fz+1.7));
-    if(det>.02&&fz<cz-1){var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9,ok=true;[[FX-.55,FY,fz-.7],[FX+.55,FY,fz-.7],[FX-.55,FY+2.1,fz+1.7],[FX+.55,FY+2.1,fz+1.7],[FX-.55,FY+2.1,fz-.7],[FX+.55,FY,fz+1.7]].forEach(function(q){var s=proj(q[0],q[1],q[2]);if(s[2]>1)ok=false;x0=Math.min(x0,s[0]);y0=Math.min(y0,s[1]);x1=Math.max(x1,s[0]);y1=Math.max(y1,s[1])});
-      if(ok){trk.style.transform='translate3d('+x0.toFixed(1)+'px,'+y0.toFixed(1)+'px,0)';trk.style.width=(x1-x0).toFixed(1)+'px';trk.style.height=(y1-y0).toFixed(1)+'px';trkL.textContent='FORKLIFT · '+dist.toFixed(1)+' m · '+(pathOn>.5||warnOn?'ENTERING YOUR LANE':'TRACKING');trk.style.opacity=String(det)}else trk.style.opacity='0'}else trk.style.opacity='0';
-    warn.style.opacity=warnOn?'1':'0';
-    var b=proj((BAY[0]+BAY[1])/2,FY+.05,(BAY[2]+BAY[3])/2);bayL.style.transform='translate3d('+b[0].toFixed(1)+'px,'+b[1].toFixed(1)+'px,0)';bayL.style.opacity=b[2]<1?bayM.opacity.toFixed(2):'0';
-    logC.style.opacity=p>.86?'1':'0';
-    var k=0;CAP.forEach(function(c,i){if(p>=c[0])k=i});if(k!==capI){capI=k;cN.textContent='0'+(k+1)+' / 05';cH.textContent=CAP[k][1];cP.textContent=CAP[k][2];steps.forEach(function(li,i){li.className=i<k?'done':i===k?'on':''})}
+    /* zoom from the hatch to the unit across the first moment */
+    var z=ease(seg(p,.04,.1));scene.setAttribute('transform','translate('+mix(580,0,z)+' '+mix(170,0,z)+') scale('+mix(.4,1,z)+')');
+    show(Math.min(STEPS.length-1,Math.floor(p*STEPS.length*1.03)));
+    if(cur===1){var sy=216+Math.sin(now/260)*20;scanL.setAttribute('d','M630 '+sy+'H674')}
     raf=requestAnimationFrame(frame)}
-  new IntersectionObserver(function(es){vis=es[0].isIntersecting;if(vis&&!raf)raf=requestAnimationFrame(frame)}).observe(sec);raf=requestAnimationFrame(frame);
+  new IntersectionObserver(function(es){vis=es[0].isIntersecting;if(vis&&!raf)raf=requestAnimationFrame(frame)}).observe(sec);
+  show(0);raf=requestAnimationFrame(frame);
 })();
 
 /* interactive viewer */
@@ -656,7 +780,7 @@ function context(how){
   [['This is the unit you were sent to service','RTU-3 · work order WO-4471'],['This is what the customer reported','Not cooling since Tuesday; breaker tripping'],['This is what happened last time','14 Mar: capacitor replaced, fan motor noted as noisy'],['These are the conditions that matter','Roof access by north hatch · harness required · gas line runs along the curb']].forEach(function(r,i){var d=el('div');d.appendChild(el('b','',r[0]));d.appendChild(document.createTextNode(r[1]));d.style.animationDelay=(i*.12)+'s';c.appendChild(d)});
   idL.appendChild(c);
 }
-$$('#arrive .opt').forEach(function(b){b.addEventListener('click',function(){press('#arrive .opt',b);var m=b.dataset.m;
+$$('#ch2 .opt').forEach(function(b){b.addEventListener('click',function(){press('#ch2 .opt',b);var m=b.dataset.m;
   if(m!=='unsure'){context(HOW[m]);return}
   idL.innerHTML='';idL.appendChild(el('div','a','Two matching units: RTU-3 and RTU-4.'));idL.appendChild(el('div','','Their tags are out of view, and both fit the description.'));idL.appendChild(el('div','q','Which one is in front of you?'));
   var p=el('div','pick');['RTU-3','RTU-4'].forEach(function(u){var x=el('button','sbtn',u);x.addEventListener('click',function(){if(u==='RTU-3')context('Confirmed by you: RTU-3.');else{idL.innerHTML='';idL.appendChild(el('div','a','RTU-4 isn’t on this work order.'));idL.appendChild(el('div','','The unit you were sent for is RTU-3, the next one to the east. Unit-specific guidance stays hidden until you’re in front of it.'))}});p.appendChild(x)});

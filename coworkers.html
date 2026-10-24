@@ -4,6 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MTech Digital Coworkers</title>
+<meta name="description" content="Digital coworkers with a defined responsibility, the knowledge and tools to carry it out, and a clear way to involve people.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#15171a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MTech">
+<meta property="og:title" content="MTech Digital Coworkers">
+<meta property="og:description" content="Digital coworkers with a defined responsibility, the knowledge and tools to carry it out, and a clear way to involve people.">
+<meta property="og:url" content="https://matteson.io/coworkers.html">
+<meta property="og:image" content="https://matteson.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
@@ -71,6 +85,37 @@
 .bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);transition:width 1.2s linear}
 .limits{font:400 12.5px/1.6 var(--f-mono);color:var(--muted);border:1px dashed var(--line);padding:10px 12px;margin-bottom:12px}
 .limits b{color:var(--fg);font-weight:500}
+/* wider world: three coworkers with different knowledge, tools and judgment */
+.xtabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:40px}
+.xtabs button{background:var(--bg);border:1px solid var(--line);padding:14px 16px;text-align:left;display:grid;gap:3px;min-width:0}
+.xtabs button b{font:700 18px var(--f-display);font-variation-settings:"wdth" 100}
+.xtabs button small{font:400 12.5px/1.4 var(--f-mono);color:var(--muted)}
+.xtabs button[aria-selected="true"]{border-color:var(--accent);background:var(--panel);box-shadow:inset 0 3px 0 var(--accent)}
+.xtabs button[aria-selected="true"] b{color:var(--accent)}
+@media(max-width:760px){.xtabs{grid-template-columns:1fr}}
+.xcase{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);border:1px solid var(--line);margin-top:12px;background:var(--bg)}
+.xcase>div{padding:20px 22px;min-width:0}
+.xcase>div+div{border-left:1px solid var(--line)}
+@media(max-width:900px){.xcase{grid-template-columns:1fr}.xcase>div+div{border-left:0;border-top:1px solid var(--line)}}
+.xq{font:500 clamp(18px,1.7vw,22px)/1.35 var(--f-body);margin:6px 0 18px}
+.xprof{display:grid;gap:14px}
+.xprof h4{font:500 10.5px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.xprof ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.xprof li{font-size:14.5px;line-height:1.4;padding-left:16px;position:relative}
+.xprof li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border:1px solid var(--accent)}
+.xsteps{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px;counter-reset:x}
+.xsteps li{counter-increment:x;display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;font-size:14.5px;line-height:1.45;animation:in .35s ease both}
+.xsteps li::before{content:counter(x);width:24px;height:24px;border:1px solid var(--line);display:grid;place-items:center;font:500 11px var(--f-mono)}
+.xsteps li.flag{color:var(--accent)}
+.xsteps li.flag::before{border-color:var(--accent)}
+.xout{margin-top:18px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--bg2));padding:14px 16px;animation:in .4s ease both}
+.xout h4{font:500 10.5px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.xout dl{margin:0;display:grid;gap:0}
+.xout dl div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;padding:6px 0;border-bottom:1px solid var(--line2);font-size:14px}
+.xout dl div:last-child{border-bottom:0}
+.xout dt{font:500 10.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+.xout dd{margin:0}
+@media(max-width:520px){.xout dl div{grid-template-columns:1fr;gap:2px}}
 /* vision sections: a job unfolding, waiting on, channels, corrections, coordination */
 .unfold{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);border:1px solid var(--line);margin-top:40px;background:var(--bg)}
 .unfold>div{min-width:0}
@@ -272,7 +317,21 @@
   </div>
 </section>
 
-<section class="s">
+<section class="s" id="wider">
+  <div class="wrap">
+    <div class="sechd">
+      <div><div class="eyebrow mono">Beyond the service call</div><h2 class="h2">Different jobs.<br>Different judgment.</h2></div>
+      <p class="lede">Coworkers aren’t one assistant with many hats. Each has its own knowledge, its own tools and its own line where it stops and asks. Pick one and watch it work.</p>
+    </div>
+    <div class="xtabs" role="tablist" aria-label="Coworkers" id="xtabs"></div>
+    <div class="xcase" aria-live="polite">
+      <div><span class="mono" id="xRole"></span><p class="xq" id="xQ"></p><div class="xprof" id="xProf"></div></div>
+      <div><span class="mono">Working on it</span><ol class="xsteps" id="xSteps"></ol><div class="xout" id="xOut"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="s alt">
   <div class="wrap">
     <div class="sechd">
       <div><div class="eyebrow mono">Meet the team</div><h2 class="h2">Every step of the job<br>has an owner.</h2></div>
@@ -286,7 +345,7 @@
   <div class="wrap"><p>Every step has an <em>owner</em>. Every owner has <em>limits</em>. Every action leaves <em>proof</em>.</p></div>
 </section>
 
-<section class="s alt">
+<section class="s">
   <div class="wrap">
     <div class="sechd">
       <div><div class="eyebrow mono">Work with one</div><h2 class="h2">Ask. It acts,<br>or it asks you.</h2></div>
@@ -305,7 +364,7 @@
   </div>
 </section>
 
-<section class="s">
+<section class="s alt">
   <div class="wrap">
     <div class="sechd">
       <div><div class="eyebrow mono">Hand work over</div><h2 class="h2">Give it the routine.<br>Keep the decisions.</h2></div>
@@ -327,7 +386,7 @@
   </div>
 </section>
 
-<section class="s alt">
+<section class="s">
   <div class="wrap">
     <div class="sechd">
       <div><div class="eyebrow mono">Built to be trusted</div><h2 class="h2">Coworkers you can<br>actually hand things to.</h2></div>
@@ -514,6 +573,42 @@ function oRender(ok){var l=$('#oList');l.innerHTML='';O0.forEach(function(r,i){v
 $('#oApprove').addEventListener('click',function(){oRender(true)});
 $('#oReset').addEventListener('click',function(){oRender(false)});
 oRender(false);
+})();
+</script>
+<script>
+/* wider world: executive, project and accounting coworkers */
+(function(){
+var $=MT.$,$$=MT.$$;
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+var X=[
+ {n:'Executive coworker',sub:'Prepares decisions from many sources',q:'“Should we add a second crew in the north region before spring?”',
+  know:['Work order backlog and first-fix rates from SVS','Crew capacity and overtime from scheduling and payroll','Margin by region from accounting','Likely new contracts from the sales pipeline'],
+  tools:['Read-only reports across those systems','A drafting space for briefs'],
+  judge:['Lays out options and trade-offs, with every number sourced','Points out where sources disagree','Never makes the decision'],
+  steps:[['','Backlog: 142 open work orders in the north, 9 days on average, up from 5.'],['','Overtime: $38k last quarter, mostly two senior technicians.'],['','Pipeline: three PM contracts likely by March, about 60 more units.'],['flag','Payroll and scheduling disagree on overtime hours for two technicians. Flagged rather than averaged.'],['','Brief prepared for Thursday’s leadership meeting.']],
+  out:{h:'Decision brief',r:[['Option A','Hire a crew now · $210k/yr · backlog to ~5 days by April'],['Option B','Contract a partner for spring · $64k · no lasting capacity'],['Option C','Wait for contracts to sign · overtime continues'],['Would change it','Losing one of the three likely contracts'],['Open question','Overtime hours for two technicians']]}},
+ {n:'Project coworker',sub:'Keeps schedules true when things change',q:'The supplier just pushed the compressor delivery back six days.',
+  know:['The project schedule and its dependencies','Crew calendars and the crane booking','What was promised to the customer, and any penalties','Approved alternative suppliers'],
+  tools:['Scheduling','Supplier email','Drafting customer updates'],
+  judge:['Can reshuffle crews within the week on its own','A new date for the customer needs the project owner','Spending to expedite needs approval'],
+  steps:[['','Supplier email read: compressor now ships the 14th, not the 8th.'],['','Three tasks depend on it: crane booking, install crew, city inspection.'],['','Alternative supplier can deliver the 10th, for $410 more.'],['','Install crew moved to the Site 9 job so no one sits idle.'],['flag','Customer-facing date would move. Asking the project owner to choose.']],
+  out:{h:'Decision request · project owner',r:[['Option 1','Accept the slip · finish the 18th · no added cost'],['Option 2','Expedite · finish the 12th · +$410'],['Already done','Crew reassigned · crane hold extended'],['Drafted','Customer update for whichever you choose']]}},
+ {n:'Accounting coworker',sub:'Investigates before money moves',q:'A supplier invoice came in at $3,212. The purchase order says $2,940.',
+  know:['The purchase order and the agreed pricing','What was actually received, from the packing slip','Match tolerances set by finance','This supplier’s billing history'],
+  tools:['Invoice matching','Read access to payables','Drafting notes to suppliers'],
+  judge:['Holds payment when the difference is outside tolerance','Separates what is owed from what isn’t','A dispute goes out only after the payables lead approves'],
+  steps:[['','Three-way match fails: $272 over, 9.3% against a 2% tolerance.'],['','Line by line: $180 of freight not on the purchase order.'],['','Two filter lines billed at next month’s price: $92 over.'],['','Receiving confirms every item arrived.'],['flag','Agreement covers freight on orders over $2,500. The $180 is owed; the $92 is not.']],
+  out:{h:'Finding · payables lead',r:[['Pay now','$3,120'],['Disputed','$92 · price increase not yet in effect'],['Evidence','Purchase order, packing slip, price agreement'],['Drafted','Short note to the supplier, ready for your approval']]}}
+];
+var tabs=$('#xtabs'),cur=0;
+X.forEach(function(x,i){var b=el('button');b.setAttribute('role','tab');b.appendChild(el('b','',x.n));b.appendChild(el('small','',x.sub));b.addEventListener('click',function(){show(i)});tabs.appendChild(b)});
+function list(h,items){var d=el('div');d.appendChild(el('h4','',h));var u=el('ul');items.forEach(function(t){u.appendChild(el('li','',t))});d.appendChild(u);return d}
+function show(i){cur=i;var x=X[i];$$('button',tabs).forEach(function(b,k){b.setAttribute('aria-selected',k===i?'true':'false')});
+  $('#xRole').textContent=x.n;$('#xQ').textContent=x.q;var p=$('#xProf');p.innerHTML='';p.appendChild(list('What it knows',x.know));p.appendChild(list('What it can use',x.tools));p.appendChild(list('Where its judgment stops',x.judge));
+  var st=$('#xSteps');st.innerHTML='';x.steps.forEach(function(s,k){var li=el('li',s[0],s[1]);li.style.animationDelay=(k*.12)+'s';st.appendChild(li)});
+  var o=$('#xOut');o.innerHTML='';o.style.animationDelay=(x.steps.length*.12)+'s';o.appendChild(el('h4','',x.out.h));var dl=el('dl');x.out.r.forEach(function(r){var d=el('div');d.appendChild(el('dt','',r[0]));d.appendChild(el('dd','',r[1]));dl.appendChild(d)});o.appendChild(dl);
+  o.style.animation='none';void o.offsetWidth;o.style.animation=''}
+show(0);
 })();
 </script>
 </body>

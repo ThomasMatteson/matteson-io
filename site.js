@@ -29,11 +29,16 @@ MT.rr=function(x,y,w,h,r){return 'M'+(x+r)+' '+y+'H'+(x+w-r)+'A'+r+' '+r+' 0 0 1
 
 /* the work capsule: owner, authority, evidence and next action travel together */
 MT.capsule=function(parent,w,rows){
-  var g=MT.S('g',{},parent),h=22+rows.length*19;
-  MT.S('rect',{x:-w/2,y:-h/2,width:w,height:h,class:'ln fillp'},g);
-  MT.S('rect',{x:-w/2,y:-h/2,width:w,height:5,class:'fillacc'},g);
-  var vals=rows.map(function(r,i){var y=-h/2+24+i*19;MT.T(r[0],{x:-w/2+10,y:y,class:'lbl',style:'font-size:9.5px'},g);return MT.T(r[1],{x:-w/2+w*.42,y:y,class:'lblf',style:'font-size:11px'},g)});
-  return {g:g,vals:vals,h:h};
+  var g=MT.S('g',{},parent),h=22+rows.length*19,W=w;
+  var box=MT.S('rect',{x:-w/2,y:-h/2,width:w,height:h,class:'ln fillp'},g);
+  var bar=MT.S('rect',{x:-w/2,y:-h/2,width:w,height:5,class:'fillacc'},g);
+  var labs=[],vals=rows.map(function(r,i){var y=-h/2+24+i*19;labs.push(MT.T(r[0],{x:-w/2+10,y:y,class:'lbl',style:'font-size:9.5px'},g));return MT.T(r[1],{x:-w/2+w*.42,y:y,class:'lblf',style:'font-size:11px'},g)});
+  /* the card grows to fit its longest label and value, and never shrinks back */
+  function fit(){var lw=0,vw=0;try{labs.forEach(function(l){lw=Math.max(lw,l.getComputedTextLength())});vals.forEach(function(v){vw=Math.max(vw,v.getComputedTextLength())})}catch(e){return}
+    W=Math.max(W,Math.ceil(lw+vw+34));[box,bar].forEach(function(r){r.setAttribute('x',-W/2);r.setAttribute('width',W)});
+    labs.forEach(function(l){l.setAttribute('x',-W/2+10)});var vx=Math.max(-W/2+w*.42,-W/2+lw+22);vals.forEach(function(v){v.setAttribute('x',vx)})}
+  fit();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+  return {g:g,vals:vals,h:h,fit:fit};
 };
 
 /* line icons (24 × 24, drawn with the current color); any element with data-icon gets one */
