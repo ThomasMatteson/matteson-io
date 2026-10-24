@@ -1,5 +1,6 @@
-/* MTech RTU experience: a compressor failure on a rooftop unit, from an IoT alert to verified operation.
-   One lit rooftop scene, a live SVS work order that fills as the technician works, and a short coworker feed.
+/* MTech RTU experience: a compressor failure on a rooftop unit, from a sensor alert to verified operation.
+   The technician does the work, the glasses guide the next step, AI QC checks and documents as it happens,
+   and digital coworkers coordinate around it. Every action visibly produces its result before the next one starts.
    Shared by the home page (short) and Field awareness (full). Usage: MTRTU(element, {full:true|false}). */
 (function(){
 'use strict';
@@ -10,51 +11,66 @@ function mix(a,b,t){return a+(b-a)*t}
 var REDUCE=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var PLAY='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2l10 6-10 6z"/></svg>',PAUSE='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h4v12H3zM9 2h4v12H9z"/></svg>',AGAIN='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2a6 6 0 1 1-5.6 3.8l1.8.8A4 4 0 1 0 8 4v2L4.5 3 8 0z"/></svg>';
 
-/* the SVS work order: every field exists from the start and fills in as the work produces it */
-var FIELDS=[['status','Status'],['asset','Asset'],['trigger','Trigger'],['history','History'],['visit','Visit'],['symptom','Symptom'],['volts','Line voltage'],['winding','Windings'],['photos','Photos'],['diag','Diagnosis'],['part','Part'],['approval','Approval'],
-  ['recovery','Refrigerant',1],['test','Pressure test',1],['vacuum','Evacuation',1],['assetupd','Asset update'],['amps','Compressor'],['superheat','Superheat',1],['package','Completion']];
+/* the four parts of the idea; one lights up whenever it is doing something */
+var ROLES=[['tech','The technician','does the work'],['glasses','MTech glasses','guide the next step'],['ai','AI QC','checks and documents'],['cw','Digital coworkers','coordinate around it']];
 
-/* six moments; t is the fraction of the moment, f marks beats only the full version plays */
+/* the SVS job record, in story order; rows appear only once the story reaches them (f: full version only) */
+var FIELDS=[['asset','Unit'],['problem','Problem'],['visit','Visit'],['volts','Line voltage',1],['reading','Compressor test'],['evidence','Evidence'],['diag','Diagnosis'],['part','Part'],['approval','Approval'],
+  ['recovery','Refrigerant',1],['assetupd','Asset record'],['test','Pressure test',1],['result','Result'],['package','Completion']];
+
+/* six moments: a plain sentence, a short explanation that is always shown, and the detail behind "What just happened?" */
 function B(t,fn,f){return {t:t,fn:fn,f:!!f}}
 var MOM=[
- {k:'Signal',h:'The equipment signals trouble',cap:'RTU-3 is blowing warm air, and its compressor just tripped on locked-rotor current.',dur:11,sdur:7,
-  more:'A current sensor and a supply-air probe on the unit stream readings. When they leave the expected range, the alert reaches the service workflow in SVS, which already knows the asset, its service history and the site. The alert is a clue, not a diagnosis.',
-  beats:[B(0,function(S){S.cam('aerial');S.lens(0);S.fault('rising')}),B(.22,function(S){S.fault('tripped')}),B(.32,function(S){S.chip('iot',1);S.fill('trigger','IoT alert · compressor current')}),
-   B(.42,function(S){S.fill('asset','RTU-3 · 7.5-ton packaged unit')}),B(.5,function(S){S.fill('history','Compressor 2014 · capacitor replaced Mar')}),
-   B(.6,function(S){S.feed('Service','Alert matched to RTU-3 at Site 14. Opened a same-day visit.')}),B(.7,function(S){S.fill('visit','V-21407 · same day');S.fill('status','Open')}),
-   B(.8,function(S){S.feed('Dispatch','Assigned the nearest technician certified for compressor work.')},1),B(.9,function(S){S.chip('iot',0)})]},
- {k:'Arrive',h:'The technician arrives informed',cap:'Through the glasses: the right unit, its symptom and its history, before a panel comes off.',dur:11,sdur:7,
-  more:'The glasses read the unit’s tag and match it to the visit, so the technician isn’t guessing between three identical units. The symptom and the March service note appear beside the equipment. It’s a focused starting point, not an answer: what failed still has to be proven.',
-  beats:[B(0,function(S){S.cam('approach');S.lens(1);S.scan()}),B(.18,function(S){S.chip('n2',1);S.chip('n4',1)},1),B(.3,function(S){S.chip('tag',1)}),B(.45,function(S){S.chip('sym',1);S.fill('symptom','Warm supply air · compressor off')}),
-   B(.6,function(S){S.chip('hist',1)}),B(.78,function(S){S.instr('Start at the compressor compartment')}),B(.95,function(S){['n2','n4','tag','sym','hist'].forEach(function(c){S.chip(c,0)})})]},
- {k:'Investigate',h:'The system guides the investigation',cap:'One instruction, one reading, and the work order fills itself in.',dur:15,sdur:9,
-  more:'The glasses show one step at a time. The technician measures, says the reading out loud, and it lands in the work order. AI QC checks that the photo of the meter is usable before it counts. SVS receives the reading, the photo and the note as they happen.',
-  beats:[B(0,function(S){S.cam('compartment');S.panel(1);S.instr('Check line voltage at the contactor')}),B(.12,function(S){S.hands('meter');S.hl('contactor')}),
-   B(.24,function(S){S.say('“Line voltage, four sixty-two.”')}),B(.3,function(S){S.fill('volts','462 V · normal')}),
-   B(.42,function(S){S.instr('Now the windings: C to R');S.hl('compressor')}),B(.52,function(S){S.say('“C to R reads open.”')}),B(.58,function(S){S.fill('winding','C–R open (OL) · winding failed')}),
-   B(.68,function(S){S.shot('meter',1)}),B(.74,function(S){S.chip('qc1',1);S.fill('photos','1 accepted')}),
-   B(.86,function(S){S.chip('qc1',0);S.fill('diag','Open winding · replace compressor');S.fill('status','Diagnosed');S.chip('comp',1)})]},
- {k:'Plan',h:'The repair takes shape',cap:'Materials finds the compressor, the customer approves, and the plan appears in the glasses.',dur:13,sdur:8,
-  more:'The diagnosis goes to the materials coworker with the evidence attached. It checks the van, the branch and the supplier. Because the repair is above the visit’s not-to-exceed, the project coworker sends the quote to the customer’s approver, then books the delivery. The technician sees the resulting plan without leaving the roof.',
-  beats:[B(0,function(S){S.cam('roofwide');S.hands(0);S.hl(0);S.chip('comp',0);S.instr(0)}),B(.1,function(S){S.feed('Materials','Received: open winding on RTU-3, meter photo attached.')}),
-   B(.25,function(S){S.feed('Materials','Van: none. Branch: CMP-54 scroll compressor, 1 in stock.');S.fill('part','CMP-54 scroll compressor · branch')}),
-   B(.42,function(S){S.feed('Project','Above the visit’s NTE. Quote sent to the facilities manager.')}),B(.6,function(S){S.feed('Project','Approved 10:41. Runner booked, arriving 11:30.');S.fill('approval','Facilities manager · 10:41');S.fill('status','Repair approved')}),
-   B(.72,function(S){S.instr('Plan: recover refrigerant now · compressor 11:30')}),B(.88,function(S){S.comp('dolly');S.chip('newc',1)})]},
- {k:'Repair',h:'The technician performs the repair',cap:'As the work happens, photos, readings and spoken notes build the record.',dur:17,sdur:10,
-  more:'Key moments of the repair: recover the refrigerant, swap the compressor, pressure-test and evacuate. Each finished step brings up the next instruction. Photos, readings and component details reach SVS as they’re captured. When a photo misses what’s needed, the glasses point to exactly what to capture again.',
-  beats:[B(0,function(S){S.chip('newc',0);S.cam('compartment2');S.hands('gauges');S.instr('Recover the refrigerant')},1),B(.1,function(S){S.fill('recovery','11.2 lb R-410A recovered')},1),
-   B(.2,function(S){S.cam('compartment2');S.comp('installed');S.hands('torch');S.instr('Braze in the new compressor · nitrogen flowing')}),
-   B(.34,function(S){S.hands(0);S.instr('Capture the new compressor’s nameplate');S.hl('plate')}),B(.4,function(S){S.shot('plate',0)}),B(.44,function(S){S.chip('qc2',1)}),
-   B(.54,function(S){S.chip('qc2',0);S.shot('plate',1)}),B(.58,function(S){S.chip('qc3',1);S.fill('assetupd','CMP-54 · SN 26K118432 · proposed');S.fill('photos','3 accepted')}),
-   B(.66,function(S){S.chip('qc3',0);S.hl(0);S.hands('gauges');S.instr('Pressure test');S.say('“Holding three hundred for fifteen.”')},1),B(.72,function(S){S.fill('test','300 psi · held 15 min')},1),
-   B(.8,function(S){S.instr('Evacuate');S.fill('vacuum','410 microns · held')},1),B(.9,function(S){S.hands(0);S.say('“Charged. Ready to start it.”');S.instr('Restore power and start the unit')})]},
- {k:'Verify',h:'The system verifies recovery',cap:'The unit restarts, readings return to range, and the job is already documented.',dur:14,sdur:9,
-  more:'Connected readings move back toward normal. AI QC compares the results with the requirements for this repair, and SVS receives the completion package. The invoice, the warranty claim on the failed compressor and the next PM are already moving. The technician walks away from a working unit with nothing left to write up.',
-  beats:[B(0,function(S){S.cam('verify');S.panel(0);S.hands(0);S.instr(0);S.fault('running');S.fill('status','Verifying')}),B(.2,function(S){S.chip('fan',1)}),
-   B(.3,function(S){S.fill('amps','14.2 A · within rating')}),B(.38,function(S){S.fill('superheat','11 °F · in range')},1),
-   B(.48,function(S){S.chip('fan',0);S.chip('qcf',1);S.fill('package','Readings, 5 photos, notes · accepted');S.fill('status','Complete')}),
-   B(.58,function(S){S.feed('Accounting','Invoice prepared from the approved quote.')}),B(.68,function(S){S.feed('Warranty','Claim filed for the failed compressor, with the photos.')}),
-   B(.76,function(S){S.feed('Scheduling','Next PM for RTU-3 confirmed for January.')},1),B(.84,function(S){S.chip('qcf',0);S.cam('walkaway');S.lens(0);S.chip('done',1)})]}
+ {k:'Alert',h:'The building is getting warm',plain:'The building is getting warm. A connected sensor alerts the service team.',
+  short:'A sensor on the rooftop unit sees warm air and a stopped compressor. SVS opens a job for that exact unit, with its service history attached.',
+  more:'The sensor measures supply-air temperature and compressor current. The compressor tripped on locked-rotor current and stopped, and supply air climbed from about 55 °F to 71 °F. The alert is a clue, not a diagnosis: the technician still has to prove what failed.',dur:12,sdur:9,
+  beats:[B(0,function(S){S.cam('aerial');S.lens(0);S.tech(0);S.fault('rising');S.iot(1);S.chip('iot',1)}),B(.25,function(S){S.fault('tripped')}),
+   B(.36,function(S){S.role('ai');S.link('iot','problem','Warm air · compressor stopped','From the unit’s sensor')}),
+   B(.62,function(S){S.role('cw');S.focus('cw');S.feed('Service','Opened a same-day visit for RTU-3 and assigned a technician.')}),
+   B(.74,function(S){S.link('feed','visit','Same day · technician assigned','Added by the service coworker')}),B(.92,function(S){S.chip('iot',0);S.focus(0)})]},
+ {k:'Arrive',h:'The technician arrives knowing which unit and why',plain:'The technician arrives knowing which unit and why.',
+  short:'From here on we are looking through the technician’s MTech glasses. They match the unit to the job and show the problem and last service beside it.',
+  more:'There are three identical units on this roof. The glasses read RTU-3’s tag and match it to the open job, so nobody guesses. The problem from the sensor and the March service note appear next to the equipment. It is a focused starting point; the diagnosis still has to come from evidence.',dur:14,sdur:11,
+  beats:[B(0,function(S){S.iot(0);S.cam('tech');S.tech(1);S.role('tech');S.chip('tech',1)}),B(.26,function(S){S.chip('tech',0);S.cam('approach')}),B(.4,function(S){S.tech(0);S.lens(1);S.role('glasses')}),
+   B(.46,function(S){S.scan();S.chip('n2',1);S.chip('n4',1)},1),B(.5,function(S){S.chip('tag',1)}),B(.62,function(S){S.chip('sym',1)}),B(.73,function(S){S.chip('hist',1)}),
+   B(.86,function(S){['n2','n4','tag','sym','hist'].forEach(function(c){S.chip(c,0)});S.instr('First: open the compressor compartment')})]},
+ {k:'Check',h:'The glasses guide the check',plain:'The glasses guide the check. The record fills itself in.',
+  short:'The technician tests the compressor and says the reading out loud. It is recorded in the job automatically, then AI QC checks the photo of the meter.',
+  more:'One instruction at a time: measure across the compressor windings. “C to R reads open” means the winding inside the compressor has failed, so it cannot run. The spoken reading becomes a field in SVS without typing, and AI QC confirms the meter photo shows the same value before it counts as evidence.',dur:18,sdur:16,
+  beats:[B(0,function(S){S.cam('compartment');S.panel(1);S.role('glasses');S.instr('Test the compressor')}),
+   B(.08,function(S){S.hands('meter');S.meter('462');S.hl('contactor');S.instr('Check line voltage at the contactor')},1),B(.12,function(S){S.role('tech');S.voice('“Line voltage, four sixty-two.”','volts','462 V · normal')},1),
+   B(.3,function(S){S.role('glasses');S.hands('meter');S.meter('O.L');S.hl('compressor');S.instr('Measure the windings: C to R')}),B(.38,function(S){S.role('tech');S.voice('“C to R reads open.”','reading','Winding open · compressor failed')}),
+   B(.6,function(S){S.hl(0);S.role('ai');S.qc('meter',1,'Meter photo',['Reading visible','Matches what was said'],'94% match · high confidence','evidence','Meter photo · checked')}),
+   B(.88,function(S){S.role('glasses');S.chip('comp',1);S.fill('diag','Compressor failed · replace','Backed by the reading and photo');S.ready('Diagnosis recorded')})]},
+ {k:'Plan',h:'Coworkers arrange the replacement',plain:'The compressor has failed. Coworkers arrange the replacement.',
+  short:'The parts coworker finds a replacement at the branch. The project coworker gets the customer’s approval and books delivery. The technician sees the plan.',
+  more:'The diagnosis, reading and photo go to the parts coworker, which checks the van, the branch and the supplier. Because the repair is above what the visit is pre-approved to spend, the project coworker sends the quote to the store’s facilities manager and books the delivery once it is approved. The technician never leaves the roof to arrange any of it.',dur:15,sdur:12,
+  beats:[B(0,function(S){S.cam('roofwide');S.hands(0);S.hl(0);S.instr(0);S.chip('comp',0);S.role('cw');S.focus('cw');S.toast('The parts coworker is finding the replacement')}),
+   B(.12,function(S){S.feed('Parts','Checking the van, the branch and the supplier…')}),B(.3,function(S){S.feed('Parts','Found one: a CMP-54 compressor at the branch, 12 miles away.')}),
+   B(.4,function(S){S.link('feed','part','CMP-54 compressor · branch stock','Added by the parts coworker')}),
+   B(.56,function(S){S.toast('The project coworker is getting approval');S.feed('Project','Above the visit’s pre-approved limit. Quote sent to the store’s facilities manager.')}),
+   B(.7,function(S){S.feed('Project','Approved at 10:41. Delivery booked for 11:30.');S.link('feed','approval','Approved · delivery 11:30','Added by the project coworker')}),
+   B(.86,function(S){S.focus(0);S.role('glasses');S.instr('Plan: recover refrigerant now · compressor arrives 11:30');S.comp('dolly');S.chip('newc',1)})]},
+ {k:'Repair',h:'The technician replaces the compressor',plain:'The technician replaces it. AI checks each photo as it is taken.',
+  short:'A photo that misses the serial number is caught on the spot, and the glasses show exactly what to retake. The accepted photo updates the unit’s record.',
+  more:'Key steps of the repair: recover the refrigerant, swap the compressor, braze it in under nitrogen, then pressure-test and evacuate. AI QC reads each photo as it is taken. The first nameplate photo cuts off the serial number, so it is rejected while the technician is still there; the retake is accepted and proposed as an update to the unit’s asset record in SVS.',dur:22,sdur:16,
+  beats:[B(0,function(S){S.chip('newc',0);S.cam('compartment2');S.hands('gauges');S.role('tech');S.instr('Recover the refrigerant')},1),B(.06,function(S){S.voice('“Recovered eleven point two pounds.”','recovery','11.2 lb recovered')},1),
+   B(.2,function(S){S.chip('newc',0);S.cam('compartment2');S.comp('installed');S.hands('torch');S.role('tech');S.instr('Braze in the new compressor')}),
+   B(.34,function(S){S.hands(0);S.role('glasses');S.instr('Photograph the new compressor’s nameplate');S.hl('plate')}),
+   B(.36,function(S){S.role('ai');S.qc('plate',0,'Nameplate photo',['Nameplate in frame','Serial number readable'],'23% match · serial cut off')}),
+   B(.56,function(S){S.role('ai');S.qc('plate',1,'Nameplate photo · retake',['Nameplate in frame','Serial number readable'],'91% match · high confidence','assetupd','New compressor CMP-54 · SN 26K118432')}),
+   B(.82,function(S){S.hl(0);S.ready('Photo accepted')}),
+   B(.87,function(S){S.role('tech');S.hands('gauges');S.voice('“Holding three hundred for fifteen.”','test','300 psi · held 15 min')},1),
+   B(.97,function(S){S.hands(0);S.role('glasses');S.instr('Restore power and start the unit')})]},
+ {k:'Verify',h:'The unit runs again',plain:'The unit runs again, and the paperwork is already done.',
+  short:'The sensor shows the air cooling back to normal. AI QC checks the results and saves the completion package, and coworkers start the invoice and the warranty claim.',
+  more:'After restart, supply air falls back toward 55 °F and the compressor draws 14.2 A, within its rating. AI QC compares the readings and photos with what this repair requires, and SVS receives the completion package. The technician walks away from a working unit with nothing left to write up, while billing and the warranty claim on the failed compressor are already moving.',dur:16,sdur:13,
+  beats:[B(0,function(S){S.cam('verify');S.panel(0);S.hands(0);S.instr(0);S.fault('running');S.iot(1);S.role('tech')}),B(.12,function(S){S.chip('fan',1)}),
+   B(.3,function(S){S.chip('fan',0);S.role('ai');S.link('iot','result','Cooling restored · supply air 55 °F','From the unit’s sensor')}),
+   B(.46,function(S){S.chip('qcf',1);S.fill('package','Readings, photos and notes · accepted','Checked by AI QC')}),
+   B(.62,function(S){S.chip('qcf',0);S.role('cw');S.focus('cw');S.feed('Accounting','Invoice prepared from the approved quote.')}),
+   B(.72,function(S){S.feed('Warranty','Warranty claim filed for the failed compressor, with the photos.')}),
+   B(.86,function(S){S.focus(0);S.role(0);S.iot(0);S.cam('walkaway');S.lens(0);S.chip('done',1)})]}
 ];
 
 window.MTRTU=function(root,opt){
@@ -63,17 +79,24 @@ window.MTRTU=function(root,opt){
 
   /* ---------- DOM ---------- */
   root.classList.add('rtu');root.innerHTML='';
-  var main=el('div','rtu-main'),stage=el('div','rtu-stage'),side=el('div','rtu-side');root.appendChild(main);root.appendChild(side);main.appendChild(stage);
-  stage.setAttribute('role','img');stage.setAttribute('aria-label','Simulation of a rooftop unit compressor repair, seen through the technician’s glasses');
+  var main=el('div','rtu-main'),side=el('div','rtu-side');root.appendChild(main);root.appendChild(side);
+  var roles=el('ol','rtu-roles');roles.setAttribute('aria-label','Who is doing what');var roleEl={};
+  ROLES.forEach(function(r){var li=el('li');li.appendChild(el('b','',r[1]));li.appendChild(el('span','',r[2]));roles.appendChild(li);roleEl[r[0]]=li});main.appendChild(roles);
+  var stage=el('div','rtu-stage');main.appendChild(stage);
+  stage.setAttribute('role','img');stage.setAttribute('aria-label','Simulation of a rooftop unit compressor repair, partly seen through the technician’s MTech glasses');
   var cv=el('canvas');cv.setAttribute('aria-hidden','true');stage.appendChild(cv);
   var labels=el('div','rtu-labels');stage.appendChild(labels);
-  var lens=el('div','rtu-lens');lens.appendChild(el('span','','Simulation · through the glasses · Site 14'));stage.appendChild(lens);
-  var iot=el('div','rtu-iot');iot.innerHTML='<div class="t"><span>RTU-3 · connected readings</span><b>Normal</b></div><svg viewBox="0 0 120 40" preserveAspectRatio="none"><rect class="band" x="0" y="22" width="120" height="10"/><polyline class="ln2" points=""/></svg><div class="row"><i>Supply air</i><span class="sa"></span></div><div class="row"><i>Compressor</i><span class="ca"></span></div>';stage.appendChild(iot);
+  var lens=el('div','rtu-lens');lens.appendChild(el('span','','Technician’s view through MTech glasses'));stage.appendChild(lens);
+  var tagSim=el('span','rtu-sim','Simulation');stage.appendChild(tagSim);
+  var iot=el('div','rtu-iot');iot.innerHTML='<div class="t"><span>Sensor on RTU-3</span><b>Normal</b></div><svg viewBox="0 0 120 40" preserveAspectRatio="none"><rect class="band" x="0" y="22" width="120" height="10"/><polyline class="ln2" points=""/></svg><div class="row"><i>Air from the unit</i><span class="sa"></span></div><div class="row"><i>Compressor</i><span class="ca"></span></div>';stage.appendChild(iot);
   var instr=el('div','rtu-instr');stage.appendChild(instr);
   var say=el('div','rtu-say');stage.appendChild(say);
   var shot=el('div','rtu-shot');shot.innerHTML='<i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i>';stage.appendChild(shot);
   var flash=el('div','rtu-flash');stage.appendChild(flash);
-  var cap=el('div','rtu-cap');var capN=el('span','n'),capP=el('p');cap.appendChild(capN);cap.appendChild(capP);cap.setAttribute('aria-live','polite');stage.appendChild(cap);
+  var qcCard=el('div','rtu-qc');qcCard.innerHTML='<header><b>AI QC</b><span>Checking photo</span></header><canvas width="240" height="150"></canvas><p class="w"></p><ul></ul><p class="s"></p><p class="v"></p>';stage.appendChild(qcCard);
+  var thumb=qcCard.querySelector('canvas'),tctx=thumb.getContext('2d');
+  var toastEl=el('div','rtu-toast');stage.appendChild(toastEl);
+  var story=el('div','rtu-story');story.setAttribute('aria-live','polite');var stN=el('span','n'),stP=el('p','pl'),stS=el('p','sh');story.appendChild(stN);story.appendChild(stP);story.appendChild(stS);main.appendChild(story);
   var ctl=el('div','rtu-ctl');main.appendChild(ctl);
   var playB=el('button','rtu-play');playB.type='button';ctl.appendChild(playB);
   var chs=el('ol','rtu-chs');ctl.appendChild(chs);
@@ -82,14 +105,18 @@ window.MTRTU=function(root,opt){
   var more=el('div','rtu-more');more.hidden=true;more.setAttribute('aria-live','polite');main.appendChild(more);
   why.addEventListener('click',function(){var o=more.hidden;more.hidden=!o;why.setAttribute('aria-expanded',o?'true':'false');renderMore()});
   function renderMore(){if(more.hidden)return;var m=moms[mi].m;more.innerHTML='';more.appendChild(el('b','',(mi+1)+' · '+m.h));more.appendChild(document.createTextNode(m.more))}
-  var svs=el('section','rtu-box rtu-svs');svs.innerHTML='<header><b>SVS</b><i>Work order WO-5212 · RTU-3</i></header>';var dl=el('dl');svs.appendChild(dl);side.appendChild(svs);
-  var rows={};FIELDS.forEach(function(f){if(f[2]&&!full)return;var d=el('div'),dt=el('dt','',f[1]),dd=el('dd','','—');d.appendChild(dt);d.appendChild(dd);dl.appendChild(d);rows[f[0]]={d:d,dd:dd}});
-  var cw=el('section','rtu-box rtu-cw');cw.innerHTML='<header><b>Coworkers</b><i>Same job</i></header>';var feedL=el('ol');cw.appendChild(feedL);side.appendChild(cw);
+  var svs=el('section','rtu-box rtu-svs');svs.innerHTML='<header><b>SVS</b><i>Job record · RTU-3</i></header>';var dl=el('dl');svs.appendChild(dl);
+  var fullB=el('button','rtu-full','Open full record');fullB.type='button';fullB.setAttribute('aria-expanded','false');svs.appendChild(fullB);
+  fullB.addEventListener('click',function(){var o=!svs.classList.contains('open');svs.classList.toggle('open',o);fullB.textContent=o?'Show only what’s happened':'Open full record';fullB.setAttribute('aria-expanded',o?'true':'false')});
+  side.appendChild(svs);
+  var rows={};FIELDS.forEach(function(f){if(f[2]&&!full)return;var d=el('div','pending'),dt=el('dt','',f[1]),dd=el('dd'),v=el('span','v','—'),src=el('span','src');dd.appendChild(v);dd.appendChild(src);d.appendChild(dt);d.appendChild(dd);dl.appendChild(d);rows[f[0]]={d:d,v:v,src:src}});
+  var cw=el('section','rtu-box rtu-cw');cw.innerHTML='<header><b>Digital coworkers</b><i>Same job</i></header>';var feedL=el('ol');cw.appendChild(feedL);side.appendChild(cw);
+  var token=el('div','rtu-token');root.appendChild(token);
 
   /* ---------- 3D scene ---------- */
   var R=null;if(window.THREE){try{R=new THREE.WebGLRenderer({canvas:cv,antialias:true,powerPreference:'high-performance'})}catch(e){R=null}}
   var G={},scene,camera;
-  if(R)build();else{root.classList.add('nogl');var nm=el('p','mono','Simulation needs WebGL. The record and coworker feed still play.');nm.style.padding='20px';stage.insertBefore(nm,labels)}
+  if(R)build();else{root.classList.add('nogl');var nm=el('p','mono','This simulation needs WebGL. The record and coworker feed still play.');nm.style.padding='20px';stage.insertBefore(nm,labels)}
 
   function build(){
     var DPR=Math.min(2,window.devicePixelRatio||1);R.setPixelRatio(DPR);R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.05;R.setClearColor(0xdfe4e8);
@@ -163,12 +190,23 @@ window.MTRTU=function(root,opt){
     function hand(){var g=new THREE.Group();mesh(bx(.085,.03,.095),GLOVE,0,0,0,g);mesh(cy(.036,.05,14),CUFF,0,0,-.07,g).rotation.x=Math.PI/2;
       for(var f=0;f<4;f++){var fg=mesh(cy(.0095,.065,8),GLOVE,-.03+f*.02,-.008,.075,g);fg.rotation.x=Math.PI/2+.5}var th=mesh(cy(.011,.055,8),GLOVE,.05,-.004,.02,g);th.rotation.z=Math.PI/2;th.rotation.y=.6;scene.add(g);g.visible=false;return g}
     var hL=hand(),hR=hand();G.hL=hL;G.hR=hR;
-    var meter=new THREE.Group();scene.add(meter);mesh(bx(.08,.15,.035),METER,0,0,0,meter);mesh(bx(.06,.04,.004),new THREE.MeshBasicMaterial({map:canvasTex(120,80,function(x){x.fillStyle='#b8c4a8';x.fillRect(0,0,120,80);x.fillStyle='#111';x.font='bold 46px monospace';x.fillText('O.L',18,58)})}),0,.035,.019,meter);meter.visible=false;G.meter=meter;
+    var meter=new THREE.Group();scene.add(meter);mesh(bx(.08,.15,.035),METER,0,0,0,meter);function lcd(t){return canvasTex(120,80,function(x){x.fillStyle='#b8c4a8';x.fillRect(0,0,120,80);x.fillStyle='#111';x.font='bold 46px monospace';x.textAlign='center';x.fillText(t,60,58)})}G.lcd={'O.L':lcd('O.L'),'462':lcd('462')};G.mscr=mesh(bx(.06,.04,.004),new THREE.MeshBasicMaterial({map:G.lcd['O.L']}),0,.035,.019,meter);meter.visible=false;G.meter=meter;
     var probe=new THREE.Group();scene.add(probe);mesh(cy(.006,.12,8),M(0xc62828),0,0,0,probe);probe.visible=false;G.probe=probe;
     var lead=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),new THREE.Vector3()]),new THREE.LineBasicMaterial({color:0xc62828}));scene.add(lead);lead.visible=false;lead.frustumCulled=false;G.lead=lead;
     var gauges=new THREE.Group();scene.add(gauges);mesh(bx(.17,.05,.05),M(0x9aa0a6,{metalness:.5}),0,0,0,gauges);[[-.045,0x1565c0],[.045,0xc62828]].forEach(function(q){var d=mesh(cy(.038,.02,20),M(q[1]),q[0],.05,0,gauges);d.rotation.x=Math.PI/2;mesh(cy(.032,.004,20),WHITE,q[0],.05,.012,gauges).rotation.x=Math.PI/2});gauges.visible=false;G.gauges=gauges;
     var hoses=[0x1565c0,0xc62828].map(function(c){var l=new THREE.Line(new THREE.BufferGeometry().setFromPoints([0,1,2,3,4].map(function(){return new THREE.Vector3()})),new THREE.LineBasicMaterial({color:c}));scene.add(l);l.visible=false;l.frustumCulled=false;return l});G.hoses=hoses;
     var torch=new THREE.Group();scene.add(torch);rod([0,0,0],[0,0,.2],.012,M(0xc9a227,{metalness:.7,roughness:.3}),torch);var flame=mesh(new THREE.ConeGeometry(.012,.06,12),new THREE.MeshBasicMaterial({color:0x6cc8ff,transparent:true,opacity:.85,blending:THREE.AdditiveBlending,depthWrite:false}),0,0,.24,torch);flame.rotation.x=Math.PI/2;flame.castShadow=false;torch.visible=false;G.torch=torch;G.flame=flame;
+    /* the technician, seen once from outside before we look through their glasses */
+    var NAVY=M(0x2c3a52,{roughness:.85}),SHIRT=M(0x3b4a5c,{roughness:.85}),SKIN=M(0xc99b74,{roughness:.7}),HIVIS=M(0xd4ec3c,{roughness:.6}),HAT=M(0xf2f2ee,{roughness:.4});
+    var tech=new THREE.Group();tech.position.set(-.6,0,4.5);scene.add(tech);G.tech=tech;
+    rod([-.09,0,0],[-.08,.86,0],.06,NAVY,tech);rod([.09,0,0],[.08,.86,0],.06,NAVY,tech);mesh(bx(.13,.06,.24),BLK,-.09,.03,-.04,tech);mesh(bx(.13,.06,.24),BLK,.09,.03,-.04,tech);
+    mesh(bx(.36,.56,.22),SHIRT,0,1.14,0,tech);mesh(bx(.38,.38,.235),HIVIS,0,1.2,0,tech);
+    rod([-.2,1.38,0],[-.27,.94,-.08],.045,SHIRT,tech);rod([.2,1.38,0],[.27,.94,-.08],.045,SHIRT,tech);
+    mesh(cy(.05,.08,12),SKIN,0,1.46,0,tech);mesh(new THREE.SphereGeometry(.1,20,14),SKIN,0,1.6,0,tech);
+    mesh(new THREE.SphereGeometry(.118,20,10,0,Math.PI*2,0,Math.PI/2),HAT,0,1.645,0,tech);mesh(cy(.125,.012,24),HAT,0,1.65,-.015,tech);
+    mesh(bx(.18,.032,.02),M(0x1b1f24,{roughness:.3}),0,1.612,-.1,tech);rod([-.09,1.612,-.1],[-.1,1.62,.04],.006,M(0x1b1f24),tech);rod([.09,1.612,-.1],[.1,1.62,.04],.006,M(0x1b1f24),tech);
+    mesh(bx(.034,.03,.04),new THREE.MeshBasicMaterial({color:0x2dd4ff}),.075,1.638,-.095,tech);
+    G.pts.tech=[-.6,1.95,4.5];
     /* highlight ring and scan edges */
     var acc=new THREE.Color(0x2dd4ff);
     var hl=new THREE.Mesh(new THREE.RingGeometry(.12,.135,48),new THREE.MeshBasicMaterial({color:acc,transparent:true,opacity:0,side:THREE.DoubleSide,depthTest:false}));hl.renderOrder=20;scene.add(hl);G.hlm=hl;
@@ -182,87 +220,128 @@ window.MTRTU=function(root,opt){
   }
 
   /* camera framings */
-  var CAM={aerial:[[8.5,6.8,10.5],[0,.7,-.5]],approach:[[-.6,1.68,4.4],[-.1,1,0]],compartment:[[1.02,1.5,2.15],[.78,.86,.42]],roofwide:[[-3.2,2.5,6.2],[.4,.8,0]],
+  var CAM={aerial:[[8.5,6.8,10.5],[0,.7,-.5]],tech:[[-2.7,2.05,7.6],[-.5,1.35,3.9]],approach:[[-.6,1.68,4.4],[-.1,1,0]],compartment:[[1.02,1.5,2.15],[.78,.86,.42]],roofwide:[[-3.2,2.5,6.2],[.4,.8,0]],
     compartment2:[[1.16,1.42,2.05],[.83,.8,.45]],verify:[[3.4,2.1,4.4],[.3,1.1,0]],walkaway:[[-5.5,3.6,10],[0,.8,0]]};
   var camA=null,camB=null,camT=0,camDur=1.8,camName='aerial';
 
-  /* ---------- state the beats act on ---------- */
+  /* ---------- labels that sit on the equipment ---------- */
   var st,chipEls={},CH={
-    iot:['IoT sensor','Current and supply-air readings','r'],tag:['RTU-3 · tag read','Matched to visit V-21407',''],sym:['Symptom','Warm supply air · compressor off','warn'],hist:['History','Mar: run capacitor replaced',''],
-    n2:['RTU-2','Not on this visit','dim'],n4:['RTU-4','Not on this visit','dim'],comp:['Compressor','Winding open · replace','warn l'],qc1:['AI QC ✓','Meter reading legible · accepted','ok l'],
-    qc2:['AI QC · retake','Serial cut off · capture the lower edge','warn l'],qc3:['AI QC ✓','Serial 26K118432 read · asset update proposed','ok l'],newc:['Delivered','CMP-54 · 11:32','l'],
-    fan:['Condenser fan','Running','ok'],qcf:['AI QC ✓','Amps, superheat and photos meet the requirements','ok'],done:['Visit complete','Documented · invoiced · warranty filed','ok']};
-  var CHP={iot:'iot',tag:'tag',sym:'unit',hist:'plate2',n2:'n2',n4:'n4',comp:'compressor',qc1:'meter',qc2:'plate',qc3:'plate',newc:'dolly',fan:'fan',qcf:'unit',done:'done'};
+    iot:['Sensor','Watching this unit','r'],tech:['Technician','Wearing MTech glasses',''],tag:['RTU-3','Tag matches this job',''],sym:['Problem','Warm air · compressor stopped','warn'],
+    hist:['Last service','March: capacitor replaced',''],n2:['RTU-2','Not this job','dim'],n4:['RTU-4','Not this job','dim'],comp:['Compressor','Failed · needs replacing','warn l'],
+    newc:['Replacement','Delivered 11:32','l'],fan:['Running again','Fan and compressor on','ok'],qcf:['AI QC ✓','Readings and photos meet the requirements','ok'],done:['Visit complete','Nothing left to write up','ok']};
+  var CHP={iot:'iot',tech:'tech',tag:'tag',sym:'fan',hist:'plate2',n2:'n2',n4:'n4',comp:'compressor',newc:'dolly',fan:'fan',qcf:'unit',done:'done'};
   Object.keys(CH).forEach(function(k){var c=CH[k],w=el('div','rtu-chip '+c[2]),d=el('div');d.appendChild(el('b','',c[0]));d.appendChild(document.createTextNode(c[1]));w.appendChild(d);labels.appendChild(w);chipEls[k]=w});
+
+  /* ---------- state the beats act on ---------- */
+  var inst=false,clock=0,queue=[],hist=[];
   function reset(){
-    st={lens:0,chips:{},hl:null,panel:0,panelP:0,hands:0,comp:'old',fault:'normal',faultT:0,instr:'',sayT:-9,shotT:-9,shotOk:1,shotTgt:null,scanT:-9,fan:1};
-    Object.keys(rows).forEach(function(k){rows[k].dd.textContent='—';rows[k].dd.className='';rows[k].d.classList.remove('new')});
-    feedL.innerHTML='';var li=el('li','empty','Waiting for work on this job…');feedL.appendChild(li);hist=[];for(var i=0;i<60;i++)hist.push(55+Math.sin(i*.7)*.4);
+    st={lens:0,tech:0,chips:{},hl:null,panel:0,panelP:0,hands:0,comp:'old',fault:'normal',faultT:0,instr:'',instrOk:0,sayT:-9,sayDur:2.8,shotT:-9,shotOk:1,shotTgt:null,snap:null,scanT:-9,fan:1,iot:0,toastT:-9};
+    queue=[];token.className='rtu-token';qcCard.className='rtu-qc';root.removeAttribute('data-focus');setRole(0);
+    Object.keys(rows).forEach(function(k){var r=rows[k];r.d.className='pending';r.v.textContent='—';r.src.textContent=''});
+    put('asset','RTU-3 · 7.5-ton unit · Site 14 roof','From SVS',true);
+    feedL.innerHTML='';feedL.appendChild(el('li','empty','Nothing to coordinate yet.'));
+    hist=[];for(var i=0;i<60;i++)hist.push(55+Math.sin(i*.7)*.4);
     camName='aerial';camA=camB=CAM.aerial;camT=99;
   }
-  var inst=false,clock=0;
+  function later(d,fn){if(inst){fn();return}queue.push({at:clock+d,fn:fn})}
+  function setRole(k){Object.keys(roleEl).forEach(function(r){roleEl[r].classList.toggle('on',r===k)})}
+  /* a field arrives in the record: it appears, highlights, and says where it came from */
+  function put(k,v,note,quiet){var r=rows[k];if(!r)return;r.d.className=quiet||inst?'':'new';r.v.textContent=v;r.src.textContent=note||'';
+    if(!quiet&&!inst)later(2.4,function(){if(r.d.className==='new')r.d.className=''})}
+  function rel(e){var a=e.getBoundingClientRect(),b=root.getBoundingClientRect();return {x:a.left-b.left+a.width/2,y:a.top-b.top+a.height/2}}
+  /* the visible link between an action and its result: a token travels from where it happened to the field it fills */
+  function fly(fromEl,k,v,note){var r=rows[k];if(!r)return;if(inst){put(k,v,note);return}
+    r.d.className='incoming';r.v.textContent='…';r.src.textContent='';
+    var a=rel(fromEl),b=rel(r.v);token.textContent=v;token.style.transition='none';token.style.transform='translate3d('+a.x+'px,'+a.y+'px,0) translate(-50%,-50%) scale(.9)';token.className='rtu-token on';
+    void token.offsetWidth;token.style.transition='transform .95s cubic-bezier(.5,0,.2,1),opacity .3s';token.style.transform='translate3d('+b.x+'px,'+b.y+'px,0) translate(-50%,-50%) scale(.8)';
+    later(1.0,function(){token.className='rtu-token';put(k,v,note)})}
+  var SRC={iot:function(){return iot},feed:function(){return feedL.firstChild||cw},say:function(){return say},qc:function(){return qcCard}};
   var S={
     cam:function(n){if(inst||REDUCE){camName=n;camA=camB=CAM[n];camT=99;return}camA=curCam();camB=CAM[n];camName=n;camT=0},
-    lens:function(on){st.lens=on},
+    lens:function(on){st.lens=on},tech:function(on){st.tech=on},iot:function(on){st.iot=on},
     fault:function(f){st.fault=f;st.faultT=clock;st.fan=f==='running'||f==='normal'?1:0},
     chip:function(k,on){st.chips[k]=on},
-    fill:function(k,v){var r=rows[k];if(!r)return;r.dd.textContent=v;r.dd.className='v';if(!inst){r.d.classList.add('new');setTimeout(function(){r.d.classList.remove('new')},1600);dl.scrollTop=Math.max(0,r.d.offsetTop-dl.clientHeight/2)}},
-    feed:function(who,txt){var e=feedL.querySelector('.empty');if(e)e.remove();var li=el('li');li.appendChild(el('b','',who+' coworker'));li.appendChild(document.createTextNode(txt));if(inst)li.style.animation='none';feedL.insertBefore(li,feedL.firstChild);feedL.scrollTop=0},
-    instr:function(t){st.instr=t||''},
-    say:function(t){if(inst)return;say.textContent=t;st.sayT=clock},
+    role:function(k){setRole(k)},
+    focus:function(k){if(k)root.setAttribute('data-focus',k);else root.removeAttribute('data-focus')},
+    toast:function(t){if(inst)return;toastEl.textContent=t;st.toastT=clock},
+    fill:function(k,v,note){put(k,v,note)},
+    link:function(src,k,v,note){fly(SRC[src](),k,v,note)},
+    feed:function(who,txt){var e=feedL.querySelector('.empty');if(e)e.remove();var li=el('li');li.appendChild(el('b','',who+' coworker'));li.appendChild(document.createTextNode(txt));if(inst)li.style.animation='none';feedL.insertBefore(li,feedL.firstChild)},
+    instr:function(t){st.instr=t||'';st.instrOk=0},
+    ready:function(t){st.instr='✓ '+t+' · ready for the next step';st.instrOk=1},
+    /* a spoken reading: the words appear, then the matching field fills */
+    voice:function(t,k,v){if(inst){put(k,v,'Spoken · recorded automatically');return}say.textContent=t;st.sayT=clock;later(1.3,function(){fly(say,k,v,'Spoken · recorded automatically')})},
     hl:function(k){st.hl=k||null},
     panel:function(o){st.panel=o;if(inst)st.panelP=o},
     hands:function(p){st.hands=p||0},
+    meter:function(t){st.meter=t},
     comp:function(c){st.comp=c},
-    shot:function(tgt,ok){if(inst)return;st.shotT=clock;st.shotOk=ok;st.shotTgt=tgt},
-    scan:function(){if(!inst)st.scanT=clock}
+    scan:function(){if(!inst)st.scanT=clock},
+    /* a photo: capture, AI QC checks it on screen, then it moves into the record (or asks for a retake) */
+    qc:function(tgt,ok,what,checks,score,k,v){
+      if(inst){if(ok&&k)put(k,v,'Checked by AI QC · saved');return}
+      st.shotT=clock;st.shotOk=ok;st.shotTgt=tgt;st.snap={tgt:tgt,bad:!ok};
+      var ul=qcCard.querySelector('ul');ul.innerHTML='';qcCard.querySelector('.w').textContent=what;qcCard.querySelector('.s').textContent='';qcCard.querySelector('.v').textContent='';
+      checks.forEach(function(c){ul.appendChild(el('li','',c))});
+      later(.5,function(){qcCard.className='rtu-qc on'});
+      checks.forEach(function(c,i){later(.9+i*.45,function(){var li=ul.children[i];li.className=(!ok&&i===checks.length-1)?'no':'yes'})});
+      var tEnd=.9+checks.length*.45;
+      later(tEnd,function(){qcCard.querySelector('.s').textContent=score;qcCard.querySelector('.v').textContent=ok?'Evidence checked and saved':'Retake needed';qcCard.className='rtu-qc on '+(ok?'ok':'bad')});
+      if(ok&&k)later(tEnd+.9,function(){fly(qcCard,k,v,'Checked by AI QC · saved');qcCard.className='rtu-qc'});
+      if(!ok)later(tEnd+.4,function(){st.instr='Retake: include the bottom edge of the nameplate';st.instrOk=0});
+      if(!ok)later(tEnd+2.6,function(){qcCard.className='rtu-qc'});
+    }
   };
   function curCam(){if(!R)return CAM[camName];var e=ease(clamp(camT/camDur));return [[mix(camA[0][0],camB[0][0],e),mix(camA[0][1],camB[0][1],e),mix(camA[0][2],camB[0][2],e)],[mix(camA[1][0],camB[1][0],e),mix(camA[1][1],camB[1][1],e),mix(camA[1][2],camB[1][2],e)]]}
 
   /* ---------- timeline ---------- */
-  var mi=0,lt=0,fired=0,playing=false,userPaused=false,ended=false,hist=[];
+  var mi=0,lt=0,fired=0,playing=false,userPaused=false,ended=false;
   function clean(){st.chips={};st.hl=null}
   function fire(upTo){var M=moms[mi];while(fired<M.beats.length&&M.beats[fired].t*M.d<=upTo){M.beats[fired].fn(S);fired++}}
-  function seek(i){reset();inst=true;for(var j=0;j<i;j++){mi=j;fired=0;clean();fire(1e9)}inst=false;mi=i;lt=0;fired=0;ended=false;clean();fire(0);uiMoment()}
-  function uiMoment(){var M=moms[mi].m;capN.textContent=(mi+1)+' / '+moms.length+' · '+M.h;capP.textContent=M.cap;chB.forEach(function(b,i){b.classList.toggle('on',i===mi)});renderMore()}
+  function seek(i){reset();inst=true;for(var j=0;j<i;j++){mi=j;fired=0;clean();fire(1e9)}inst=false;root.removeAttribute('data-focus');mi=i;lt=0;fired=0;ended=false;clean();fire(0);uiMoment()}
+  function uiMoment(){var M=moms[mi].m;stN.textContent=(mi+1)+' of '+moms.length+' · '+M.k;stP.textContent=M.plain;stS.textContent=M.short;chB.forEach(function(b,i){b.classList.toggle('on',i===mi)});renderMore()}
   function play(user){if(user)userPaused=false;if(ended){seek(0)}playing=true;setBtn()}
   function pause(user){playing=false;if(user)userPaused=true;setBtn()}
   function setBtn(){playB.innerHTML=ended?AGAIN:playing?PAUSE:PLAY;playB.setAttribute('aria-label',ended?'Replay':playing?'Pause':'Play')}
   playB.addEventListener('click',function(){if(playing)pause(true);else play(true)});
-  function step(dt){if(!playing)return;lt+=dt;fire(lt);if(lt>=moms[mi].d){if(mi<moms.length-1){mi++;lt=0;fired=0;clean();fire(0);uiMoment()}else{lt=moms[mi].d;playing=false;ended=true;setBtn()}}}
+  function step(dt){lt+=dt;fire(lt);if(lt>=moms[mi].d){if(mi<moms.length-1){mi++;lt=0;fired=0;clean();fire(0);uiMoment()}else{lt=moms[mi].d;playing=false;ended=true;setBtn()}}}
 
   /* ---------- per-frame rendering ---------- */
   var v3=R?new THREE.Vector3():null,W=1,H=1,last=0,vis=false,raf=0;
   function size(){W=stage.clientWidth;H=stage.clientHeight;if(R){R.setSize(W,H,false);camera.aspect=W/H;camera.fov=W/H<1?58:42;camera.updateProjectionMatrix()}}
   function proj(p){v3.set(p[0],p[1],p[2]).project(camera);return [(v3.x*.5+.5)*W,(-v3.y*.5+.5)*H,v3.z]}
   function anchor(k){var P=G.pts;if(k==='plate2')return [.8,1.12,.79];if(k==='compressor')return st.comp==='installed'?[.85,.9,.62]:P.compressor;return P[k]}
+  function shotBox(){var pts=st.shotTgt==='meter'?[[.58,1.06,1.26],[.67,1.2,1.2]]:[[.68,.58,.6],[.82,.68,.62]];var a1=proj(pts[0]),a2=proj(pts[1]);
+    return [Math.min(a1[0],a2[0])-16,Math.min(a1[1],a2[1])-16,Math.max(a1[0],a2[0])+16,Math.max(a1[1],a2[1])+16]}
   function frame(now){
-    raf=0;if(!vis)return;var dt=Math.min(.1,(now-(last||now))/1000);last=now;clock+=dt;step(dt);camT+=dt;
-    /* IoT readings follow the fault state */
+    raf=0;if(!vis)return;var rdt=Math.min(.1,(now-(last||now))/1000);last=now;var dt=playing?rdt:0;
+    clock+=dt;if(playing){step(dt);for(var qi=0;qi<queue.length;qi++){if(queue[qi].at<=clock){var q=queue.splice(qi,1)[0];qi--;q.fn()}}}camT+=dt;
+    /* sensor readings follow the fault state */
     var fT=clock-st.faultT,temp,amps,cls;
-    if(st.fault==='rising'){temp=55+16*clamp(fT/5);amps=(18+40*clamp(fT/5)).toFixed(1)+' A · rising';cls='alert'}
-    else if(st.fault==='tripped'){temp=71+Math.sin(clock)*.4;amps='0 A · tripped on locked rotor';cls='alert'}
-    else if(st.fault==='running'){temp=71-16*ease(clamp(fT/6));amps=(14.2+Math.sin(clock*1.3)*.2).toFixed(1)+' A · within rating';cls=fT>5?'ok':''}
-    else {temp=55+Math.sin(clock*.8)*.3;amps='14.1 A';cls=''}
-    if(!hist.length||clock-(hist.t||0)>.2){hist.push(temp+Math.sin(clock*3)*.25);if(hist.length>60)hist.shift();hist.t=clock}
-    iot.className='rtu-iot'+(cls?' '+cls:'');iot.querySelector('.t b').textContent=cls==='alert'?'Alert':cls==='ok'?'Back in range':'Normal';
-    iot.querySelector('.sa').textContent=temp.toFixed(1)+' °F';iot.querySelector('.sa').className='sa '+(temp>60?'al':temp<57&&st.fault==='running'?'gd':'');
+    if(st.fault==='rising'){temp=55+16*clamp(fT/4);amps='Struggling';cls='alert'}
+    else if(st.fault==='tripped'){temp=71+Math.sin(clock)*.4;amps='Stopped';cls='alert'}
+    else if(st.fault==='running'){temp=71-16*ease(clamp(fT/6));amps='Running · 14.2 A';cls=fT>5?'ok':''}
+    else {temp=55+Math.sin(clock*.8)*.3;amps='Running';cls=''}
+    if(dt&&(!hist.length||clock-(hist.t||0)>.2)){hist.push(temp+Math.sin(clock*3)*.25);if(hist.length>60)hist.shift();hist.t=clock}
+    iot.className='rtu-iot'+(st.iot?' on':'')+(cls?' '+cls:'');iot.querySelector('.t b').textContent=cls==='alert'?'Alert':cls==='ok'?'Back to normal':'Normal';
+    iot.querySelector('.sa').textContent=temp.toFixed(0)+' °F'+(temp>60?' · should be ~55':'');iot.querySelector('.sa').className='sa '+(temp>60?'al':temp<57&&st.fault==='running'?'gd':'');
     iot.querySelector('.ca').textContent=amps;iot.querySelector('.ca').className='ca '+(cls==='alert'?'al':cls==='ok'?'gd':'');
     iot.querySelector('polyline').setAttribute('points',hist.map(function(v,i){return (i*120/59).toFixed(1)+','+(40-(v-50)*1.7).toFixed(1)}).join(' '));
-    instr.textContent=st.instr;instr.classList.toggle('on',!!st.instr);
-    say.classList.toggle('on',clock-st.sayT<3.2);
-    lens.classList.toggle('on',!!st.lens);
+    instr.textContent=st.instr;instr.className='rtu-instr'+(st.instr?' on':'')+(st.instrOk?' ok':'');
+    say.classList.toggle('on',clock-st.sayT<st.sayDur);toastEl.classList.toggle('on',clock-st.toastT<3);
+    lens.classList.toggle('on',!!st.lens);tagSim.classList.toggle('on',!st.lens);
     if(R){
-      /* camera with a slight head sway when seen through the glasses */
+      /* camera, with a slight head sway when we are looking through the glasses */
       var c=curCam(),sw=st.lens&&!REDUCE?1:0;camera.position.set(c[0][0]+Math.sin(clock*.9)*.012*sw,c[0][1]+Math.sin(clock*1.7)*.008*sw,c[0][2]);camera.lookAt(c[1][0],c[1][1],c[1][2]);
-      st.panelP+=(st.panel-st.panelP)*Math.min(1,dt*2.5);var pp=ease(clamp(st.panelP));G.cpanel.position.set(.8+pp*.95,.92-pp*.42,.762+pp*.55);G.cpanel.rotation.set(-pp*.18,-pp*.25,0);
+      st.panelP+=(st.panel-st.panelP)*Math.min(1,dt*2.5);if(inst||REDUCE)st.panelP=st.panel;var pp=ease(clamp(st.panelP));G.cpanel.position.set(.8+pp*.95,.92-pp*.42,.762+pp*.55);G.cpanel.rotation.set(-pp*.18,-pp*.25,0);
       G.blades.rotation.y+=st.fan&&(st.fault!=='running'||fT>1.5)?dt*(st.fault==='running'?14:12):0;
       G.led.material.color.setHex(st.fault==='rising'||st.fault==='tripped'?(Math.sin(clock*8)>0?0xffb020:0x553300):0x2dd4ff);
-      var ins=st.comp==='installed';G.oldC.position.set(ins?2.3:.85,ins?.1:.46,ins?1.45:.45);if(ins)G.oldC.parent!==G.dolly&&G.oldC.position.set(2.3,.1,1.45);
+      G.tech.visible=!!st.tech;
+      var ins=st.comp==='installed';G.oldC.position.set(ins?2.3:.85,ins?.1:.46,ins?1.45:.45);
       G.newC.visible=st.comp!=='old';if(st.comp==='dolly')G.newC.position.set(2.3,.06,1.48);else if(ins)G.newC.position.set(.85,.46,.45);
       /* hands and tools */
       var hp=st.hands;[G.hL,G.hR,G.meter,G.probe,G.lead,G.gauges,G.torch].concat(G.hoses).forEach(function(o){o.visible=false});
-      if(hp==='meter'){G.hL.visible=G.hR.visible=G.meter.visible=G.probe.visible=G.lead.visible=true;G.hL.position.set(.6,1.06,1.3);G.hL.rotation.set(-.9,.3,0);G.meter.position.set(.62,1.13,1.24);G.meter.rotation.set(-.55,.25,0);
+      if(hp==='meter'){var mt=G.lcd[st.meter||'O.L'];if(G.mscr.material.map!==mt){G.mscr.material.map=mt;G.mscr.material.needsUpdate=true}G.hL.visible=G.hR.visible=G.meter.visible=G.probe.visible=G.lead.visible=true;G.hL.position.set(.6,1.06,1.3);G.hL.rotation.set(-.9,.3,0);G.meter.position.set(.62,1.13,1.24);G.meter.rotation.set(-.55,.25,0);
         G.hR.position.set(.96,.84,.86);G.hR.rotation.set(-.4,-.5,0);G.probe.position.set(.88,.79,.7);G.probe.rotation.set(1.1,0,.4);
         var lp=G.lead.geometry.attributes.position;lp.setXYZ(0,.62,1.06,1.24);lp.setXYZ(1,.86,.77,.66);lp.needsUpdate=true}
       if(hp==='gauges'){G.hL.visible=G.hR.visible=G.gauges.visible=true;G.hoses.forEach(function(h){h.visible=true});G.gauges.position.set(.58,1.12,1.26);G.gauges.rotation.set(-.5,.2,0);G.hL.position.set(.56,1.06,1.3);G.hL.rotation.set(-.8,.2,0);
@@ -270,21 +349,24 @@ window.MTRTU=function(root,opt){
       if(hp==='torch'){G.hR.visible=G.torch.visible=G.hL.visible=true;G.hR.position.set(1.1,1.08,1.0);G.hR.rotation.set(-.3,-.7,0);G.torch.position.set(1.08,1.09,.98);G.torch.lookAt(.86,1.02,.46);G.flame.scale.set(1,.8+Math.random()*.4,1);
         G.hL.position.set(.62,1.0,1.1);G.hL.rotation.set(-.6,.4,0)}
       /* highlight ring faces the camera and breathes */
-      var hk=st.hl;if(hk){var hp3=anchor(hk==='plate'?'plate':hk);G.hlm.position.set(hp3[0],hp3[1],hp3[2]);G.hlm.quaternion.copy(camera.quaternion);G.hlm.scale.setScalar(1+.12*Math.sin(clock*4));G.hlm.material.opacity=.95}else G.hlm.material.opacity=Math.max(0,G.hlm.material.opacity-dt*3);
+      var hk=st.hl;if(hk){var hp3=anchor(hk);G.hlm.position.set(hp3[0],hp3[1],hp3[2]);G.hlm.quaternion.copy(camera.quaternion);G.hlm.scale.setScalar(1+.12*Math.sin(clock*4));G.hlm.material.opacity=.95}else G.hlm.material.opacity=Math.max(0,G.hlm.material.opacity-rdt*3);
       var sT=clock-st.scanT;G.edges.material.opacity=sT<2.2?Math.sin(clamp(sT/2.2)*Math.PI)*.9:st.lens&&camName==='approach'?.25:0;
       R.render(scene,camera);
-      /* chips that track the scene */
+      /* the photo AI QC is looking at: copied straight from the rendered view */
+      if(st.snap&&clock-st.shotT>.25){var bb=shotBox(),k2=cv.width/W,pad=40,x0=Math.max(0,bb[0]-pad),y0=Math.max(0,bb[1]-pad),w0=Math.min(W,bb[2]+pad)-x0,h0=Math.min(H,bb[3]+pad)-y0;
+        try{tctx.fillStyle='#111';tctx.fillRect(0,0,240,150);var sc2=Math.min(240/w0,150/h0),dw=w0*sc2,dh=h0*sc2;tctx.drawImage(cv,x0*k2,y0*k2,w0*k2,h0*k2,(240-dw)/2,(150-dh)/2,dw,dh);
+          if(st.snap.bad){tctx.fillStyle='rgba(10,10,10,.82)';tctx.fillRect(0,96,240,54);tctx.strokeStyle='#ffb020';tctx.lineWidth=3;tctx.strokeRect(3,94,234,53);tctx.fillStyle='#ffb020';tctx.font='600 13px monospace';tctx.fillText('SERIAL CUT OFF',62,128)}}catch(e){}
+        st.snap=null}
+      /* labels that track the scene, kept inside the frame */
       Object.keys(chipEls).forEach(function(k){var on=st.chips[k],e=chipEls[k];if(!on){e.style.opacity='0';return}var a=anchor(CHP[k]);if(!a){e.style.opacity='0';return}var p=proj(a);
         if(p[2]>1){e.style.opacity='0';return}
-        /* keep every chip inside the frame */
         var cw2=e.firstChild.offsetWidth,x=p[0],nar=W<640,cl=e.classList;
         if(cl.contains('l')&&!nar)x=Math.min(x,W-cw2-22);else if(cl.contains('r')&&!nar)x=Math.max(x,cw2+22);else x=Math.max(cw2/2+8,Math.min(W-cw2/2-8,x));
         e.style.transform='translate3d('+x.toFixed(1)+'px,'+Math.max(p[1],60).toFixed(1)+'px,0)';e.style.opacity=k==='n2'||k==='n4'?'.7':'1'});
       /* photo capture brackets and flash */
-      var shT=clock-st.shotT;if(shT<1.6&&st.shotTgt){var pts=st.shotTgt==='meter'?[[.58,1.06,1.26],[.67,1.2,1.2]]:[[.68,.58,.6],[.82,.68,.62]];
-        var a1=proj(pts[0]),a2=proj(pts[1]),x0=Math.min(a1[0],a2[0])-16,y0=Math.min(a1[1],a2[1])-16,x1=Math.max(a1[0],a2[0])+16,y1=Math.max(a1[1],a2[1])+16;
-        shot.style.transform='translate3d('+x0.toFixed(1)+'px,'+y0.toFixed(1)+'px,0)';shot.style.width=(x1-x0).toFixed(1)+'px';shot.style.height=(y1-y0).toFixed(1)+'px';
-        shot.className='rtu-shot '+(shT>.35?(st.shotOk?'good':'bad'):'');shot.style.opacity='1';flash.style.opacity=String(Math.max(0,.55-shT*2.2))}else{shot.style.opacity='0';flash.style.opacity='0'}
+      var shT=clock-st.shotT;if(shT<1.4&&st.shotTgt){var b2=shotBox();
+        shot.style.transform='translate3d('+b2[0].toFixed(1)+'px,'+b2[1].toFixed(1)+'px,0)';shot.style.width=(b2[2]-b2[0]).toFixed(1)+'px';shot.style.height=(b2[3]-b2[1]).toFixed(1)+'px';
+        shot.className='rtu-shot';shot.style.opacity='1';flash.style.opacity=String(Math.max(0,.55-shT*2.2))}else{shot.style.opacity='0';flash.style.opacity='0'}
     }
     var p=clamp(lt/moms[mi].d);chB.forEach(function(b,i){b.style.setProperty('--p',(i<mi?100:i===mi?p*100:0).toFixed(1)+'%')});
     raf=requestAnimationFrame(frame);
